@@ -3,6 +3,7 @@ package com.example.unsplashapp.data.remote.response
 import androidx.annotation.Keep
 import com.squareup.moshi.Json
 
+// model to receive response
 @Keep
 data class CollectionItemResponse(
     @Json(name = "id") val id: String, // W6bCWhwaXmw
