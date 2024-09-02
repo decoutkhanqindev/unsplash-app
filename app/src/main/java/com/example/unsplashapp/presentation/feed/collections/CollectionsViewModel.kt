@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 class CollectionsViewModel(private val unsplashApiService: UnsplashApiService) : ViewModel() {
     private var _uiState: MutableLiveData<CollectionsUiState> =
         MutableLiveData<CollectionsUiState>(CollectionsUiState.FirstPageLoading)
-    internal val uiState: LiveData<CollectionsUiState> get() = uiState
+    internal val uiState: LiveData<CollectionsUiState> get() = _uiState
 
     companion object {
         private const val PER_PAGE = 30
