@@ -11,7 +11,7 @@ import com.example.unsplashapp.databinding.ItemCollectionUiModelBinding
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 
 class CollectionItemAdapter(
-    private val requestManager: RequestManager
+    private val requestManager: RequestManager // -> handle glide module
 ) : ListAdapter<CollectionItemModel, CollectionItemAdapter.VH>(CollectionItemCallBack) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH = VH(
