@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
@@ -16,6 +17,7 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
 ) {
     companion object {
         fun newInstance(): FeedCollectionsFragment = FeedCollectionsFragment()
+        private const val VISIBLE_THRESHOLD = 2 // -> 2 items is visible
     }
 
     private val viewModel: CollectionsViewModel by viewModels(factoryProducer = {
@@ -67,6 +69,19 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
                 }
             }
         }
+
+        val linearLayoutManager: LinearLayoutManager =
+            binding.collectionsRecyclerView.layoutManager as LinearLayoutManager
+        binding.collectionsRecyclerView.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
+            // OnScrollListener designed to detect when the user scrolls near the bottom of the RecyclerView and potentially trigger an action like loading more data
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if ((dy > 0) && ((linearLayoutManager.findLastVisibleItemPosition() + VISIBLE_THRESHOLD) >= linearLayoutManager.itemCount)) {
+                    // If there are 2 more elements from the last element, you can call loadNextPage()
+                    viewModel.loadNextPage()
+                }
+            }
+        })
     }
 
     override fun onDestroyView() {
