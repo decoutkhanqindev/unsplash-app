@@ -71,6 +71,7 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
             }
         }
 
+        // config to load next page
         val linearLayoutManager: LinearLayoutManager =
             binding.collectionsRecyclerView.layoutManager as LinearLayoutManager
         binding.collectionsRecyclerView.addOnScrollListener(object :
