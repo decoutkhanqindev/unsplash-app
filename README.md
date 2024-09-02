@@ -6,8 +6,8 @@
 
 ## Screenshots
 
-- ![Feeds](./img_search.png)
-- ![Search](./img_feed.png)
+- ![Feeds](https://github.com/user-attachments/assets/38a0f44d-5e92-4883-ab1c-251fbf34d695)
+- ![Search](https://github.com/user-attachments/assets/626674de-e543-4541-b711-1b056ffccedf)
 
 ## TODO
 
