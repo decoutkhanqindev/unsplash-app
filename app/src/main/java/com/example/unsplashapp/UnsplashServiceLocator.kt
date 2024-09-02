@@ -49,7 +49,7 @@ object UnsplashServiceLocator {
 
     // OkHttpClient making network requests and handling network interactions (Variety of HTTP Methods,
     // Handling Request Bodies, Setting Headers, Parsing Response Bodies, Handling Response Codes, ....)
-    private val okHttpClient: OkHttpClient by lazy {
+    val okHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS).writeTimeout(30, TimeUnit.SECONDS)
             .addNetworkInterceptor(httpLoggingInterceptor) // -> logging HTTP requests and responses.
