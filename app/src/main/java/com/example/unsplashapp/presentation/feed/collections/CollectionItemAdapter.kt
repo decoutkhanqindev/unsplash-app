@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.example.unsplashapp.databinding.ItemCollectionUiModelBinding
+import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 
 class CollectionItemAdapter(
     private val requestManager: RequestManager

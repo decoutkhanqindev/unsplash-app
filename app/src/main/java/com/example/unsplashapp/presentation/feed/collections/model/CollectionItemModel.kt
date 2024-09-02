@@ -1,4 +1,4 @@
-package com.example.unsplashapp.presentation.feed.collections
+package com.example.unsplashapp.presentation.feed.collections.model
 
 // model to display data on UI
 data class CollectionItemModel(
