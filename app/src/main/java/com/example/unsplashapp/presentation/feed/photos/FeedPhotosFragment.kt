@@ -1,7 +1,10 @@
 package com.example.unsplashapp.presentation.feed.photos
 
-import androidx.fragment.app.Fragment
+import com.example.unsplashapp.core.base.BaseFragment
+import com.example.unsplashapp.databinding.FragmentFeedPhotosBinding
 
-class FeedPhotosFragment : Fragment() {
+class FeedPhotosFragment : BaseFragment<FragmentFeedPhotosBinding>(
+    inflate = FragmentFeedPhotosBinding::inflate
+) {
 
 }
