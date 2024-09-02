@@ -2,13 +2,13 @@ package com.example.unsplashapp.presentation.feed.collections
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
-import com.example.unsplashapp.data.remote.UnsplashApiService
 import com.example.unsplashapp.databinding.FragmentFeedCollectionsBinding
 
 class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
@@ -26,10 +26,23 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
         }
     })
 
+    private val collectionItemAdapter: CollectionItemAdapter by lazy {
+        CollectionItemAdapter(requestManager = Glide.with(this))
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUpViews()
         bindViewModel()
+    }
+
+    private fun setUpViews() {
+        binding.collectionsRecyclerView.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            adapter = collectionItemAdapter
+        }
     }
 
     private fun bindViewModel() {
@@ -38,18 +51,26 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
                 CollectionsUiState.FirstPageLoading -> { // -> show loading
                     binding.progressCircular.isVisible = true
                     binding.buttonRetry.isVisible = false
+                    collectionItemAdapter.submitList(emptyList())
                 }
 
                 CollectionsUiState.FirstPageError -> {  // -> show error
                     binding.progressCircular.isVisible = false
                     binding.buttonRetry.isVisible = true
+                    collectionItemAdapter.submitList(emptyList())
                 }
 
                 is CollectionsUiState.Content -> { // -> show content
                     binding.progressCircular.isVisible = false
                     binding.buttonRetry.isVisible = false
+                    collectionItemAdapter.submitList(uiState.items)
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        binding.collectionsRecyclerView.adapter = null // -> avoid memory leak
+        super.onDestroyView()
     }
 }
