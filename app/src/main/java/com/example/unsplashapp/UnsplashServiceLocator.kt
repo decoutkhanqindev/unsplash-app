@@ -42,6 +42,7 @@ object UnsplashServiceLocator {
             }
         }
 
+    // all requests made using that client will include the necessary authorization headers to access the Unsplash API.
     private val authorizationInterceptor: AuthorizationInterceptor
         get() = AuthorizationInterceptor(
             clientId = BuildConfig.UNSPLASH_ACCESS_KEY
@@ -53,7 +54,7 @@ object UnsplashServiceLocator {
         OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS).writeTimeout(30, TimeUnit.SECONDS)
             .addNetworkInterceptor(httpLoggingInterceptor) // -> logging HTTP requests and responses.
-            //.addInterceptor(TODO()) // -> add header is  Client-ID: YOUR ACCESS KEY
+            .addInterceptor(authorizationInterceptor) // -> add header is  Client-ID: YOUR ACCESS KEY
             .build()
     }
 
