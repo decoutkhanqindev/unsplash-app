@@ -1,4 +1,4 @@
-package com.example.unsplashapp.data.remote.response
+package com.example.unsplashapp.data.remote
 
 import retrofit2.Retrofit
 import retrofit2.create
