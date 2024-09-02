@@ -40,7 +40,7 @@ class CollectionsViewModel(private val unsplashApiService: UnsplashApiService) :
                 // call api
                 val responseItems: List<CollectionItemResponse> = // response models
                     unsplashApiService.getCollections(page = 1, perPage = PER_PAGE)
-                // map CollectionItemResponse to CollectionItemModel
+                // convert CollectionItemResponse to CollectionItemModel
                 val modelItems: List<CollectionItemModel> = // ui models
                     responseItems.map { it.toCollectionItemModel() }
 
@@ -48,9 +48,9 @@ class CollectionsViewModel(private val unsplashApiService: UnsplashApiService) :
                     items = modelItems,
                     currentPage = 1,
                     nextPageState = if (modelItems.size < PER_PAGE) {
-                        CollectionsNextPageState.NO_MORE_ITEMS
+                        CollectionsNextPageState.NO_MORE_ITEMS // -> continue loading
                     } else {
-                        CollectionsNextPageState.IDLE
+                        CollectionsNextPageState.IDLE // -> no loading
                     }
                 )
             } catch (cancel: CancellationException) {
@@ -74,7 +74,7 @@ class CollectionsViewModel(private val unsplashApiService: UnsplashApiService) :
 
                     CollectionsNextPageState.ERROR -> loadFirstPage() // if error -> retry
 
-                    CollectionsNextPageState.IDLE -> {
+                    CollectionsNextPageState.IDLE -> { // -> no loading or error
                         loadNextPageInternal(currentState)
                     }
                 }
@@ -114,7 +114,7 @@ class CollectionsViewModel(private val unsplashApiService: UnsplashApiService) :
         }
     }
 
-    // map CollectionItemResponse to CollectionItemModel
+    // convert CollectionItemResponse to CollectionItemModel
     private fun CollectionItemResponse.toCollectionItemModel(): CollectionItemModel =
         CollectionItemModel(
             id = id,
