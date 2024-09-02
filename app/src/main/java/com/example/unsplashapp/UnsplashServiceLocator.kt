@@ -2,14 +2,17 @@ package com.example.unsplashapp
 
 import androidx.annotation.MainThread
 import com.example.unsplashapp.data.remote.UnsplashApiService
+import com.example.unsplashapp.data.remote.interceptor.AuthorizationInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
 
 object UnsplashServiceLocator {
-    const val BASE_URL: String = "https://api.unsplash.com"
+    private const val UNSPLASH_BASE_URL = "https://api.unsplash.com/"
 
     // @MainThread
     private var _application: UnsplashApplication? = null
@@ -28,19 +31,42 @@ object UnsplashServiceLocator {
             "UnsplashServiceLocator must be initialized. " + "Call UnsplashServiceLocator.initWith(this) in your Application class."
         }
 
-    private val moshi: Moshi by lazy {
-        Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
-    }
 
     // setting up an HttpLoggingInterceptor for logging HTTP requests and responses.
     private val httpLoggingInterceptor: HttpLoggingInterceptor
         get() = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
+            level = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }
         }
 
-    val okHttpClient: OkHttpClient by lazy { TODO() }
+    private val authorizationInterceptor: AuthorizationInterceptor
+        get() = AuthorizationInterceptor(
+            clientId = BuildConfig.UNSPLASH_ACCESS_KEY
+        )
 
-    private val retrofit: Retrofit by lazy { TODO() }
+    // OkHttpClient making network requests and handling network interactions (Variety of HTTP Methods,
+    // Handling Request Bodies, Setting Headers, Parsing Response Bodies, Handling Response Codes, ....)
+    private val okHttpClient: OkHttpClient by lazy {
+        OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS).writeTimeout(30, TimeUnit.SECONDS)
+            .addNetworkInterceptor(httpLoggingInterceptor) // -> logging HTTP requests and responses.
+            //.addInterceptor(TODO()) // -> add header is  Client-ID: YOUR ACCESS KEY
+            .build()
+    }
 
-    val unsplashService: UnsplashApiService by lazy { TODO() }
+    private val moshi: Moshi by lazy {
+        Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
+    }
+
+    private val retrofit: Retrofit by lazy {
+        Retrofit.Builder().baseUrl(UNSPLASH_BASE_URL).client(okHttpClient)
+            .addConverterFactory(MoshiConverterFactory.create(moshi)).build()
+    }
+
+    val unsplashService: UnsplashApiService by lazy {
+        UnsplashApiService(retrofit) // -> UnsplashApiService.invoke(retrofit)
+    }
 }
