@@ -1,6 +1,5 @@
 package com.example.unsplashapp.data.remote.interceptor
 
-import com.example.unsplashapp.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 

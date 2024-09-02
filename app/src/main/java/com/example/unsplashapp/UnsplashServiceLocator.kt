@@ -66,7 +66,7 @@ object UnsplashServiceLocator {
             .addConverterFactory(MoshiConverterFactory.create(moshi)).build()
     }
 
-    val unsplashService: UnsplashApiService by lazy {
+    val unsplashApiService: UnsplashApiService by lazy {
         UnsplashApiService(retrofit) // -> UnsplashApiService.invoke(retrofit)
     }
 }
