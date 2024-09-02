@@ -1,3 +1,5 @@
+import java.util.*
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -19,6 +21,22 @@ android {
     }
 
     buildTypes {
+        debug {
+            // -> read local.properties file containing UNSPLASH_ACCESS_KEY
+            val properties: Properties = Properties().apply {
+                load(rootProject.file("local.properties").inputStream())
+            }
+            val unsplashAccessKey: String =
+                checkNotNull(properties.getProperty("UNSPLASH_ACCESS_KEY")) {
+                    "UNSPLASH_ACCESS_KEY is not set in local.properties"
+                }
+
+            // -> write UNSPLASH_ACCESS_KEY to build gradle
+            buildConfigField(
+                type = "String", name = "UNSPLASH_ACCESS_KEY", value = "\"$unsplashAccessKey\""
+            )
+        }
+
         release {
             isMinifyEnabled = false
             proguardFiles(
