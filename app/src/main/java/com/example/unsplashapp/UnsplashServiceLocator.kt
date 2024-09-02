@@ -12,8 +12,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 object UnsplashServiceLocator {
-    private const val UNSPLASH_BASE_URL = "https://api.unsplash.com/"
-
     // @MainThread
     private var _application: UnsplashApplication? = null
 
@@ -31,6 +29,7 @@ object UnsplashServiceLocator {
             "UnsplashServiceLocator must be initialized. " + "Call UnsplashServiceLocator.initWith(this) in your Application class."
         }
 
+    private const val UNSPLASH_BASE_URL = "https://api.unsplash.com/"
 
     // setting up an HttpLoggingInterceptor for logging HTTP requests and responses.
     private val httpLoggingInterceptor: HttpLoggingInterceptor
