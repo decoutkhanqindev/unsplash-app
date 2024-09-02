@@ -9,23 +9,7 @@ import com.example.unsplashapp.data.remote.response.CollectionItemResponse
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
-class CollectionsViewModel(
-    private val unsplashApiService: UnsplashApiService
-) : ViewModel() {
-
-//    init { -> testing to call api
-//        viewModelScope.launch {
-//            repeat(10) {
-//                val result: Result<Int> = kotlin.runCatching {
-//                    UnsplashServiceLocator.unsplashApiService.getCollections(
-//                        page = it + 1, perPage = 30
-//                    ).size
-//                }
-//                println(">>>>> page=${it + 1}, perPage=$result")
-//            }
-//        }
-//    }
-
+class CollectionsViewModel(private val unsplashApiService: UnsplashApiService) : ViewModel() {
     private var _uiState: MutableLiveData<CollectionsUiState> =
         MutableLiveData<CollectionsUiState>(CollectionsUiState.FirstPageLoading)
     internal val uiState: LiveData<CollectionsUiState> get() = uiState
@@ -35,6 +19,16 @@ class CollectionsViewModel(
     }
 
     init {
+//        viewModelScope.launch {// -> testing to call api
+//            repeat(10) {
+//                val result: Result<Int> = kotlin.runCatching {
+//                    UnsplashServiceLocator.unsplashApiService.getCollections(
+//                        page = it + 1, perPage = 30
+//                    ).size
+//                }
+//                println(">>>>> page=${it + 1}, perPage=$result")
+//            }
+//        }
         loadFirstPage()
     }
 
@@ -43,9 +37,10 @@ class CollectionsViewModel(
             _uiState.value = CollectionsUiState.FirstPageLoading
 
             try {
+                // call api
                 val responseItems: List<CollectionItemResponse> = // response models
                     unsplashApiService.getCollections(page = 1, perPage = PER_PAGE)
-
+                // map CollectionItemResponse to CollectionItemModel
                 val modelItems: List<CollectionItemModel> = // ui models
                     responseItems.map { it.toCollectionItemModel() }
 
@@ -93,16 +88,17 @@ class CollectionsViewModel(
             val nextPage: Int = currentState.currentPage + 1
 
             try {
+                // call api
                 val responseItems: List<CollectionItemResponse> = // response models
                     unsplashApiService.getCollections(
                         page = nextPage, perPage = PER_PAGE
                     )
-
+                // map CollectionItemResponse to CollectionItemModel
                 val nextPageModelItems: List<CollectionItemModel> = // ui models
                     responseItems.map { it.toCollectionItemModel() }
 
                 _uiState.value = currentState.copy(
-                    items = currentState.items + nextPageModelItems,
+                    items = currentState.items + nextPageModelItems, // old items + new items
                     currentPage = nextPage,
                     nextPageState = if (nextPageModelItems.size < PER_PAGE) {
                         CollectionsNextPageState.NO_MORE_ITEMS
