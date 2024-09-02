@@ -120,6 +120,6 @@ class CollectionsViewModel(private val unsplashApiService: UnsplashApiService) :
             id = id,
             title = title,
             description = description.orEmpty(),
-            coverPhoto = coverPhoto.urls.regular
+            coverPhotoUrl = coverPhoto.urls.regular
         )
 }
