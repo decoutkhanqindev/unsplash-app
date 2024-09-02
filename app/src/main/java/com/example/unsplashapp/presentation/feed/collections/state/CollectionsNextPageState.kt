@@ -1,4 +1,4 @@
-package com.example.unsplashapp.presentation.feed.collections
+package com.example.unsplashapp.presentation.feed.collections.state
 
 // represent for last elements -> loading or error
 enum class CollectionsNextPageState {

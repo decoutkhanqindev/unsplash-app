@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.unsplashapp.data.remote.UnsplashApiService
 import com.example.unsplashapp.data.remote.response.CollectionItemResponse
+import com.example.unsplashapp.presentation.feed.collections.state.CollectionsNextPageState
+import com.example.unsplashapp.presentation.feed.collections.state.CollectionsUiState
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 

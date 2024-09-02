@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.databinding.FragmentFeedCollectionsBinding
+import com.example.unsplashapp.presentation.feed.collections.state.CollectionsUiState
 
 class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
     inflate = FragmentFeedCollectionsBinding::inflate

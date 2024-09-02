@@ -1,4 +1,6 @@
-package com.example.unsplashapp.presentation.feed.collections
+package com.example.unsplashapp.presentation.feed.collections.state
+
+import com.example.unsplashapp.presentation.feed.collections.CollectionItemModel
 
 sealed interface CollectionsUiState {
     data object FirstPageLoading: CollectionsUiState
