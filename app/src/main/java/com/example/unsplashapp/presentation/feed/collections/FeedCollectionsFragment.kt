@@ -102,7 +102,7 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
         parentFragmentManager.commit {
             setReorderingAllowed(true)
             addToBackStack(null)
-            replace<FeedCollectionPreviewPhotosFragment>(containerViewId = binding.collectionItem.id,
+            replace<FeedCollectionPreviewPhotosFragment>(containerViewId = binding.collectionItemPreviewPhoto.id,
                 tag = FeedCollectionPreviewPhotosFragment::class.simpleName,
                 args = Bundle().apply { putSerializable("item", item) })
         }
