@@ -3,6 +3,7 @@ package com.example.unsplashapp.presentation.feed.collections
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
@@ -13,7 +14,6 @@ import com.bumptech.glide.Glide
 import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.databinding.FragmentFeedCollectionsBinding
-import com.example.unsplashapp.presentation.feed.collections.adapter.CollectionItemPreviewPhotoAdapter
 import com.example.unsplashapp.presentation.feed.collections.adapter.CollectionsItemAdapter
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 import com.example.unsplashapp.presentation.feed.collections.state.CollectionsUiState
@@ -34,7 +34,7 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
         }
     })
 
-    private val collectionItemAdapter: CollectionsItemAdapter by lazy {
+    private val collectionsItemAdapter: CollectionsItemAdapter by lazy {
         CollectionsItemAdapter(
             requestManager = Glide.with(this), onItemClick = ::onItemClick
         )
@@ -45,13 +45,14 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
 
         setUpViews()
         bindViewModel()
+        handleBackStackToDisplayUi(binding.collectionsRecyclerView)
     }
 
     private fun setUpViews() {
         binding.collectionsRecyclerView.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-            adapter = collectionItemAdapter
+            adapter = collectionsItemAdapter
         }
     }
 
@@ -61,19 +62,19 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
                 CollectionsUiState.FirstPageLoading -> { // -> show loading
                     binding.progressCircular.isVisible = true
                     binding.buttonRetry.isVisible = false
-                    collectionItemAdapter.submitList(emptyList())
+                    collectionsItemAdapter.submitList(emptyList())
                 }
 
                 CollectionsUiState.FirstPageError -> {  // -> show error
                     binding.progressCircular.isVisible = false
                     binding.buttonRetry.isVisible = true
-                    collectionItemAdapter.submitList(emptyList())
+                    collectionsItemAdapter.submitList(emptyList())
                 }
 
                 is CollectionsUiState.Content -> { // -> show content
                     binding.progressCircular.isVisible = false
                     binding.buttonRetry.isVisible = false
-                    collectionItemAdapter.submitList(uiState.items)
+                    collectionsItemAdapter.submitList(uiState.items)
                 }
             }
         }
@@ -105,6 +106,16 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
             replace<FeedCollectionPreviewPhotosFragment>(containerViewId = binding.collectionItemPreviewPhoto.id,
                 tag = FeedCollectionPreviewPhotosFragment::class.simpleName,
                 args = Bundle().apply { putSerializable("item", item) })
+        }
+    }
+
+    private fun handleBackStackToDisplayUi(view: View) {
+        parentFragmentManager.addOnBackStackChangedListener {
+            if (parentFragmentManager.backStackEntryCount == 0) {
+                view.visibility = View.VISIBLE
+            } else {
+                view.visibility = View.GONE
+            }
         }
     }
 }
