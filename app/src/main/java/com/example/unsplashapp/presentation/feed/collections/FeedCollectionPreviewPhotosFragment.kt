@@ -6,11 +6,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
-import com.example.unsplashapp.databinding.FragmentFeedCollectionItemBinding
+import com.example.unsplashapp.databinding.FragmentFeedCollectionItemPreviewPhotoBinding
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 
-class FeedCollectionPreviewPhotosFragment : BaseFragment<FragmentFeedCollectionItemBinding>(
-    inflate = FragmentFeedCollectionItemBinding::inflate
+class FeedCollectionPreviewPhotosFragment : BaseFragment<FragmentFeedCollectionItemPreviewPhotoBinding>(
+    inflate = FragmentFeedCollectionItemPreviewPhotoBinding::inflate
 ) {
     private var item: CollectionItemModel? = null
     private val viewModel: CollectionsViewModel by viewModels<CollectionsViewModel>(factoryProducer = {

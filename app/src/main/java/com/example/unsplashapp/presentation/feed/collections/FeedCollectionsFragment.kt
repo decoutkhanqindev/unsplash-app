@@ -14,6 +14,7 @@ import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.databinding.FragmentFeedCollectionsBinding
 import com.example.unsplashapp.presentation.feed.collections.adapter.CollectionItemPreviewPhotoAdapter
+import com.example.unsplashapp.presentation.feed.collections.adapter.CollectionsItemAdapter
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 import com.example.unsplashapp.presentation.feed.collections.state.CollectionsUiState
 
@@ -33,8 +34,8 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
         }
     })
 
-    private val collectionItemAdapter: CollectionItemPreviewPhotoAdapter by lazy {
-        CollectionItemPreviewPhotoAdapter(
+    private val collectionItemAdapter: CollectionsItemAdapter by lazy {
+        CollectionsItemAdapter(
             requestManager = Glide.with(this), onItemClick = ::onItemClick
         )
     }
