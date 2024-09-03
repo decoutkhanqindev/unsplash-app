@@ -23,6 +23,7 @@ class FeedCollectionPreviewPhotosFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        @Suppress("DEPRECATION")
         item = arguments?.getSerializable("item") as? CollectionItemModel
     }
 
@@ -41,12 +42,18 @@ class FeedCollectionPreviewPhotosFragment :
 
     private fun bindModel() {
         binding.run {
-            collectionItemTitle.text = item?.title
-            collectionItemDescription.text = item?.description ?: "No description..."
             // map PreviewPhoto to CollectionItemPreviewPhotoModel
             val previewPhotos: List<CollectionItemPreviewPhotoModel>? =
                 item?.previewPhotos?.map { it.toCollectionItemPreviewPhotoModel() }
             collectionItemPreviewPhotoAdapter!!.submitList(previewPhotos)
+            collectionItemTitle.text = item?.title
+            collectionItemDescription.text = item?.description ?: "No description..."
+            collectionItemUsername.text = buildString {
+                append("by ")
+                append(item?.user?.username ?: "Unknown User")
+            }
+            Glide.with(requireParentFragment()).load(item?.user?.profileImage?.small).fitCenter()
+                .centerCrop().into(collectionItemUserImg)
         }
     }
 
