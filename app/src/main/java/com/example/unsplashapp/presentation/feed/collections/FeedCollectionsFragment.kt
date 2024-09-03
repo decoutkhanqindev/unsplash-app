@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.databinding.FragmentFeedCollectionsBinding
+import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 import com.example.unsplashapp.presentation.feed.collections.state.CollectionsUiState
 
 class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
@@ -30,7 +31,9 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
     })
 
     private val collectionItemAdapter: CollectionItemAdapter by lazy {
-        CollectionItemAdapter(requestManager = Glide.with(this))
+        CollectionItemAdapter(
+            requestManager = Glide.with(this), onItemClick = ::onItemClick
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -89,5 +92,9 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
     override fun onDestroyView() {
         binding.collectionsRecyclerView.adapter = null // -> avoid memory leak
         super.onDestroyView()
+    }
+
+    private fun onItemClick(item: CollectionItemModel) {
+
     }
 }
