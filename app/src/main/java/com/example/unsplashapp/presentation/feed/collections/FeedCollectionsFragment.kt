@@ -3,6 +3,8 @@ package com.example.unsplashapp.presentation.feed.collections
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.databinding.FragmentFeedCollectionsBinding
+import com.example.unsplashapp.presentation.feed.collections.adapter.CollectionsItemAdapter
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 import com.example.unsplashapp.presentation.feed.collections.state.CollectionsUiState
 
@@ -30,8 +33,8 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
         }
     })
 
-    private val collectionItemAdapter: CollectionItemAdapter by lazy {
-        CollectionItemAdapter(
+    private val collectionItemAdapter: CollectionsItemAdapter by lazy {
+        CollectionsItemAdapter(
             requestManager = Glide.with(this), onItemClick = ::onItemClick
         )
     }
@@ -95,6 +98,12 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
     }
 
     private fun onItemClick(item: CollectionItemModel) {
-
+        parentFragmentManager.commit {
+            setReorderingAllowed(true)
+            addToBackStack(null)
+            replace<FeedCollectionItemFragment>(containerViewId = binding.collectionItem.id,
+                tag = FeedCollectionItemFragment::class.simpleName,
+                args = Bundle().apply { putSerializable("item", item) })
+        }
     }
 }
