@@ -9,6 +9,7 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.unsplashapp.databinding.CollectionsItemBinding
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
+import com.example.unsplashapp.presentation.feed.collections.utils.CollectionItemCallBack
 
 class CollectionsItemAdapter(
     private val requestManager: RequestManager, // -> handle glide module
@@ -45,15 +46,5 @@ class CollectionsItemAdapter(
                 textDescription.text = item.description
             }
         }
-    }
-
-    private object CollectionItemCallBack : ItemCallback<CollectionItemModel>() {
-        override fun areItemsTheSame(
-            oldItem: CollectionItemModel, newItem: CollectionItemModel
-        ): Boolean = oldItem.id == newItem.id
-
-        override fun areContentsTheSame(
-            oldItem: CollectionItemModel, newItem: CollectionItemModel
-        ): Boolean = oldItem == newItem
     }
 }
