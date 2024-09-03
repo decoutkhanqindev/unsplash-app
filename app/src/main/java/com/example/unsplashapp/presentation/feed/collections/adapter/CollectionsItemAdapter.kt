@@ -39,10 +39,10 @@ class CollectionsItemAdapter(
         fun bind(item: CollectionItemModel) {
             binding.run {
                 requestManager.load(item.coverPhotoUrl).fitCenter().centerCrop()
-                    .transition(DrawableTransitionOptions.withCrossFade()).into(imageCollection)
+                    .transition(DrawableTransitionOptions.withCrossFade()).into(imageCollectionItem)
 
-                textTitle.text = item.title
-                textDescription.text = item.description
+                titleCollectionItem.text = item.title
+                descriptionCollectionItem.text = item.description
             }
         }
     }

@@ -33,6 +33,7 @@ class FeedCollectionPreviewPhotosFragment :
         setUpViews()
     }
 
+    // convert PreviewPhoto to CollectionItemPreviewPhotoModel
     private fun CollectionItemResponse.PreviewPhoto.toCollectionItemPreviewPhotoModel(): CollectionItemPreviewPhotoModel =
         CollectionItemPreviewPhotoModel(
             id = id, createdAt = createdAt, urls = urls
@@ -42,6 +43,7 @@ class FeedCollectionPreviewPhotosFragment :
         binding.run {
             collectionItemTitle.text = item?.title
             collectionItemDescription.text = item?.description ?: "No description..."
+            // map PreviewPhoto to CollectionItemPreviewPhotoModel
             val previewPhotos: List<CollectionItemPreviewPhotoModel>? =
                 item?.previewPhotos?.map { it.toCollectionItemPreviewPhotoModel() }
             collectionItemPreviewPhotoAdapter!!.submitList(previewPhotos)

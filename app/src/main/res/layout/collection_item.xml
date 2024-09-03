@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/image_collection"
+            android:id="@+id/image_collection_item"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
@@ -25,7 +25,7 @@
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <TextView
-            android:id="@+id/text_title"
+            android:id="@+id/title_collection_item"
             tools:text="TITLE"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -36,10 +36,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_collection" />
+            app:layout_constraintTop_toBottomOf="@+id/image_collection_item" />
 
         <TextView
-            android:id="@+id/text_description"
+            android:id="@+id/description_collection_item"
             tools:text="DESCRIPTION"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -52,6 +52,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_title" />
+            app:layout_constraintTop_toBottomOf="@+id/title_collection_item" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
