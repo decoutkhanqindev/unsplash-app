@@ -9,7 +9,7 @@ import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.databinding.FragmentFeedCollectionItemBinding
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 
-class FeedCollectionItemFragment : BaseFragment<FragmentFeedCollectionItemBinding>(
+class FeedCollectionPreviewPhotosFragment : BaseFragment<FragmentFeedCollectionItemBinding>(
     inflate = FragmentFeedCollectionItemBinding::inflate
 ) {
     private var item: CollectionItemModel? = null
@@ -22,7 +22,7 @@ class FeedCollectionItemFragment : BaseFragment<FragmentFeedCollectionItemBindin
     })
 
     companion object {
-        fun newInstance(): FeedCollectionItemFragment = FeedCollectionItemFragment()
+        fun newInstance(): FeedCollectionPreviewPhotosFragment = FeedCollectionPreviewPhotosFragment()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
