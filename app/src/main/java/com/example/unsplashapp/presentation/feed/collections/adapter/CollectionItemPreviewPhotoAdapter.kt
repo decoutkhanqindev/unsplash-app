@@ -5,16 +5,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.unsplashapp.databinding.CollectionItemBinding
+import com.example.unsplashapp.databinding.CollectionItemPreviewPhotoBinding
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
+import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemPreviewPhotoModel
 import com.example.unsplashapp.presentation.feed.collections.utils.CollectionItemCallBack
+import com.example.unsplashapp.presentation.feed.collections.utils.CollectionItemPreviewPhotoCallBack
 
 class CollectionItemPreviewPhotoAdapter(
     private val requestManager: RequestManager
-) : ListAdapter<CollectionItemModel, CollectionItemPreviewPhotoAdapter.VH>(CollectionItemCallBack) {
+) : ListAdapter<CollectionItemPreviewPhotoModel, CollectionItemPreviewPhotoAdapter.VH>(
+    CollectionItemPreviewPhotoCallBack
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH = VH(
-        CollectionItemBinding.inflate(
+        CollectionItemPreviewPhotoBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
     )
@@ -22,11 +28,17 @@ class CollectionItemPreviewPhotoAdapter(
     override fun onBindViewHolder(holder: VH, position: Int): Unit = holder.bind(getItem(position))
 
     inner class VH(
-        private val binding: CollectionItemBinding
+        private val binding: CollectionItemPreviewPhotoBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: CollectionItemModel) {
+        fun bind(item: CollectionItemPreviewPhotoModel) {
+            binding.run {
+                requestManager.load(item.urls.regular).fitCenter().centerCrop()
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(imageCollectionItemPreviewPhoto)
 
+                dateCollectionItemPreviewPhoto.text = item.createdAt
+            }
         }
     }
 }
