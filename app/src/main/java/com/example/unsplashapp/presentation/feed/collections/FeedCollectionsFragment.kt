@@ -3,7 +3,6 @@ package com.example.unsplashapp.presentation.feed.collections
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
@@ -94,13 +93,8 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
         })
     }
 
-    override fun onDestroyView() {
-        binding.collectionsRecyclerView.adapter = null // -> avoid memory leak
-        super.onDestroyView()
-    }
-
     private fun onItemClick(item: CollectionItemModel) {
-        parentFragmentManager.commit {
+        childFragmentManager.commit {
             setReorderingAllowed(true)
             addToBackStack(null)
             replace<FeedCollectionPreviewPhotosFragment>(containerViewId = binding.collectionItemPreviewPhoto.id,
@@ -110,12 +104,17 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
     }
 
     private fun handleBackStackToDisplayUi(view: View) {
-        parentFragmentManager.addOnBackStackChangedListener {
-            if (parentFragmentManager.backStackEntryCount == 0) {
+        childFragmentManager.addOnBackStackChangedListener {
+            if (childFragmentManager.backStackEntryCount == 0) {
                 view.visibility = View.VISIBLE
             } else {
                 view.visibility = View.GONE
             }
         }
+    }
+
+    override fun onDestroyView() {
+        binding.collectionsRecyclerView.adapter = null // -> avoid memory leak
+        super.onDestroyView()
     }
 }

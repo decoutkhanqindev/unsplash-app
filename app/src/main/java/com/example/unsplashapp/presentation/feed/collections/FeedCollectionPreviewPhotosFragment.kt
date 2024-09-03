@@ -17,7 +17,7 @@ class FeedCollectionPreviewPhotosFragment :
     ) {
 
     private var item: CollectionItemModel? = null
-    private val collectionItemPreviewPhotoAdapter: CollectionItemPreviewPhotoAdapter by lazy {
+    private val collectionItemPreviewPhotoAdapter: CollectionItemPreviewPhotoAdapter? by lazy {
         CollectionItemPreviewPhotoAdapter(Glide.with(this))
     }
 
@@ -44,7 +44,7 @@ class FeedCollectionPreviewPhotosFragment :
             collectionItemDescription.text = item?.description ?: "No description..."
             val previewPhotos: List<CollectionItemPreviewPhotoModel>? =
                 item?.previewPhotos?.map { it.toCollectionItemPreviewPhotoModel() }
-            collectionItemPreviewPhotoAdapter.submitList(previewPhotos)
+            collectionItemPreviewPhotoAdapter!!.submitList(previewPhotos)
         }
     }
 
@@ -55,7 +55,7 @@ class FeedCollectionPreviewPhotosFragment :
     }
 
     override fun onDestroyView() {
-        item = null
+        binding.collectionItemPreviewPhotos.adapter = null // -> avoid memory leak
         super.onDestroyView()
     }
 }
