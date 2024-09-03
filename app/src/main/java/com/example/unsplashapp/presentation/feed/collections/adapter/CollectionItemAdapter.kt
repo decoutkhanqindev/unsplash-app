@@ -15,18 +15,20 @@ class CollectionItemAdapter(
     private val requestManager: RequestManager
 ) : ListAdapter<CollectionItemModel, CollectionItemAdapter.VH>(CollectionItemCallBack) {
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH = VH(
+        CollectionItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+    )
 
-    override fun onBindViewHolder(holder: VH, position: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        TODO("Not yet implemented")
-    }
+    override fun onBindViewHolder(holder: VH, position: Int): Unit = holder.bind(getItem(position))
 
     inner class VH(
         private val binding: CollectionItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        fun bind(item: CollectionItemModel) {
+
+        }
     }
 }
