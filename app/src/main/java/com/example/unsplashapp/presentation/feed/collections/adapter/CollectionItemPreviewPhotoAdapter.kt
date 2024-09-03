@@ -1,5 +1,8 @@
 package com.example.unsplashapp.presentation.feed.collections.adapter
 
+import android.annotation.SuppressLint
+import android.icu.text.SimpleDateFormat
+import android.icu.util.TimeZone
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -12,6 +15,8 @@ import com.example.unsplashapp.presentation.feed.collections.model.CollectionIte
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemPreviewPhotoModel
 import com.example.unsplashapp.presentation.feed.collections.utils.CollectionItemCallBack
 import com.example.unsplashapp.presentation.feed.collections.utils.CollectionItemPreviewPhotoCallBack
+import java.time.format.DateTimeFormatter
+import java.util.Date
 
 class CollectionItemPreviewPhotoAdapter(
     private val requestManager: RequestManager
@@ -36,9 +41,17 @@ class CollectionItemPreviewPhotoAdapter(
                 requestManager.load(item.urls.regular).fitCenter().centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(imageCollectionItemPreviewPhoto)
-
-                dateCollectionItemPreviewPhoto.text = item.createdAt
+                dateCollectionItemPreviewPhoto.text = formatTimestamp(item.createdAt)
             }
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        private fun formatTimestamp(timestamp: String): String {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+            inputFormat.timeZone = TimeZone.getTimeZone("UTC") // Set input time zone to UTC
+            val outputFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+            val date: Date? = inputFormat.parse(timestamp)
+            return if (date != null) outputFormat.format(date) else "Invalid Date"
         }
     }
 }
