@@ -9,5 +9,6 @@ data class CollectionItemModel(
     val title: String,
     val description: String,
     val coverPhotoUrl: String,
+    val user: CollectionItemResponse.User,
     val previewPhotos: List<CollectionItemResponse.PreviewPhoto>
 ) : Serializable
