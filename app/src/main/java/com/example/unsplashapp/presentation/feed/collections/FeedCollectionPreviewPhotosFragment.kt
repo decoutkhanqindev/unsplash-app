@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.data.remote.response.CollectionItemResponse
-import com.example.unsplashapp.databinding.FragmentFeedCollectionItemPreviewPhotosBinding
+import com.example.unsplashapp.databinding.FragmentFeedCollectionPreviewPhotosBinding
 import com.example.unsplashapp.presentation.feed.collections.adapter.CollectionItemPreviewPhotoAdapter
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemPreviewPhotoModel
 
 class FeedCollectionPreviewPhotosFragment :
-    BaseFragment<FragmentFeedCollectionItemPreviewPhotosBinding>(
-        inflate = FragmentFeedCollectionItemPreviewPhotosBinding::inflate
+    BaseFragment<FragmentFeedCollectionPreviewPhotosBinding>(
+        inflate = FragmentFeedCollectionPreviewPhotosBinding::inflate
     ) {
 
     private var item: CollectionItemModel? = null

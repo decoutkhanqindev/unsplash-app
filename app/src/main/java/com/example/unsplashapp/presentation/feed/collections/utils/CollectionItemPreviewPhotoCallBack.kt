@@ -1,7 +1,6 @@
 package com.example.unsplashapp.presentation.feed.collections.utils
 
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
-import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemPreviewPhotoModel
 
 object CollectionItemPreviewPhotoCallBack : ItemCallback<CollectionItemPreviewPhotoModel>() {

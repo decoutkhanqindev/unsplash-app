@@ -9,13 +9,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.example.unsplashapp.databinding.CollectionItemBinding
 import com.example.unsplashapp.databinding.CollectionItemPreviewPhotoBinding
-import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemPreviewPhotoModel
-import com.example.unsplashapp.presentation.feed.collections.utils.CollectionItemCallBack
 import com.example.unsplashapp.presentation.feed.collections.utils.CollectionItemPreviewPhotoCallBack
-import java.time.format.DateTimeFormatter
 import java.util.Date
 
 class CollectionItemPreviewPhotoAdapter(
