@@ -2,6 +2,7 @@ package com.example.unsplashapp.presentation.feed.collections
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -45,6 +46,7 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
         setUpViews()
         bindViewModel()
         handleBackStackToDisplayUi(binding.collectionsRecyclerView)
+        handleBackStackForChildFragment()
     }
 
     private fun setUpViews() {
@@ -109,6 +111,16 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
                 view.visibility = View.VISIBLE
             } else {
                 view.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun handleBackStackForChildFragment() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            if (childFragmentManager.backStackEntryCount > 0) {
+                childFragmentManager.popBackStack() // Pop child fragment back stack
+            } else {
+                requireActivity().finish() // or super.onBackPressed() if in an activity
             }
         }
     }
