@@ -11,7 +11,8 @@ import com.example.unsplashapp.databinding.ItemCollectionUiModelBinding
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 
 class CollectionItemAdapter(
-    private val requestManager: RequestManager // -> handle glide module
+    private val requestManager: RequestManager, // -> handle glide module
+    private val onItemClick: (CollectionItemModel) -> Unit
 ) : ListAdapter<CollectionItemModel, CollectionItemAdapter.VH>(CollectionItemCallBack) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH = VH(
@@ -25,6 +26,15 @@ class CollectionItemAdapter(
     inner class VH(
         private val binding: ItemCollectionUiModelBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                val position: Int = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClick(getItem(position))
+                }
+            }
+        }
 
         fun bind(item: CollectionItemModel) {
             binding.run {
