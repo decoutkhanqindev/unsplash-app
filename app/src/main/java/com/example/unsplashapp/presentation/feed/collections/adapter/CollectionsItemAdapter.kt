@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.unsplashapp.databinding.CollectionItemBinding
-import com.example.unsplashapp.databinding.CollectionsItemBinding
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 import com.example.unsplashapp.presentation.feed.collections.utils.CollectionItemCallBack
 
