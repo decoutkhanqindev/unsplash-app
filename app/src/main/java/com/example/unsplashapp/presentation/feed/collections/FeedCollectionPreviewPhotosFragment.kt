@@ -47,7 +47,7 @@ class FeedCollectionPreviewPhotosFragment :
                 item?.previewPhotos?.map { it.toCollectionItemPreviewPhotoModel() }
             collectionItemPreviewPhotoAdapter!!.submitList(previewPhotos)
             collectionItemTitle.text = item?.title
-            collectionItemDescription.text = item?.description ?: "No description..."
+            collectionItemDescription.text = item?.description
             collectionItemUsername.text = buildString {
                 append("by ")
                 append(item?.user?.username ?: "Unknown User")

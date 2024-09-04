@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.data.remote.UnsplashApiService
 import com.example.unsplashapp.data.remote.response.PhotoItemResponse
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
@@ -99,6 +98,6 @@ class PhotosViewModel(private val unsplashApiService: UnsplashApiService) : View
     }
 
     private fun PhotoItemResponse.toPhotoItemModel(): PhotoItemModel = PhotoItemModel(
-        id = id, description = description, urls = urls
+        id = id, description = description ?: "No description...", urls = urls
     )
 }

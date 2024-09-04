@@ -122,7 +122,7 @@ class CollectionsViewModel(private val unsplashApiService: UnsplashApiService) :
         CollectionItemModel(
             id = id,
             title = title,
-            description = description.orEmpty(),
+            description = description ?: "No description...",
             coverPhotoUrl = coverPhoto.urls.regular,
             user = user,
             previewPhotos = previewPhotos
