@@ -18,7 +18,7 @@ class CollectionsViewModel(private val unsplashApiService: UnsplashApiService) :
     internal val uiState: LiveData<CollectionsUiState> get() = _uiState
 
     companion object {
-        private const val PER_PAGE = 30
+        private const val PER_PAGE: Int = 30
     }
 
     init {
