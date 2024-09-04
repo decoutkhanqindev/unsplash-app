@@ -51,9 +51,9 @@ class CollectionsViewModel(private val unsplashApiService: UnsplashApiService) :
                     items = modelItems,
                     currentPage = 1,
                     nextPageState = if (modelItems.size < PER_PAGE) {
-                        CollectionsNextPageState.NO_MORE_ITEMS // -> continue loading
+                        CollectionsNextPageState.NO_MORE_ITEMS
                     } else {
-                        CollectionsNextPageState.IDLE // -> no loading
+                        CollectionsNextPageState.IDLE
                     }
                 )
             } catch (cancel: CancellationException) {
