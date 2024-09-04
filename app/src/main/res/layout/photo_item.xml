@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/image_collection_item"
+            android:id="@+id/image_photo_item"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
@@ -27,7 +27,7 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/description_collection_item"
+            android:id="@+id/description_photo_item"
             tools:text="DESCRIPTION"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -40,6 +40,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_collection_item" />
+            app:layout_constraintTop_toBottomOf="@+id/image_photo_item" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
