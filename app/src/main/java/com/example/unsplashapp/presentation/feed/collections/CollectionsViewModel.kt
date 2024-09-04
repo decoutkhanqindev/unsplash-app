@@ -78,7 +78,7 @@ class CollectionsViewModel(private val unsplashApiService: UnsplashApiService) :
                     CollectionsNextPageState.ERROR -> loadFirstPage() // if error -> retry
 
                     CollectionsNextPageState.IDLE -> { // -> no loading or error
-                        loadNextPageInternal(currentState)
+                        loadNextPageInternal(currentState = currentState)
                     }
                 }
             }
