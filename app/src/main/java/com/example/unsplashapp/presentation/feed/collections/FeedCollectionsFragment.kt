@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.databinding.FragmentFeedCollectionsBinding
-import com.example.unsplashapp.presentation.feed.collections.adapter.CollectionsItemAdapter
+import com.example.unsplashapp.presentation.feed.collections.adapter.CollectionItemAdapter
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 import com.example.unsplashapp.presentation.feed.collections.state.CollectionsUiState
 
@@ -34,8 +34,8 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
         }
     })
 
-    private val collectionsItemAdapter: CollectionsItemAdapter by lazy {
-        CollectionsItemAdapter(
+    private val collectionItemAdapter: CollectionItemAdapter by lazy {
+        CollectionItemAdapter(
             requestManager = Glide.with(this), onItemClick = ::onItemClick
         )
     }
@@ -53,7 +53,7 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
         binding.collectionsRecyclerView.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-            adapter = collectionsItemAdapter
+            adapter = collectionItemAdapter
         }
     }
 
@@ -63,19 +63,19 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
                 CollectionsUiState.FirstPageLoading -> { // -> show loading
                     binding.progressCircular.isVisible = true
                     binding.buttonRetry.isVisible = false
-                    collectionsItemAdapter.submitList(emptyList())
+                    collectionItemAdapter.submitList(emptyList())
                 }
 
                 CollectionsUiState.FirstPageError -> {  // -> show error
                     binding.progressCircular.isVisible = false
                     binding.buttonRetry.isVisible = true
-                    collectionsItemAdapter.submitList(emptyList())
+                    collectionItemAdapter.submitList(emptyList())
                 }
 
                 is CollectionsUiState.Content -> { // -> show content
                     binding.progressCircular.isVisible = false
                     binding.buttonRetry.isVisible = false
-                    collectionsItemAdapter.submitList(uiState.items)
+                    collectionItemAdapter.submitList(uiState.items)
                 }
             }
         }

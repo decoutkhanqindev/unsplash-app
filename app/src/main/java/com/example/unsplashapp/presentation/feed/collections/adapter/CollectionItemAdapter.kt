@@ -10,10 +10,10 @@ import com.example.unsplashapp.databinding.CollectionItemBinding
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 import com.example.unsplashapp.presentation.feed.collections.utils.CollectionItemCallBack
 
-class CollectionsItemAdapter(
+class CollectionItemAdapter(
     private val requestManager: RequestManager, // -> handle glide module
     private val onItemClick: (CollectionItemModel) -> Unit
-) : ListAdapter<CollectionItemModel, CollectionsItemAdapter.VH>(CollectionItemCallBack) {
+) : ListAdapter<CollectionItemModel, CollectionItemAdapter.VH>(CollectionItemCallBack) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH = VH(
         CollectionItemBinding.inflate(
