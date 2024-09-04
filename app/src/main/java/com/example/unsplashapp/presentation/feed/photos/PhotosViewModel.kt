@@ -1,6 +1,5 @@
 package com.example.unsplashapp.presentation.feed.photos
 
-import android.provider.ContactsContract.Contacts.Photo
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
