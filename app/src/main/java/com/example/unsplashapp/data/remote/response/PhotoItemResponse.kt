@@ -11,12 +11,12 @@ data class PhotoItemResponse(
     @Json(name = "alternative_slugs") val alternativeSlugs: AlternativeSlugs,
     @Json(name = "created_at") val createdAt: String, // 2024-07-02T16:19:28Z
     @Json(name = "updated_at") val updatedAt: String, // 2024-09-02T02:29:39Z
-    @Json(name = "promoted_at") val promotedAt: Any?, // null
+    @Json(name = "promoted_at") val promotedAt: String?, // null
     @Json(name = "width") val width: Int, // 3600
     @Json(name = "height") val height: Int, // 2396
     @Json(name = "color") val color: String, // #262626
     @Json(name = "blur_hash") val blurHash: String, // LGB3+:?wiv4Tks?bS%Io%#%MMxIA
-    @Json(name = "description") val description: Any?, // null
+    @Json(name = "description") val description: String?, // null
     @Json(name = "alt_description") val altDescription: String, // A man holding a camera in his hands
     @Json(name = "breadcrumbs") val breadcrumbs: List<Any>,
     @Json(name = "urls") val urls: Urls,
