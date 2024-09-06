@@ -33,7 +33,7 @@ class FeedsFragment : BaseFragment<FragmentFeedsBinding>(
     private fun setUpViewPager() {
         binding.feedsViewPager.run {
             adapter = FeedsViewPagerAdapter(fragment = this@FeedsFragment)
-            return@run TabLayoutMediator(
+            TabLayoutMediator(
                 binding.feedsTabsLayout, this
             ) { tab: TabLayout.Tab, position: Int ->
                 tab.text = when (position) {
