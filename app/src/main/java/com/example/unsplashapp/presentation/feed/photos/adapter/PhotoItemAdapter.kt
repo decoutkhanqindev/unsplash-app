@@ -27,6 +27,9 @@ class PhotoItemAdapter(
                 requestManager.load(item.urls.regular).fitCenter().centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade()).into(imagePhotoItem)
                 descriptionPhotoItem.text = item.description
+                requestManager.load(item.user.profileImage.medium).fitCenter().centerCrop()
+                    .transition(DrawableTransitionOptions.withCrossFade()).into(photoItemUserImg)
+                photoItemUsername.text = item.user.username
             }
         }
     }
