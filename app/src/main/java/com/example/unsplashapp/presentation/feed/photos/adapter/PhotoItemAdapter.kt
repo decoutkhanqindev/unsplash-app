@@ -29,7 +29,10 @@ class PhotoItemAdapter(
                 photoItemDescription.text = item.description
                 requestManager.load(item.user.profileImage.medium).fitCenter().centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade()).into(photoItemUserImage)
-                photoItemUserUsername.text = item.user.username
+                photoItemUserUsername.text = buildString {
+                    append("by ")
+                    append(item.user.username)
+                }
             }
         }
     }
