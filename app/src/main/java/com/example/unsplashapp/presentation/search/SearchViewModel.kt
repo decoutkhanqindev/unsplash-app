@@ -8,7 +8,6 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.example.unsplashapp.data.remote.UnsplashApiService
-import com.example.unsplashapp.data.remote.response.PhotoItemResponse
 import com.example.unsplashapp.data.remote.response.SearchPhotoItemResponse
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel.Companion.toPhotoItemModel
@@ -16,30 +15,36 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 
 class SearchViewModel(private val unsplashApiService: UnsplashApiService) : ViewModel() {
-    private var _queryString: MutableLiveData<String> = MutableLiveData<String>("")
+    private val _queryString: MutableLiveData<String> = MutableLiveData<String>("")
     private val queryString: LiveData<String> get() = _queryString
 
     internal val searchPhotoLiveData: LiveData<List<PhotoItemModel>> =
-        queryString.switchMap { liveDataValue: String -> // handle to observer a new value and cancel a old value
+        queryString.switchMap { query: String -> // handle to observer a new value and cancel a old value
             // -> ex: 1 2 3 <-> stop at 3 so cancel value 1 2 -> 3 is a new value
             liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
                 try {
-                    val responseItems: SearchPhotoItemResponse = unsplashApiService.searchPhotos(
-                        query = liveDataValue, page = 1, perPage = 30
+                    val responseItem: SearchPhotoItemResponse = unsplashApiService.searchPhotos(
+                        query = query, page = 1, perPage = 10
                     )
                     val modelItems: List<PhotoItemModel> =
-                        responseItems.results.map { it.toPhotoItemModel() }
+                        responseItem.results.map { it.toPhotoItemModel() }
                     emit(modelItems)
                 } catch (cancel: CancellationException) {
                     throw cancel
                 } catch (e: Exception) {
                     emit(emptyList())
-                    Log.d("SearchViewModel", "searchPhotoLiveData: ${e.message}")
+                    Log.d(
+                        "SearchViewModel",
+                        "searchPhotoLiveData: ${e.message} ${_queryString.value.toString()}"
+                    )
                 }
             }
         }
 
     fun searchQuery(query: String) {
-        _queryString.value = query
+        if (query.isNotBlank()) {
+            _queryString.value = query
+            Log.d("SearchViewModel", "searchQuery: ${_queryString.value}")
+        }
     }
 }
