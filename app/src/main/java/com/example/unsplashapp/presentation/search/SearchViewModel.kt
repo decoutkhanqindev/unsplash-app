@@ -19,13 +19,12 @@ class SearchViewModel(private val unsplashApiService: UnsplashApiService) : View
     private val queryString: LiveData<String> get() = _queryString
 
     internal val searchPhotoLiveData: LiveData<List<PhotoItemModel>> =
-        queryString.switchMap { value: String ->
-            // handle to observer a new value and cancel a old value
+        queryString.switchMap { liveDataValue: String -> // handle to observer a new value and cancel a old value
             // -> ex: 1 2 3 <-> stop at 3 so cancel value 1 2 -> 3 is a new value
             liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
                 try {
                     val responseItems: List<PhotoItemResponse> = unsplashApiService.searchPhotos(
-                        query = value, page = 1, perPage = 30
+                        query = liveDataValue, page = 1, perPage = 30
                     )
                     val modelItems: List<PhotoItemModel> =
                         responseItems.map { it.toPhotoItemModel() }
