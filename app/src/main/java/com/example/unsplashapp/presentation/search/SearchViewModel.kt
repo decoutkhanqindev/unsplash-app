@@ -9,6 +9,7 @@ import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.example.unsplashapp.data.remote.UnsplashApiService
 import com.example.unsplashapp.data.remote.response.PhotoItemResponse
+import com.example.unsplashapp.data.remote.response.SearchPhotoItemResponse
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel.Companion.toPhotoItemModel
 import kotlinx.coroutines.CancellationException
@@ -23,11 +24,11 @@ class SearchViewModel(private val unsplashApiService: UnsplashApiService) : View
             // -> ex: 1 2 3 <-> stop at 3 so cancel value 1 2 -> 3 is a new value
             liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
                 try {
-                    val responseItems: List<PhotoItemResponse> = unsplashApiService.searchPhotos(
+                    val responseItems: SearchPhotoItemResponse = unsplashApiService.searchPhotos(
                         query = liveDataValue, page = 1, perPage = 30
                     )
                     val modelItems: List<PhotoItemModel> =
-                        responseItems.map { it.toPhotoItemModel() }
+                        responseItems.results.map { it.toPhotoItemModel() }
                     emit(modelItems)
                 } catch (cancel: CancellationException) {
                     throw cancel
