@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.databinding.FragmentSearchBinding
 import com.google.android.material.tabs.TabLayout
@@ -12,6 +15,14 @@ import com.google.android.material.tabs.TabLayoutMediator
 class SearchFragment : BaseFragment<FragmentSearchBinding>(
     inflate = FragmentSearchBinding::inflate
 ) {
+    private val viewModel: SearchViewModel by viewModels<SearchViewModel>(factoryProducer = {
+        viewModelFactory {
+            addInitializer(SearchViewModel::class) {
+                SearchViewModel(UnsplashServiceLocator.unsplashApiService)
+            }
+        }
+    })
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -53,7 +64,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
             }
 
             override fun afterTextChanged(s: Editable?) {
-                TODO("Not yet implemented")
+                viewModel.searchQuery(s.toString())
             }
         })
     }
