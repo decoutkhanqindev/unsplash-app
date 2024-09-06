@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
                 setReorderingAllowed(true)
                 addToBackStack(null)
                 add<FeedsFragment>(
-                    containerViewId = R.id.main, tag = FeedsFragment::class.simpleName
+                    containerViewId = binding.main.id, tag = FeedsFragment::class.simpleName
                 )
             }
         }
