@@ -21,12 +21,12 @@ class SearchViewModel(private val unsplashApiService: UnsplashApiService) : View
     internal val searchPhotosLiveData: LiveData<List<PhotoItemModel>> =
         searchQuery.switchMap { query: String ->
             if (query.isNotBlank()) {
-                return@switchMap liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
+                liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
                     val modelItems: List<PhotoItemModel> = searchPhotos(query)
                     emit(modelItems)
                 }
             } else {
-                return@switchMap liveData { emit(emptyList()) }
+                liveData { emit(emptyList()) }
             }
         }
 

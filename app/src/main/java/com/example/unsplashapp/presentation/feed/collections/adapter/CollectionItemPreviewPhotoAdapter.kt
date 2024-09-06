@@ -37,6 +37,7 @@ class CollectionItemPreviewPhotoAdapter(
                 requestManager.load(item.urls.regular).fitCenter().centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(collectionItemPreviewPhotoImage)
+
                 collectionItemPreviewPhotoDate.text = formatTimestamp(item.createdAt)
             }
         }

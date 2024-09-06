@@ -39,6 +39,7 @@ class FeedCollectionPreviewPhotosFragment :
             val previewPhotoItems: List<CollectionItemPreviewPhotoModel>? =
                 item?.previewPhotos?.map { it.toCollectionItemPreviewPhotoModel() }
             collectionItemPreviewPhotoAdapter!!.submitList(previewPhotoItems)
+
             collectionItemPreviewPhotosTitle.text = item?.title
             collectionItemPreviewPhotosDescription.text = item?.description
             collectionItemPreviewPhotosUserUsername.text = buildString {

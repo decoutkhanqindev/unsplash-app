@@ -1,7 +1,6 @@
 package com.example.unsplashapp.presentation.search.photos
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -53,8 +52,6 @@ class SearchPhotosFragment : BaseFragment<FragmentSearchPhotosBinding>(
     private fun bindViewModel() {
         viewModel.searchPhotosLiveData.observe(viewLifecycleOwner) { items: List<PhotoItemModel> ->
             photoItemAdapter.submitList(items)
-            Log.d("SearchPhotosFragment", "bindViewModel: $items")
-            Log.d("SearchPhotosFragment", "photoItemAdapter: ${items.count()}")
         }
     }
 }

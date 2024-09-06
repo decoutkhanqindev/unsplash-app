@@ -57,10 +57,13 @@ class PhotosViewModel(private val unsplashApiService: UnsplashApiService) : View
     internal fun loadNextPage() {
         when (val currentSate: PhotosUiState = _uiState.value!!) {
             PhotosUiState.FirstPageLoading, PhotosUiState.FirstPageError -> return
+
             is PhotosUiState.Content -> {
                 when (currentSate.nextPageState) {
                     PhotosNextPageState.NO_MORE_ITEMS, PhotosNextPageState.LOADING -> return
+
                     PhotosNextPageState.ERROR -> loadFirstPage()
+
                     PhotosNextPageState.IDLE -> {
                         loadNextPageInternal(currentState = currentSate)
                     }

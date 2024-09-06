@@ -43,7 +43,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
     private fun setUpViewPager() {
         binding.searchViewPager.run {
             adapter = SearchViewPagerAdapter(this@SearchFragment)
-            return@run TabLayoutMediator(
+            TabLayoutMediator(
                 binding.searchTabsLayout, this
             ) { tab: TabLayout.Tab, position: Int ->
                 tab.text = when (position) {

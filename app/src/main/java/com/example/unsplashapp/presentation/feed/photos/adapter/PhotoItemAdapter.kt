@@ -26,9 +26,12 @@ class PhotoItemAdapter(
             binding.run {
                 requestManager.load(item.urls.regular).fitCenter().centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade()).into(photoItemImage)
+
                 photoItemDescription.text = item.description
+
                 requestManager.load(item.user.profileImage.medium).fitCenter().centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade()).into(photoItemUserImage)
+
                 photoItemUserUsername.text = buildString {
                     append("by ")
                     append(item.user.username)
