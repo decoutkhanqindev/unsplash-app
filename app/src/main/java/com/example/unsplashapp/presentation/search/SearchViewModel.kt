@@ -1,5 +1,6 @@
 package com.example.unsplashapp.presentation.search
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,7 @@ import com.example.unsplashapp.data.remote.UnsplashApiService
 import com.example.unsplashapp.data.remote.response.SearchPhotoItemResponse
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel.Companion.toPhotoItemModel
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 
 class SearchViewModel(private val unsplashApiService: UnsplashApiService) : ViewModel() {
@@ -34,7 +36,10 @@ class SearchViewModel(private val unsplashApiService: UnsplashApiService) : View
                 query = query, page = 1, perPage = 30
             )
             responseItem.results.map { it.toPhotoItemModel() }
+        } catch (cancel: CancellationException) {
+            throw cancel
         } catch (e: Exception) {
+            Log.d("SearchViewModel", "searchPhotos: ${e.message}")
             emptyList()
         }
     }
