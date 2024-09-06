@@ -98,6 +98,6 @@ class PhotosViewModel(private val unsplashApiService: UnsplashApiService) : View
     }
 
     private fun PhotoItemResponse.toPhotoItemModel(): PhotoItemModel = PhotoItemModel(
-        id = id, description = description ?: "No description...", urls = urls
+        id = id, description = description ?: "No description...", urls = urls, user = user
     )
 }
