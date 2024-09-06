@@ -10,6 +10,7 @@ import com.example.unsplashapp.databinding.FragmentFeedCollectionItemPreviewPhot
 import com.example.unsplashapp.presentation.feed.collections.adapter.CollectionItemPreviewPhotoAdapter
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemPreviewPhotoModel
+import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemPreviewPhotoModel.Companion.toCollectionItemPreviewPhotoModel
 
 class FeedCollectionPreviewPhotosFragment :
     BaseFragment<FragmentFeedCollectionItemPreviewPhotosBinding>(
@@ -32,12 +33,6 @@ class FeedCollectionPreviewPhotosFragment :
         bindModel()
         setUpViews()
     }
-
-    // convert PreviewPhoto to CollectionItemPreviewPhotoModel
-    private fun CollectionItemResponse.PreviewPhoto.toCollectionItemPreviewPhotoModel(): CollectionItemPreviewPhotoModel =
-        CollectionItemPreviewPhotoModel(
-            id = id, createdAt = createdAt, urls = urls
-        )
 
     private fun bindModel() {
         binding.run {
