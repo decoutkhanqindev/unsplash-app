@@ -11,4 +11,16 @@ data class CollectionItemModel(
     val coverPhotoUrl: String,
     val user: CollectionItemResponse.User,
     val previewPhotos: List<CollectionItemResponse.PreviewPhoto>
-) : Serializable
+) : Serializable {
+    companion object {
+       fun CollectionItemResponse.toCollectionItemModel(): CollectionItemModel =
+            CollectionItemModel(
+                id = id,
+                title = title,
+                description = description ?: "No description...",
+                coverPhotoUrl = coverPhoto.urls.regular,
+                user = user,
+                previewPhotos = previewPhotos
+            )
+    }
+}
