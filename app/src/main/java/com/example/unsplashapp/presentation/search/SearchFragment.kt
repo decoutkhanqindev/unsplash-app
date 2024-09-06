@@ -3,6 +3,7 @@ package com.example.unsplashapp.presentation.search
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.viewModelFactory
