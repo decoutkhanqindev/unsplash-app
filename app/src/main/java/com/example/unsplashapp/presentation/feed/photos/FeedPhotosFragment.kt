@@ -53,20 +53,20 @@ class FeedPhotosFragment : BaseFragment<FragmentFeedPhotosBinding>(
         viewModel.uiState.observe(viewLifecycleOwner) { uiState: PhotosUiState ->
             when (uiState) {
                 PhotosUiState.FirstPageLoading -> {
-                    binding.progressCircular.isVisible = true
-                    binding.buttonRetry.isVisible = false
+                    binding.photosProgressCircular.isVisible = true
+                    binding.photosButtonRetry.isVisible = false
                     photoItemAdapter.submitList(emptyList())
                 }
 
                 PhotosUiState.FirstPageError -> {
-                    binding.progressCircular.isVisible = false
-                    binding.buttonRetry.isVisible = true
+                    binding.photosProgressCircular.isVisible = false
+                    binding.photosButtonRetry.isVisible = true
                     photoItemAdapter.submitList(emptyList())
                 }
 
                 is PhotosUiState.Content -> {
-                    binding.progressCircular.isVisible = false
-                    binding.buttonRetry.isVisible = false
+                    binding.photosProgressCircular.isVisible = false
+                    binding.photosButtonRetry.isVisible = false
                     photoItemAdapter.submitList(uiState.items)
                 }
             }

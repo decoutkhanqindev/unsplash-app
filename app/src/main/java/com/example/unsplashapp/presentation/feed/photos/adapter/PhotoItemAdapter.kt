@@ -25,11 +25,11 @@ class PhotoItemAdapter(
         fun bind(item: PhotoItemModel) {
             binding.run {
                 requestManager.load(item.urls.regular).fitCenter().centerCrop()
-                    .transition(DrawableTransitionOptions.withCrossFade()).into(imagePhotoItem)
-                descriptionPhotoItem.text = item.description
+                    .transition(DrawableTransitionOptions.withCrossFade()).into(photoItemImage)
+                photoItemDescription.text = item.description
                 requestManager.load(item.user.profileImage.medium).fitCenter().centerCrop()
-                    .transition(DrawableTransitionOptions.withCrossFade()).into(photoItemUserImg)
-                photoItemUsername.text = item.user.username
+                    .transition(DrawableTransitionOptions.withCrossFade()).into(photoItemUserImage)
+                photoItemUserUsername.text = item.user.username
             }
         }
     }

@@ -17,7 +17,7 @@
         tools:listitem="@layout/photo_item" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/progress_circular"
+        android:id="@+id/photos_progress_circular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button_retry"
+        android:id="@+id/photos_button_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Click to retry"

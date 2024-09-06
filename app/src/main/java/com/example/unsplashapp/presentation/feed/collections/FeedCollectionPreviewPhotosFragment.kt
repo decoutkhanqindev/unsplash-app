@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.data.remote.response.CollectionItemResponse
-import com.example.unsplashapp.databinding.FragmentFeedCollectionPreviewPhotosBinding
+import com.example.unsplashapp.databinding.FragmentFeedCollectionItemPreviewPhotosBinding
 import com.example.unsplashapp.presentation.feed.collections.adapter.CollectionItemPreviewPhotoAdapter
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemPreviewPhotoModel
 
 class FeedCollectionPreviewPhotosFragment :
-    BaseFragment<FragmentFeedCollectionPreviewPhotosBinding>(
-        inflate = FragmentFeedCollectionPreviewPhotosBinding::inflate
+    BaseFragment<FragmentFeedCollectionItemPreviewPhotosBinding>(
+        inflate = FragmentFeedCollectionItemPreviewPhotosBinding::inflate
     ) {
 
     private var item: CollectionItemModel? = null
@@ -23,8 +23,7 @@ class FeedCollectionPreviewPhotosFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        @Suppress("DEPRECATION")
-        item = arguments?.getSerializable("item") as? CollectionItemModel
+        @Suppress("DEPRECATION") item = arguments?.getSerializable("item") as? CollectionItemModel
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,28 +42,28 @@ class FeedCollectionPreviewPhotosFragment :
     private fun bindModel() {
         binding.run {
             // map PreviewPhoto to CollectionItemPreviewPhotoModel
-            val previewPhotos: List<CollectionItemPreviewPhotoModel>? =
+            val previewPhotoItems: List<CollectionItemPreviewPhotoModel>? =
                 item?.previewPhotos?.map { it.toCollectionItemPreviewPhotoModel() }
-            collectionItemPreviewPhotoAdapter!!.submitList(previewPhotos)
-            collectionItemTitle.text = item?.title
-            collectionItemDescription.text = item?.description
-            collectionItemUsername.text = buildString {
+            collectionItemPreviewPhotoAdapter!!.submitList(previewPhotoItems)
+            collectionItemPreviewPhotosTitle.text = item?.title
+            collectionItemPreviewPhotosDescription.text = item?.description
+            collectionItemPreviewPhotosUserUsername.text = buildString {
                 append("by ")
                 append(item?.user?.username ?: "Unknown User")
             }
             Glide.with(requireParentFragment()).load(item?.user?.profileImage?.small).fitCenter()
-                .centerCrop().into(collectionItemUserImg)
+                .centerCrop().into(collectionItemPreviewPhotosUserImage)
         }
     }
 
-    private fun setUpViews(): Unit = binding.collectionItemPreviewPhotos.run {
+    private fun setUpViews(): Unit = binding.collectionItemPreviewPhotosRecyclerView.run {
         setHasFixedSize(true)
         layoutManager = LinearLayoutManager(context)
         adapter = collectionItemPreviewPhotoAdapter
     }
 
     override fun onDestroyView() {
-        binding.collectionItemPreviewPhotos.adapter = null // -> avoid memory leak
+        binding.collectionItemPreviewPhotosRecyclerView.adapter = null // -> avoid memory leak
         super.onDestroyView()
     }
 }

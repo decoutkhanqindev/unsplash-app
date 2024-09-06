@@ -7,7 +7,7 @@
     tools:context=".presentation.feed.collections.FeedCollectionsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/collectionsRecyclerView"
+        android:id="@+id/collections_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -17,7 +17,7 @@
         tools:listitem="@layout/collection_item" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/progress_circular"
+        android:id="@+id/collections_progress_circular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button_retry"
+        android:id="@+id/collections_button_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Click to retry"
@@ -39,12 +39,12 @@
         app:layout_constraintVertical_bias="0.5" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/collection_item_preview_photo"
+        android:id="@+id/collection_preview_photos_fragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_feed_collection_preview_photos" />
+        tools:layout="@layout/fragment_feed_collection_item_preview_photos" />
 </androidx.constraintlayout.widget.ConstraintLayout>

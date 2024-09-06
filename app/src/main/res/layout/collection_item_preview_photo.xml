@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/image_collection_item_preview_photo"
+            android:id="@+id/collection_item_preview_photo_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
@@ -27,7 +27,7 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/date_collection_item_preview_photo"
+            android:id="@+id/collection_item_preview_photo_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -39,7 +39,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_collection_item_preview_photo"
+            app:layout_constraintTop_toBottomOf="@+id/collection_item_preview_photo_image"
             tools:text="DATE" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

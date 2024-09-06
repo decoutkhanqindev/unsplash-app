@@ -36,8 +36,8 @@ class CollectionItemPreviewPhotoAdapter(
             binding.run {
                 requestManager.load(item.urls.regular).fitCenter().centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(imageCollectionItemPreviewPhoto)
-                dateCollectionItemPreviewPhoto.text = formatTimestamp(item.createdAt)
+                    .into(collectionItemPreviewPhotoImage)
+                collectionItemPreviewPhotoDate.text = formatTimestamp(item.createdAt)
             }
         }
 

@@ -35,10 +35,10 @@ class FeedsFragment : BaseFragment<FragmentFeedsBinding>(
     }
 
     private fun setUpViewPager() {
-        binding.viewPager.run {
+        binding.feedsViewPager.run {
             adapter = FeedsViewPagerAdapter(fragment = this@FeedsFragment)
             return@run TabLayoutMediator(
-                binding.tabsLayout, this
+                binding.feedsTabsLayout, this
             ) { tab: TabLayout.Tab, position: Int ->
                 tab.text = when (position) {
                     0 -> "Collections"
