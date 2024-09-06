@@ -7,4 +7,10 @@ data class PhotoItemModel(
     val description: String,
     val urls: PhotoItemResponse.Urls,
     val user: PhotoItemResponse.User
-)
+) {
+    companion object {
+        fun PhotoItemResponse.toPhotoItemModel(): PhotoItemModel = PhotoItemModel(
+            id = id, description = description ?: "No description...", urls = urls, user = user
+        )
+    }
+}
