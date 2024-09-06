@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.unsplashapp.data.remote.UnsplashApiService
 import com.example.unsplashapp.data.remote.response.CollectionItemResponse
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
+import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel.Companion.toCollectionItemModel
 import com.example.unsplashapp.presentation.feed.collections.state.CollectionsNextPageState
 import com.example.unsplashapp.presentation.feed.collections.state.CollectionsUiState
 import kotlinx.coroutines.CancellationException
@@ -116,15 +117,4 @@ class CollectionsViewModel(private val unsplashApiService: UnsplashApiService) :
             }
         }
     }
-
-    // convert CollectionItemResponse to CollectionItemModel
-    private fun CollectionItemResponse.toCollectionItemModel(): CollectionItemModel =
-        CollectionItemModel(
-            id = id,
-            title = title,
-            description = description ?: "No description...",
-            coverPhotoUrl = coverPhoto.urls.regular,
-            user = user,
-            previewPhotos = previewPhotos
-        )
 }
