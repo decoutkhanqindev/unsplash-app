@@ -51,5 +51,4 @@ class SearchViewModel(private val unsplashApiService: UnsplashApiService) : View
     fun setQuery(query: String) {
         _searchQuery.value = query
     }
-
 }
