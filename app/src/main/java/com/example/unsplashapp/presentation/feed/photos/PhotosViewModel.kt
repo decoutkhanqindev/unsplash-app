@@ -69,6 +69,8 @@ class PhotosViewModel(private val unsplashApiService: UnsplashApiService) : View
                     }
                 }
             }
+
+            else -> throw IllegalArgumentException()
         }
     }
 
