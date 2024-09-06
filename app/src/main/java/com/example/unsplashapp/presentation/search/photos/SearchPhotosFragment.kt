@@ -1,8 +1,9 @@
 package com.example.unsplashapp.presentation.search.photos
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -20,10 +21,12 @@ class SearchPhotosFragment : BaseFragment<FragmentSearchPhotosBinding>(
         fun newInstance(): SearchPhotosFragment = SearchPhotosFragment()
     }
 
-    private val viewModel: SearchViewModel by viewModels<SearchViewModel>(factoryProducer = {
+    private val viewModel: SearchViewModel by activityViewModels<SearchViewModel>(factoryProducer = {
         viewModelFactory {
             addInitializer(SearchViewModel::class) {
-                SearchViewModel(UnsplashServiceLocator.unsplashApiService)
+                SearchViewModel(
+                    unsplashApiService = UnsplashServiceLocator.unsplashApiService
+                )
             }
         }
     })
@@ -39,15 +42,19 @@ class SearchPhotosFragment : BaseFragment<FragmentSearchPhotosBinding>(
         bindViewModel()
     }
 
-    private fun setUpViews(): Unit = binding.searchPhotosRecyclerView.run {
-        setHasFixedSize(true)
-        layoutManager = LinearLayoutManager(context)
-        adapter = photoItemAdapter
+    private fun setUpViews() {
+        binding.searchPhotosRecyclerView.run {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            adapter = photoItemAdapter
+        }
     }
 
-    private fun bindViewModel(): Unit {
+    private fun bindViewModel() {
         viewModel.searchPhotosLiveData.observe(viewLifecycleOwner) { items: List<PhotoItemModel> ->
             photoItemAdapter.submitList(items)
+            Log.d("SearchPhotosFragment", "bindViewModel: $items")
+            Log.d("SearchPhotosFragment", "photoItemAdapter: ${items.count()}")
         }
     }
 }

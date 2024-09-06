@@ -1,10 +1,11 @@
 package com.example.unsplashapp.presentation.search.users
 
+import com.example.unsplashapp.core.base.BaseFragment
+import com.example.unsplashapp.databinding.FragmentSearchUsersBinding
 
-import androidx.fragment.app.Fragment
-import com.example.unsplashapp.presentation.search.photos.SearchPhotosFragment
-
-class SearchUsersFragment : Fragment() {
+class SearchUsersFragment : BaseFragment<FragmentSearchUsersBinding>(
+    inflate = FragmentSearchUsersBinding::inflate
+) {
     companion object {
         fun newInstance(): SearchUsersFragment = SearchUsersFragment()
     }

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
@@ -15,10 +15,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 class SearchFragment : BaseFragment<FragmentSearchBinding>(
     inflate = FragmentSearchBinding::inflate
 ) {
-    private val viewModel: SearchViewModel by viewModels<SearchViewModel>(factoryProducer = {
+    // activityViewModels -> to save view model
+    private val viewModel: SearchViewModel by activityViewModels<SearchViewModel>(factoryProducer = {
         viewModelFactory {
             addInitializer(SearchViewModel::class) {
-                SearchViewModel(UnsplashServiceLocator.unsplashApiService)
+                SearchViewModel(unsplashApiService = UnsplashServiceLocator.unsplashApiService)
             }
         }
     })
@@ -31,17 +32,20 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
         setUpTextChanges()
     }
 
-    private fun setUpViews(): Unit =
+    private fun setUpViews() {
         // handle to back stack
         binding.searchToolbar.setNavigationOnClickListener {// -> define the action to be
             // performed when the navigation icon -> back btn in the toolbar is clicked.
             parentFragmentManager.popBackStack()
         }
+    }
 
     private fun setUpViewPager() {
         binding.searchViewPager.run {
             adapter = SearchViewPagerAdapter(this@SearchFragment)
-            return@run TabLayoutMediator(binding.searchTabsLayout, this) { tab: TabLayout.Tab, position: Int ->
+            return@run TabLayoutMediator(
+                binding.searchTabsLayout, this
+            ) { tab: TabLayout.Tab, position: Int ->
                 tab.text = when (position) {
                     0 -> "Photos"
                     1 -> "Users"
