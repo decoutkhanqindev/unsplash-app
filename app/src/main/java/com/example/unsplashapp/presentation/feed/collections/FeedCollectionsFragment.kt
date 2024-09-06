@@ -61,20 +61,20 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
         viewModel.uiState.observe(viewLifecycleOwner) { uiState: CollectionsUiState ->
             when (uiState) {
                 CollectionsUiState.FirstPageLoading -> { // -> show loading
-                    binding.progressCircular.isVisible = true
-                    binding.buttonRetry.isVisible = false
+                    binding.collectionsProgressCircular.isVisible = true
+                    binding.collectionsButtonRetry.isVisible = false
                     collectionItemAdapter.submitList(emptyList())
                 }
 
                 CollectionsUiState.FirstPageError -> {  // -> show error
-                    binding.progressCircular.isVisible = false
-                    binding.buttonRetry.isVisible = true
+                    binding.collectionsProgressCircular.isVisible = false
+                    binding.collectionsButtonRetry.isVisible = true
                     collectionItemAdapter.submitList(emptyList())
                 }
 
                 is CollectionsUiState.Content -> { // -> show content
-                    binding.progressCircular.isVisible = false
-                    binding.buttonRetry.isVisible = false
+                    binding.collectionsProgressCircular.isVisible = false
+                    binding.collectionsButtonRetry.isVisible = false
                     collectionItemAdapter.submitList(uiState.items)
                 }
             }
@@ -99,7 +99,7 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
         childFragmentManager.commit {
             setReorderingAllowed(true)
             addToBackStack(null)
-            replace<FeedCollectionPreviewPhotosFragment>(containerViewId = binding.collectionItemPreviewPhoto.id,
+            replace<FeedCollectionPreviewPhotosFragment>(containerViewId = binding.collectionsRecyclerView.id,
                 tag = FeedCollectionPreviewPhotosFragment::class.simpleName,
                 args = Bundle().apply { putSerializable("item", item) })
         }

@@ -23,7 +23,7 @@ class FeedCollectionPreviewPhotosFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        @Suppress("DEPRECATION") item = arguments?.getSerializable("item") as? CollectionItemModel
+        item = arguments?.getSerializable("item") as? CollectionItemModel
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
