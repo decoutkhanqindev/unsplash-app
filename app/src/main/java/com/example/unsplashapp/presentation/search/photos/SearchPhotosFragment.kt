@@ -36,9 +36,7 @@ class SearchPhotosFragment : BaseFragment<FragmentSearchPhotosBinding>(
         super.onViewCreated(view, savedInstanceState)
 
         setUpViews()
-        viewModel.searchPhotoLiveData.observe(viewLifecycleOwner) { items: List<PhotoItemModel>? ->
-            photoItemAdapter.submitList(items)
-        }
+        bindViewModel()
     }
 
     private fun setUpViews(): Unit = binding.searchPhotosRecyclerView.run {
@@ -47,5 +45,8 @@ class SearchPhotosFragment : BaseFragment<FragmentSearchPhotosBinding>(
         adapter = photoItemAdapter
     }
 
-
+    private fun bindViewModel(): Unit =
+        viewModel.searchPhotoLiveData.observe(viewLifecycleOwner) { items: List<PhotoItemModel> ->
+            photoItemAdapter.submitList(items)
+        }
 }
