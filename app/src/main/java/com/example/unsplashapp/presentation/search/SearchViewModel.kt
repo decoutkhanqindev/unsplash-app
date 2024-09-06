@@ -11,6 +11,7 @@ import com.example.unsplashapp.data.remote.UnsplashApiService
 import com.example.unsplashapp.data.remote.response.SearchPhotoItemResponse
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel.Companion.toPhotoItemModel
+import com.example.unsplashapp.presentation.search.utils.Debounce.debounce
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 
@@ -19,7 +20,7 @@ class SearchViewModel(private val unsplashApiService: UnsplashApiService) : View
     private val searchQuery: LiveData<String> get() = _searchQuery
 
     internal val searchPhotosLiveData: LiveData<List<PhotoItemModel>> =
-        searchQuery.switchMap { query: String ->
+        searchQuery.debounce(650L, viewModelScope).switchMap { query: String ->
             if (query.isNotBlank()) {
                 liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
                     val modelItems: List<PhotoItemModel> = searchPhotos(query)
@@ -47,4 +48,5 @@ class SearchViewModel(private val unsplashApiService: UnsplashApiService) : View
     fun setQuery(query: String) {
         _searchQuery.value = query
     }
+
 }
