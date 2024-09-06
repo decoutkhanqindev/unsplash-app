@@ -31,13 +31,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
         setUpTextChanges()
     }
 
-    private fun setUpViews() {
+    private fun setUpViews(): Unit =
         // handle to back stack
         binding.searchToolbar.setNavigationOnClickListener {// -> define the action to be
             // performed when the navigation icon -> back btn in the toolbar is clicked.
             parentFragmentManager.popBackStack()
         }
-    }
 
     private fun setUpViewPager() {
         binding.searchViewPager.run {
