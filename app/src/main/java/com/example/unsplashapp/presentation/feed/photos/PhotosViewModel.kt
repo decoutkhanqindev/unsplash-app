@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.unsplashapp.data.remote.UnsplashApiService
 import com.example.unsplashapp.data.remote.response.PhotoItemResponse
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
+import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel.Companion.toPhotoItemModel
 import com.example.unsplashapp.presentation.feed.photos.state.PhotosNextPageState
 import com.example.unsplashapp.presentation.feed.photos.state.PhotosUiState
 import kotlinx.coroutines.CancellationException
@@ -77,7 +78,7 @@ class PhotosViewModel(private val unsplashApiService: UnsplashApiService) : View
                 val responseItems: List<PhotoItemResponse> =
                     unsplashApiService.getPhotos(page = nextPage, perPage = PER_PAGE)
                 val nextPageModelItems: List<PhotoItemModel> =
-                    responseItems.map { it.toPhotoItemModel() }
+                    responseItems.map { it.toPhotoItemModel()}
 
                 _uiState.value = currentState.copy(
                     items = currentState.items + nextPageModelItems,
@@ -96,8 +97,4 @@ class PhotosViewModel(private val unsplashApiService: UnsplashApiService) : View
             }
         }
     }
-
-    private fun PhotoItemResponse.toPhotoItemModel(): PhotoItemModel = PhotoItemModel(
-        id = id, description = description ?: "No description...", urls = urls, user = user
-    )
 }
