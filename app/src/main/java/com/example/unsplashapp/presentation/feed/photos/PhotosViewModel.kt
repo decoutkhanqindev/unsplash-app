@@ -78,7 +78,7 @@ class PhotosViewModel(private val unsplashApiService: UnsplashApiService) : View
                 val responseItems: List<PhotoItemResponse> =
                     unsplashApiService.getPhotos(page = nextPage, perPage = PER_PAGE)
                 val nextPageModelItems: List<PhotoItemModel> =
-                    responseItems.map { it.toPhotoItemModel()}
+                    responseItems.map { it.toPhotoItemModel() }
 
                 _uiState.value = currentState.copy(
                     items = currentState.items + nextPageModelItems,
