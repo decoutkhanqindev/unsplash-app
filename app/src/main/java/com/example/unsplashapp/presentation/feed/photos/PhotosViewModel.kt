@@ -14,9 +14,9 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
 class PhotosViewModel(private val unsplashApiService: UnsplashApiService) : ViewModel() {
-    private var _uiSate: MutableLiveData<PhotosUiState> =
+    private var _uiState: MutableLiveData<PhotosUiState> =
         MutableLiveData<PhotosUiState>(PhotosUiState.FirstPageLoading)
-    internal val uiState: LiveData<PhotosUiState> get() = _uiSate
+    internal val uiState: LiveData<PhotosUiState> get() = _uiState
 
     companion object {
         private const val PER_PAGE: Int = 30
@@ -28,14 +28,14 @@ class PhotosViewModel(private val unsplashApiService: UnsplashApiService) : View
 
     private fun loadFirstPage() {
         viewModelScope.launch {
-            _uiSate.value = PhotosUiState.FirstPageLoading
+            _uiState.value = PhotosUiState.FirstPageLoading
 
             try {
                 val responseItems: List<PhotoItemResponse> =
                     unsplashApiService.getPhotos(page = 1, perPage = PER_PAGE)
                 val modelItems: List<PhotoItemModel> = responseItems.map { it.toPhotoItemModel() }
 
-                _uiSate.value = PhotosUiState.Content(
+                _uiState.value = PhotosUiState.Content(
                     items = modelItems,
                     currentPage = 1,
                     nextPageState = if (modelItems.size < PER_PAGE) {
@@ -47,14 +47,14 @@ class PhotosViewModel(private val unsplashApiService: UnsplashApiService) : View
             } catch (cancel: CancellationException) {
                 throw cancel
             } catch (e: Exception) {
-                _uiSate.value = PhotosUiState.FirstPageError
+                _uiState.value = PhotosUiState.FirstPageError
                 Log.d("PhotosViewModel", "loadFirstPage: $e")
             }
         }
     }
 
     internal fun loadNextPage() {
-        when (val currentSate: PhotosUiState = _uiSate.value!!) {
+        when (val currentSate: PhotosUiState = _uiState.value!!) {
             PhotosUiState.FirstPageLoading, PhotosUiState.FirstPageError -> return
             is PhotosUiState.Content -> {
                 when (currentSate.nextPageState) {
@@ -70,7 +70,7 @@ class PhotosViewModel(private val unsplashApiService: UnsplashApiService) : View
 
     private fun loadNextPageInternal(currentState: PhotosUiState.Content) {
         viewModelScope.launch {
-            _uiSate.value = currentState.copy(nextPageState = PhotosNextPageState.LOADING)
+            _uiState.value = currentState.copy(nextPageState = PhotosNextPageState.LOADING)
             val nextPage: Int = currentState.currentPage + 1
 
             try {
@@ -79,7 +79,7 @@ class PhotosViewModel(private val unsplashApiService: UnsplashApiService) : View
                 val nextPageModelItems: List<PhotoItemModel> =
                     responseItems.map { it.toPhotoItemModel() }
 
-                _uiSate.value = currentState.copy(
+                _uiState.value = currentState.copy(
                     items = currentState.items + nextPageModelItems,
                     currentPage = nextPage,
                     nextPageState = if (nextPageModelItems.size < PER_PAGE) {
@@ -91,7 +91,7 @@ class PhotosViewModel(private val unsplashApiService: UnsplashApiService) : View
             } catch (cancel: CancellationException) {
                 throw cancel
             } catch (e: Exception) {
-                _uiSate.value = currentState.copy(nextPageState = PhotosNextPageState.ERROR)
+                _uiState.value = currentState.copy(nextPageState = PhotosNextPageState.ERROR)
                 Log.d("PhotosViewModel", "loadNextPageInternal: ${e.message}")
             }
         }
