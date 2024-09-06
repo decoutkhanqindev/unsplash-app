@@ -13,7 +13,7 @@ data class CollectionItemModel(
     val previewPhotos: List<CollectionItemResponse.PreviewPhoto>
 ) : Serializable {
     companion object {
-       fun CollectionItemResponse.toCollectionItemModel(): CollectionItemModel =
+        fun CollectionItemResponse.toCollectionItemModel(): CollectionItemModel =
             CollectionItemModel(
                 id = id,
                 title = title,

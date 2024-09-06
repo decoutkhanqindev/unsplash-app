@@ -3,7 +3,6 @@ package com.example.unsplashapp.presentation.search
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -42,7 +41,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
     private fun setUpViewPager() {
         binding.searchViewPager.run {
             adapter = SearchViewPagerAdapter(this@SearchFragment)
-            TabLayoutMediator(binding.searchTabsLayout, this) { tab: TabLayout.Tab, position: Int ->
+            return@run TabLayoutMediator(binding.searchTabsLayout, this) { tab: TabLayout.Tab, position: Int ->
                 tab.text = when (position) {
                     0 -> "Photos"
                     1 -> "Users"
@@ -55,14 +54,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
     // handle text changes to query api
     private fun setUpTextChanges() {
         binding.searchTextInputEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                viewModel.searchQuery(s.toString())
+                viewModel.setQuery(s.toString())
             }
         })
     }

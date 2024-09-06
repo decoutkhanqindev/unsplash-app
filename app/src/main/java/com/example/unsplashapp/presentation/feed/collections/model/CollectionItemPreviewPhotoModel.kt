@@ -10,8 +10,6 @@ data class CollectionItemPreviewPhotoModel(
     companion object {
         // convert PreviewPhoto to CollectionItemPreviewPhotoModel
         fun CollectionItemResponse.PreviewPhoto.toCollectionItemPreviewPhotoModel(): CollectionItemPreviewPhotoModel =
-            CollectionItemPreviewPhotoModel(
-                id = id, createdAt = createdAt, urls = urls
-            )
+            CollectionItemPreviewPhotoModel(id = id, createdAt = createdAt, urls = urls)
     }
 }
