@@ -17,39 +17,39 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 
 class SearchViewModel(private val unsplashApiService: UnsplashApiService) : ViewModel() {
-	private val _searchQuery: MutableLiveData<String> = MutableLiveData<String>("")
-	private val searchQuery: LiveData<String> get() = _searchQuery
-	
-	internal val searchPhotosLiveData: LiveData<List<PhotoItemModel>> = searchQuery.debounce(
-		650L, viewModelScope
-	) // -> avoid multiple requests, after 650L request starts
-		.distinctUntilChanged() // -> if next value changes but equals with previous value -> not request
-		.switchMap { query: String ->
-			if (query.isNotBlank()) {
-				liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-					val modelItems: List<PhotoItemModel> = searchPhotos(query)
-					emit(modelItems)
-				}
-			} else {
-				liveData { emit(emptyList()) }
-			}
-		}
-	
-	private suspend fun searchPhotos(query: String): List<PhotoItemModel> {
-		return try {
-			val responseItem: SearchPhotoItemResponse = unsplashApiService.searchPhotos(
-				query = query, page = 1, perPage = 30
-			)
-			responseItem.results.map { it.toPhotoItemModel() }
-		} catch (cancel: CancellationException) {
-			throw cancel
-		} catch (e: Exception) {
-			Log.d("SearchViewModel", "searchPhotos: ${e.message}")
-			emptyList()
-		}
-	}
-	
-	fun setQuery(query: String) {
-		_searchQuery.value = query
-	}
+  private val _searchQuery: MutableLiveData<String> = MutableLiveData<String>("")
+  private val searchQuery: LiveData<String> get() = _searchQuery
+  
+  internal val searchPhotosLiveData: LiveData<List<PhotoItemModel>> = searchQuery.debounce(
+    650L, viewModelScope
+  ) // -> avoid multiple requests, after 650L request starts
+    .distinctUntilChanged() // -> if next value changes but equals with previous value -> not request
+    .switchMap { query: String ->
+      if (query.isNotBlank()) {
+        liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
+          val modelItems: List<PhotoItemModel> = searchPhotos(query)
+          emit(modelItems)
+        }
+      } else {
+        liveData { emit(emptyList()) }
+      }
+    }
+  
+  private suspend fun searchPhotos(query: String): List<PhotoItemModel> {
+    return try {
+      val responseItem: SearchPhotoItemResponse = unsplashApiService.searchPhotos(
+        query = query, page = 1, perPage = 30
+      )
+      responseItem.results.map { it.toPhotoItemModel() }
+    } catch (cancel: CancellationException) {
+      throw cancel
+    } catch (e: Exception) {
+      Log.d("SearchViewModel", "searchPhotos: ${e.message}")
+      emptyList()
+    }
+  }
+  
+  fun setQuery(query: String) {
+    _searchQuery.value = query
+  }
 }
