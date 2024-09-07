@@ -6,17 +6,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.unsplashapp.data.remote.UnsplashApiService
 import com.example.unsplashapp.data.remote.response.CollectionItemResponse
+import com.example.unsplashapp.presentation.feed.state.FeedsNextPageState
+import com.example.unsplashapp.presentation.feed.state.FeedsUiState
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel.Companion.toCollectionItemModel
-import com.example.unsplashapp.presentation.feed.collections.state.CollectionsNextPageState
-import com.example.unsplashapp.presentation.feed.collections.state.CollectionsUiState
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
 class CollectionsViewModel(private val unsplashApiService: UnsplashApiService) : ViewModel() {
-    private var _uiState: MutableLiveData<CollectionsUiState> =
-        MutableLiveData<CollectionsUiState>(CollectionsUiState.FirstPageLoading)
-    internal val uiState: LiveData<CollectionsUiState> get() = _uiState
+    private var _collectionsUiState: MutableLiveData<FeedsUiState<CollectionItemModel>> =
+        MutableLiveData<FeedsUiState<CollectionItemModel>>(FeedsUiState.FirstPageLoading)
+    val collectionsUiState: LiveData<FeedsUiState<CollectionItemModel>> get() = _collectionsUiState
 
     companion object {
         private const val PER_PAGE: Int = 30
@@ -38,7 +38,7 @@ class CollectionsViewModel(private val unsplashApiService: UnsplashApiService) :
 
     private fun loadFirstPage() {
         viewModelScope.launch {
-            _uiState.value = CollectionsUiState.FirstPageLoading
+            _collectionsUiState.value = FeedsUiState.FirstPageLoading
 
             try {
                 // call api
@@ -48,37 +48,37 @@ class CollectionsViewModel(private val unsplashApiService: UnsplashApiService) :
                 val modelItems: List<CollectionItemModel> = // ui models
                     responseItems.map { it.toCollectionItemModel() }
 
-                _uiState.value = CollectionsUiState.Content(
+                _collectionsUiState.value = FeedsUiState.Content(
                     items = modelItems,
                     currentPage = 1,
                     nextPageState = if (modelItems.size < PER_PAGE) {
-                        CollectionsNextPageState.NO_MORE_ITEMS
+                        FeedsNextPageState.NO_MORE_ITEMS
                     } else {
-                        CollectionsNextPageState.IDLE
+                        FeedsNextPageState.IDLE
                     }
                 )
             } catch (cancel: CancellationException) {
                 throw cancel
             } catch (e: Exception) {
-                _uiState.value = CollectionsUiState.FirstPageError
+                _collectionsUiState.value = FeedsUiState.FirstPageError
             }
         }
     }
 
     internal fun loadNextPage() {
         // check current state -> to accept load more or not
-        when (val currentState: CollectionsUiState = _uiState.value!!) {
-            CollectionsUiState.FirstPageError, CollectionsUiState.FirstPageLoading -> return
+        when (val currentState: FeedsUiState<CollectionItemModel> = _collectionsUiState.value!!) {
+            FeedsUiState.FirstPageError, FeedsUiState.FirstPageLoading -> return
 
-            is CollectionsUiState.Content -> {
+            is FeedsUiState.Content -> {
                 when (currentState.nextPageState) {
-                    CollectionsNextPageState.NO_MORE_ITEMS -> return // -> don't do anything
+                    FeedsNextPageState.NO_MORE_ITEMS -> return // -> don't do anything
 
-                    CollectionsNextPageState.LOADING -> return // -> has in progress request -> don't do anything -> avoid duplicated request
+                    FeedsNextPageState.LOADING -> return // -> has in progress request -> don't do anything -> avoid duplicated request
 
-                    CollectionsNextPageState.ERROR -> loadFirstPage() // if error -> retry
+                    FeedsNextPageState.ERROR -> loadFirstPage() // if error -> retry
 
-                    CollectionsNextPageState.IDLE -> { // -> no loading or error
+                    FeedsNextPageState.IDLE -> { // -> no loading or error
                         loadNextPageInternal(currentState = currentState)
                     }
                 }
@@ -86,9 +86,10 @@ class CollectionsViewModel(private val unsplashApiService: UnsplashApiService) :
         }
     }
 
-    private fun loadNextPageInternal(currentState: CollectionsUiState.Content) {
+    private fun loadNextPageInternal(currentState: FeedsUiState.Content<CollectionItemModel>) {
         viewModelScope.launch {
-            _uiState.value = currentState.copy(nextPageState = CollectionsNextPageState.LOADING)
+            _collectionsUiState.value =
+                currentState.copy(nextPageState = FeedsNextPageState.LOADING)
             val nextPage: Int = currentState.currentPage + 1
 
             try {
@@ -101,19 +102,20 @@ class CollectionsViewModel(private val unsplashApiService: UnsplashApiService) :
                 val nextPageModelItems: List<CollectionItemModel> = // ui models
                     responseItems.map { it.toCollectionItemModel() }
 
-                _uiState.value = currentState.copy(
+                _collectionsUiState.value = currentState.copy(
                     items = currentState.items + nextPageModelItems, // old items + new items
                     currentPage = nextPage,
                     nextPageState = if (nextPageModelItems.size < PER_PAGE) {
-                        CollectionsNextPageState.NO_MORE_ITEMS
+                        FeedsNextPageState.NO_MORE_ITEMS
                     } else {
-                        CollectionsNextPageState.IDLE
+                        FeedsNextPageState.IDLE
                     }
                 )
             } catch (cancel: CancellationException) {
                 throw cancel
             } catch (e: Exception) {
-                _uiState.value = currentState.copy(nextPageState = CollectionsNextPageState.ERROR)
+                _collectionsUiState.value =
+                    currentState.copy(nextPageState = FeedsNextPageState.ERROR)
             }
         }
     }
