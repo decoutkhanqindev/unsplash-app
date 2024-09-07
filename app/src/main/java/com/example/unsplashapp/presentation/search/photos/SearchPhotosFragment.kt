@@ -14,44 +14,44 @@ import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
 import com.example.unsplashapp.presentation.search.SearchViewModel
 
 class SearchPhotosFragment : BaseFragment<FragmentSearchPhotosBinding>(
-    inflate = FragmentSearchPhotosBinding::inflate
+  inflate = FragmentSearchPhotosBinding::inflate
 ) {
-    companion object {
-        fun newInstance(): SearchPhotosFragment = SearchPhotosFragment()
+  companion object {
+    fun newInstance(): SearchPhotosFragment = SearchPhotosFragment()
+  }
+
+  private val viewModel: SearchViewModel by activityViewModels<SearchViewModel>(factoryProducer = {
+    viewModelFactory {
+      addInitializer(SearchViewModel::class) {
+        SearchViewModel(
+          unsplashApiService = UnsplashServiceLocator.unsplashApiService
+        )
+      }
     }
+  })
 
-    private val viewModel: SearchViewModel by activityViewModels<SearchViewModel>(factoryProducer = {
-        viewModelFactory {
-            addInitializer(SearchViewModel::class) {
-                SearchViewModel(
-                    unsplashApiService = UnsplashServiceLocator.unsplashApiService
-                )
-            }
-        }
-    })
+  private val photoItemAdapter: PhotoItemAdapter by lazy(LazyThreadSafetyMode.NONE) {
+    PhotoItemAdapter(requestManager = Glide.with(this))
+  }
 
-    private val photoItemAdapter: PhotoItemAdapter by lazy(LazyThreadSafetyMode.NONE) {
-        PhotoItemAdapter(requestManager = Glide.with(this))
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+
+    setUpViews()
+    bindViewModel()
+  }
+
+  private fun setUpViews() {
+    binding.searchPhotosRecyclerView.run {
+      setHasFixedSize(true)
+      layoutManager = LinearLayoutManager(context)
+      adapter = photoItemAdapter
     }
+  }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setUpViews()
-        bindViewModel()
+  private fun bindViewModel() {
+    viewModel.searchPhotosLiveData.observe(viewLifecycleOwner) { items: List<PhotoItemModel> ->
+      photoItemAdapter.submitList(items)
     }
-
-    private fun setUpViews() {
-        binding.searchPhotosRecyclerView.run {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context)
-            adapter = photoItemAdapter
-        }
-    }
-
-    private fun bindViewModel() {
-        viewModel.searchPhotosLiveData.observe(viewLifecycleOwner) { items: List<PhotoItemModel> ->
-            photoItemAdapter.submitList(items)
-        }
-    }
+  }
 }

@@ -12,35 +12,35 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class FeedsFragment : BaseFragment<FragmentFeedsBinding>(
-    inflate = FragmentFeedsBinding::inflate
+  inflate = FragmentFeedsBinding::inflate
 ) {
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
 
-        binding.searchButton.setOnClickListener {
-            parentFragmentManager.commit {
-                setReorderingAllowed(true)
-                addToBackStack(null)
-                replace<SearchFragment>(
-                    containerViewId = R.id.main, tag = SearchFragment::class.simpleName
-                )
-            }
+    binding.searchButton.setOnClickListener {
+      parentFragmentManager.commit {
+        setReorderingAllowed(true)
+        addToBackStack(null)
+        replace<SearchFragment>(
+          containerViewId = R.id.main, tag = SearchFragment::class.simpleName
+        )
+      }
+    }
+
+    setUpViewPager()
+  }
+
+  private fun setUpViewPager() {
+    binding.feedsViewPager.run {
+      adapter = FeedsViewPagerAdapter(fragment = this@FeedsFragment)
+      TabLayoutMediator(binding.feedsTabsLayout, this) { tab: TabLayout.Tab, position: Int ->
+        tab.text = when (position) {
+          0 -> "Collections"
+          1 -> "Photos"
+          else -> throw IllegalArgumentException("Invalid position: $position")
         }
-
-        setUpViewPager()
-    }
-
-    private fun setUpViewPager() {
-        binding.feedsViewPager.run {
-            adapter = FeedsViewPagerAdapter(fragment = this@FeedsFragment)
-            TabLayoutMediator(binding.feedsTabsLayout, this) { tab: TabLayout.Tab, position: Int ->
-                tab.text = when (position) {
-                    0 -> "Collections"
-                    1 -> "Photos"
-                    else -> throw IllegalArgumentException("Invalid position: $position")
-                }
-            }
-        }.attach() // -> attach FeedCollectionsFragment and FeedPhotosFragment together
-    }
+      }
+    }.attach() // -> attach FeedCollectionsFragment and FeedPhotosFragment together
+  }
 }
 

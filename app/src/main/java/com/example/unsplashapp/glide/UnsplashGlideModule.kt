@@ -12,17 +12,17 @@ import java.io.InputStream
 
 @GlideModule
 class UnsplashGlideModule : AppGlideModule() {
-    // replace Glide's default network library (HttpURLConnection) with OkHttpClient to load images from the internet.
+  // replace Glide's default network library (HttpURLConnection) with OkHttpClient to load images from the internet.
 
-    override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
-        super.registerComponents(context, glide, registry)
+  override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
+    super.registerComponents(context, glide, registry)
 
-        // registry.replace: Replace Glide's default loader (HttpURLConnection) with OkHttpUrlLoader,
-        // using the OkHttpClient you configured in UnsplashServiceLocator.
-        registry.replace(
-            GlideUrl::class.java,
-            InputStream::class.java,
-            OkHttpUrlLoader.Factory(UnsplashServiceLocator.okHttpClient)
-        )
-    }
+    // registry.replace: Replace Glide's default loader (HttpURLConnection) with OkHttpUrlLoader,
+    // using the OkHttpClient you configured in UnsplashServiceLocator.
+    registry.replace(
+      GlideUrl::class.java,
+      InputStream::class.java,
+      OkHttpUrlLoader.Factory(UnsplashServiceLocator.okHttpClient)
+    )
+  }
 }
