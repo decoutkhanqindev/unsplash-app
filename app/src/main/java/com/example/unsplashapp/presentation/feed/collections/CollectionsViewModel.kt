@@ -23,16 +23,6 @@ class CollectionsViewModel(private val unsplashApiService: UnsplashApiService) :
     }
 
     init {
-//        viewModelScope.launch {// -> testing to call api
-//            repeat(10) {
-//                val result: Result<Int> = kotlin.runCatching {
-//                    UnsplashServiceLocator.unsplashApiService.getCollections(
-//                        page = it + 1, perPage = 30
-//                    ).size
-//                }
-//                println(">>>>> page=${it + 1}, perPage=$result")
-//            }
-//        }
         loadFirstPage()
     }
 
