@@ -15,12 +15,12 @@ import androidx.viewbinding.ViewBinding
 abstract class BaseFragment<VB : ViewBinding>(
   private val inflate: (LayoutInflater, ViewGroup?, Boolean) -> VB
 ) : Fragment() {
-
+  
   private var _binding: VB? = null
   protected val binding: VB get() = _binding!!
-
+  
   protected val logTag: String by lazy(LazyThreadSafetyMode.PUBLICATION) { this::class.java.simpleName }
-
+  
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     lifecycle.addObserver(object : LifecycleEventObserver {
@@ -29,7 +29,7 @@ abstract class BaseFragment<VB : ViewBinding>(
       }
     })
   }
-
+  
   @CallSuper
   // indicate that when a method annotated with @CallSuper is overridden in a subclass,
   // the overriding method must call the superclass's implementation of that method.
@@ -39,7 +39,7 @@ abstract class BaseFragment<VB : ViewBinding>(
     _binding = inflate(inflater, container, false)
     return _binding!!.root
   }
-
+  
   @CallSuper
   override fun onDestroyView() {
     _binding = null

@@ -4,9 +4,9 @@ import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.databinding.FragmentSearchUsersBinding
 
 class SearchUsersFragment : BaseFragment<FragmentSearchUsersBinding>(
-  inflate = FragmentSearchUsersBinding::inflate
+	inflate = FragmentSearchUsersBinding::inflate
 ) {
-  companion object {
-    fun newInstance(): SearchUsersFragment = SearchUsersFragment()
-  }
+	companion object {
+		fun newInstance(): SearchUsersFragment = SearchUsersFragment()
+	}
 }

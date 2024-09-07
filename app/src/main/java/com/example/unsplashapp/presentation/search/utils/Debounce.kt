@@ -8,16 +8,16 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 object Debounce {
-  fun <T> LiveData<T>.debounce(duration: Long, coroutineScope: CoroutineScope): LiveData<T> {
-    val mediatorLiveData: MediatorLiveData<T> = MediatorLiveData<T>()
-    var job: Job? = null
-    mediatorLiveData.addSource(this) { value: T ->
-      job?.cancel()
-      job = coroutineScope.launch {
-        delay(duration)
-        mediatorLiveData.value = value
-      }
-    }
-    return mediatorLiveData
-  }
+	fun <T> LiveData<T>.debounce(duration: Long, coroutineScope: CoroutineScope): LiveData<T> {
+		val mediatorLiveData: MediatorLiveData<T> = MediatorLiveData<T>()
+		var job: Job? = null
+		mediatorLiveData.addSource(this) { value: T ->
+			job?.cancel()
+			job = coroutineScope.launch {
+				delay(duration)
+				mediatorLiveData.value = value
+			}
+		}
+		return mediatorLiveData
+	}
 }

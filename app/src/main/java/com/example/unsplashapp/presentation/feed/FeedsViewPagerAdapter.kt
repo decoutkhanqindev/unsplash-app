@@ -6,12 +6,12 @@ import com.example.unsplashapp.presentation.feed.collections.FeedCollectionsFrag
 import com.example.unsplashapp.presentation.feed.photos.FeedPhotosFragment
 
 class FeedsViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
-  override fun getItemCount(): Int = 2
-
-  override fun createFragment(position: Int): Fragment = // -> always return a new obj fragment
-    when (position) {
-      0 -> FeedCollectionsFragment.newInstance()
-      1 -> FeedPhotosFragment.newInstance()
-      else -> throw IllegalArgumentException("Invalid position: $position")
-    }
+	override fun getItemCount(): Int = 2
+	
+	override fun createFragment(position: Int): Fragment = // -> always return a new obj fragment
+		when (position) {
+			0 -> FeedCollectionsFragment.newInstance()
+			1 -> FeedPhotosFragment.newInstance()
+			else -> throw IllegalArgumentException("Invalid position: $position")
+		}
 }
