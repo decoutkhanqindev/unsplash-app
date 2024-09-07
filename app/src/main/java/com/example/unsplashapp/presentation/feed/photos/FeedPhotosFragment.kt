@@ -12,7 +12,8 @@ import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.databinding.FragmentFeedPhotosBinding
 import com.example.unsplashapp.presentation.feed.photos.adapter.PhotoItemAdapter
-import com.example.unsplashapp.presentation.feed.photos.state.PhotosUiState
+import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
+import com.example.unsplashapp.presentation.feed.state.FeedsUiState
 
 class FeedPhotosFragment : BaseFragment<FragmentFeedPhotosBinding>(
     inflate = FragmentFeedPhotosBinding::inflate
@@ -50,21 +51,21 @@ class FeedPhotosFragment : BaseFragment<FragmentFeedPhotosBinding>(
     }
 
     private fun bindViewModel() {
-        viewModel.uiState.observe(viewLifecycleOwner) { uiState: PhotosUiState ->
+        viewModel.photosUiState.observe(viewLifecycleOwner) { uiState: FeedsUiState<PhotoItemModel> ->
             when (uiState) {
-                PhotosUiState.FirstPageLoading -> {
+                FeedsUiState.FirstPageLoading -> {
                     binding.photosProgressCircular.isVisible = true
                     binding.photosButtonRetry.isVisible = false
                     photoItemAdapter.submitList(emptyList())
                 }
 
-                PhotosUiState.FirstPageError -> {
+                FeedsUiState.FirstPageError -> {
                     binding.photosProgressCircular.isVisible = false
                     binding.photosButtonRetry.isVisible = true
                     photoItemAdapter.submitList(emptyList())
                 }
 
-                is PhotosUiState.Content -> {
+                is FeedsUiState.Content -> {
                     binding.photosProgressCircular.isVisible = false
                     binding.photosButtonRetry.isVisible = false
                     photoItemAdapter.submitList(uiState.items)
