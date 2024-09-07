@@ -1,4 +1,4 @@
-package com.example.unsplashapp.presentation.feed.photos.utils
+package com.example.unsplashapp.presentation.feed.photos.adapter
 
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel

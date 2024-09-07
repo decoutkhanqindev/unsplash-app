@@ -11,7 +11,6 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.unsplashapp.databinding.CollectionItemPreviewPhotoBinding
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemPreviewPhotoModel
-import com.example.unsplashapp.presentation.feed.collections.utils.CollectionItemPreviewPhotoCallBack
 import java.util.Date
 
 class CollectionItemPreviewPhotoAdapter(

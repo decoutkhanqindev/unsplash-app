@@ -8,7 +8,6 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.unsplashapp.databinding.PhotoItemBinding
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
-import com.example.unsplashapp.presentation.feed.photos.utils.PhotoItemCallBack
 
 class PhotoItemAdapter(
     private val requestManager: RequestManager
