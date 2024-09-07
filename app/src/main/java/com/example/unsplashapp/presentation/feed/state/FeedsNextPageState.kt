@@ -1,6 +1,6 @@
-package com.example.unsplashapp.presentation.feed.photos.state
+package com.example.unsplashapp.presentation.feed.state
 
-enum class PhotosNextPageState {
+enum class FeedsNextPageState {
     LOADING, // -> load more a next page state is loading
     ERROR, // -> load more a next page state is error
     IDLE, // -> load more a next page state is normal -> no loading and no error
