@@ -10,32 +10,32 @@ import com.example.unsplashapp.databinding.PhotoItemBinding
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
 
 class PhotoItemAdapter(
-	private val requestManager: RequestManager
+  private val requestManager: RequestManager
 ) : ListAdapter<PhotoItemModel, PhotoItemAdapter.VH>(PhotoItemCallBack) {
-	
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH = VH(
-		PhotoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-	)
-	
-	override fun onBindViewHolder(holder: VH, position: Int): Unit = holder.bind(getItem(position))
-	
-	inner class VH(private val binding: PhotoItemBinding) : RecyclerView.ViewHolder(binding.root) {
-		
-		fun bind(item: PhotoItemModel) {
-			binding.run {
-				requestManager.load(item.urls.regular).fitCenter().centerCrop()
-					.transition(DrawableTransitionOptions.withCrossFade()).into(photoItemImage)
-				
-				photoItemDescription.text = item.description
-				
-				requestManager.load(item.user.profileImage.medium).fitCenter().centerCrop()
-					.transition(DrawableTransitionOptions.withCrossFade()).into(photoItemUserImage)
-				
-				photoItemUserUsername.text = buildString {
-					append("by ")
-					append(item.user.username)
-				}
-			}
-		}
-	}
+  
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH = VH(
+    PhotoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+  )
+  
+  override fun onBindViewHolder(holder: VH, position: Int): Unit = holder.bind(getItem(position))
+  
+  inner class VH(private val binding: PhotoItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    
+    fun bind(item: PhotoItemModel) {
+      binding.run {
+        requestManager.load(item.urls.regular).fitCenter().centerCrop()
+          .transition(DrawableTransitionOptions.withCrossFade()).into(photoItemImage)
+        
+        photoItemDescription.text = item.description
+        
+        requestManager.load(item.user.profileImage.medium).fitCenter().centerCrop()
+          .transition(DrawableTransitionOptions.withCrossFade()).into(photoItemUserImage)
+        
+        photoItemUserUsername.text = buildString {
+          append("by ")
+          append(item.user.username)
+        }
+      }
+    }
+  }
 }

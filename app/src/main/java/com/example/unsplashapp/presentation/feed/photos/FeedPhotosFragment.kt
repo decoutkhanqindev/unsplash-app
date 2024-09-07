@@ -16,79 +16,79 @@ import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
 import com.example.unsplashapp.presentation.feed.state.FeedsUiState
 
 class FeedPhotosFragment : BaseFragment<FragmentFeedPhotosBinding>(
-	inflate = FragmentFeedPhotosBinding::inflate
+  inflate = FragmentFeedPhotosBinding::inflate
 ) {
-	companion object {
-		fun newInstance(): FeedPhotosFragment = FeedPhotosFragment()
-		private const val VISIBLE_THRESHOLD = 2 // -> 2 items is visible
-	}
-	
-	private val viewModel: PhotosViewModel by viewModels<PhotosViewModel>(factoryProducer = {
-		viewModelFactory {
-			addInitializer(PhotosViewModel::class) {
-				PhotosViewModel(UnsplashServiceLocator.unsplashApiService)
-			}
-		}
-	})
-	
-	private val photoItemAdapter: PhotoItemAdapter by lazy(LazyThreadSafetyMode.NONE) {
-		PhotoItemAdapter(requestManager = Glide.with(this))
-	}
-	
-	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
-		
-		setUpViews()
-		bindViewModel()
-	}
-	
-	private fun setUpViews() {
-		binding.photosRecyclerView.run {
-			setHasFixedSize(true)
-			layoutManager = LinearLayoutManager(context)
-			adapter = photoItemAdapter
-		}
-	}
-	
-	private fun bindViewModel() {
-		viewModel.photosUiState.observe(viewLifecycleOwner) { photosUiState: FeedsUiState<PhotoItemModel> ->
-			when (photosUiState) {
-				FeedsUiState.FirstPageLoading -> {
-					binding.photosProgressCircular.isVisible = true
-					binding.photosButtonRetry.isVisible = false
-					photoItemAdapter.submitList(emptyList())
-				}
-				
-				FeedsUiState.FirstPageError -> {
-					binding.photosProgressCircular.isVisible = false
-					binding.photosButtonRetry.isVisible = true
-					photoItemAdapter.submitList(emptyList())
-				}
-				
-				is FeedsUiState.Content -> {
-					binding.photosProgressCircular.isVisible = false
-					binding.photosButtonRetry.isVisible = false
-					photoItemAdapter.submitList(photosUiState.items)
-				}
-			}
-		}
-		
-		// config to load next page
-		val linearLayoutManager: LinearLayoutManager =
-			binding.photosRecyclerView.layoutManager as LinearLayoutManager
-		binding.photosRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-			// OnScrollListener designed to detect when the user scrolls near the bottom of the RecyclerView and potentially trigger an action like loading more data
-			override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-				if ((dy > 0) && ((linearLayoutManager.findLastVisibleItemPosition() + VISIBLE_THRESHOLD) >= linearLayoutManager.itemCount)) {
-					// If there are 2 more elements from the last element, you can call loadNextPage()
-					viewModel.loadNextPage()
-				}
-			}
-		})
-	}
-	
-	override fun onDestroyView() {
-		binding.photosRecyclerView.adapter = null
-		super.onDestroyView()
-	}
+  companion object {
+    fun newInstance(): FeedPhotosFragment = FeedPhotosFragment()
+    private const val VISIBLE_THRESHOLD = 2 // -> 2 items is visible
+  }
+  
+  private val viewModel: PhotosViewModel by viewModels<PhotosViewModel>(factoryProducer = {
+    viewModelFactory {
+      addInitializer(PhotosViewModel::class) {
+        PhotosViewModel(UnsplashServiceLocator.unsplashApiService)
+      }
+    }
+  })
+  
+  private val photoItemAdapter: PhotoItemAdapter by lazy(LazyThreadSafetyMode.NONE) {
+    PhotoItemAdapter(requestManager = Glide.with(this))
+  }
+  
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    
+    setUpViews()
+    bindViewModel()
+  }
+  
+  private fun setUpViews() {
+    binding.photosRecyclerView.run {
+      setHasFixedSize(true)
+      layoutManager = LinearLayoutManager(context)
+      adapter = photoItemAdapter
+    }
+  }
+  
+  private fun bindViewModel() {
+    viewModel.photosUiState.observe(viewLifecycleOwner) { photosUiState: FeedsUiState<PhotoItemModel> ->
+      when (photosUiState) {
+        FeedsUiState.FirstPageLoading -> {
+          binding.photosProgressCircular.isVisible = true
+          binding.photosButtonRetry.isVisible = false
+          photoItemAdapter.submitList(emptyList())
+        }
+        
+        FeedsUiState.FirstPageError -> {
+          binding.photosProgressCircular.isVisible = false
+          binding.photosButtonRetry.isVisible = true
+          photoItemAdapter.submitList(emptyList())
+        }
+        
+        is FeedsUiState.Content -> {
+          binding.photosProgressCircular.isVisible = false
+          binding.photosButtonRetry.isVisible = false
+          photoItemAdapter.submitList(photosUiState.items)
+        }
+      }
+    }
+    
+    // config to load next page
+    val linearLayoutManager: LinearLayoutManager =
+      binding.photosRecyclerView.layoutManager as LinearLayoutManager
+    binding.photosRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+      // OnScrollListener designed to detect when the user scrolls near the bottom of the RecyclerView and potentially trigger an action like loading more data
+      override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        if ((dy > 0) && ((linearLayoutManager.findLastVisibleItemPosition() + VISIBLE_THRESHOLD) >= linearLayoutManager.itemCount)) {
+          // If there are 2 more elements from the last element, you can call loadNextPage()
+          viewModel.loadNextPage()
+        }
+      }
+    })
+  }
+  
+  override fun onDestroyView() {
+    binding.photosRecyclerView.adapter = null
+    super.onDestroyView()
+  }
 }
