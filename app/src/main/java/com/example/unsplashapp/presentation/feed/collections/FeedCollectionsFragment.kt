@@ -13,9 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
+import com.example.unsplashapp.data.remote.UnsplashApiService
 import com.example.unsplashapp.databinding.FragmentFeedCollectionsBinding
+import com.example.unsplashapp.presentation.feed.FeedsViewModel
 import com.example.unsplashapp.presentation.feed.collections.adapter.CollectionItemAdapter
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
+import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel.Companion.toCollectionItemModel
 import com.example.unsplashapp.presentation.feed.state.FeedsUiState
 
 class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
@@ -26,10 +29,14 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
     private const val VISIBLE_THRESHOLD = 2 // -> 2 items is visible
   }
   
-  private val viewModel: CollectionsViewModel by viewModels(factoryProducer = {
+  private val unsplashApiService: UnsplashApiService = UnsplashServiceLocator.unsplashApiService
+  
+  private val viewModel: FeedsViewModel<CollectionItemModel> by viewModels(factoryProducer = {
     viewModelFactory {
-      addInitializer(CollectionsViewModel::class) {
-        CollectionsViewModel(unsplashApiService = UnsplashServiceLocator.unsplashApiService)
+      addInitializer(FeedsViewModel::class) {
+        FeedsViewModel(getItems = { page: Int, perPage: Int ->
+          unsplashApiService.getCollections(page, perPage).map { it.toCollectionItemModel() }
+        })
       }
     }
   })
