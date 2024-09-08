@@ -20,9 +20,8 @@ class SearchViewModel(private val unsplashApiService: UnsplashApiService) : View
   private val _searchQuery: MutableLiveData<String> = MutableLiveData<String>("")
   private val searchQuery: LiveData<String> get() = _searchQuery
   
-  internal val searchPhotosLiveData: LiveData<List<PhotoItemModel>> = searchQuery.debounce(
-    650L, viewModelScope
-  ) // -> avoid multiple requests, after 650L request starts
+  internal val searchPhotosLiveData: LiveData<List<PhotoItemModel>> = searchQuery
+    .debounce(650L, viewModelScope) // -> avoid multiple requests, after 650L request starts
     .distinctUntilChanged() // -> if next value changes but equals with previous value -> not request
     .switchMap { query: String ->
       if (query.isNotBlank()) {
