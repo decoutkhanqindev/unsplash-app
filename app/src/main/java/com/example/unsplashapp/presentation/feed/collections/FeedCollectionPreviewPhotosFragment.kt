@@ -1,5 +1,6 @@
 package com.example.unsplashapp.presentation.feed.collections
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,9 +22,15 @@ class FeedCollectionPreviewPhotosFragment :
     CollectionItemPreviewPhotoAdapter(Glide.with(this))
   }
   
+  @Suppress("DEPRECATION")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    item = arguments?.getSerializable("item") as? CollectionItemModel
+    
+    item = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
+      arguments?.getParcelable("item", CollectionItemModel::class.java)
+    } else {
+      arguments?.getSerializable("item") as? CollectionItemModel
+    }
   }
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,10 +58,12 @@ class FeedCollectionPreviewPhotosFragment :
     }
   }
   
-  private fun setUpViews(): Unit = binding.collectionItemPreviewPhotosRecyclerView.run {
-    setHasFixedSize(true)
-    layoutManager = LinearLayoutManager(context)
-    adapter = collectionItemPreviewPhotoAdapter
+  private fun setUpViews() {
+    binding.collectionItemPreviewPhotosRecyclerView.run {
+      setHasFixedSize(true)
+      layoutManager = LinearLayoutManager(context)
+      adapter = collectionItemPreviewPhotoAdapter
+    }
   }
   
   override fun onDestroyView() {
