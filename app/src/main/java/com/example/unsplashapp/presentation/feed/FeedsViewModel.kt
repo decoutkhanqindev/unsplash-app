@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.unsplashapp.data.remote.UnsplashApiService
 import com.example.unsplashapp.presentation.feed.state.FeedsNextPageState
 import com.example.unsplashapp.presentation.feed.state.FeedsUiState
 import kotlinx.coroutines.CancellationException
@@ -16,7 +15,7 @@ class FeedsViewModel<T>(
 ) : ViewModel() {
   private var _feedsUiState: MutableLiveData<FeedsUiState<T>> =
     MutableLiveData<FeedsUiState<T>>(FeedsUiState.FirstPageLoading)
-  internal val collectionsUiState: LiveData<FeedsUiState<T>> get() = _feedsUiState
+  internal val feedsUiState: LiveData<FeedsUiState<T>> get() = _feedsUiState
   
   init {
     loadFirstPage()
@@ -86,7 +85,7 @@ class FeedsViewModel<T>(
         throw cancel
       } catch (exception: Exception) {
         _feedsUiState.value = currentState.copy(nextPageState = FeedsNextPageState.ERROR)
-        Log.d("FeedsViewModel", "loadFirstPage: ${exception.message}")
+        Log.d("FeedsViewModel", "loadNextPageInternal: ${exception.message}")
       }
     }
   }

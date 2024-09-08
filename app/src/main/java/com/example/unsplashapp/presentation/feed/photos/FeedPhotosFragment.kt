@@ -10,9 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
+import com.example.unsplashapp.data.remote.UnsplashApiService
 import com.example.unsplashapp.databinding.FragmentFeedPhotosBinding
+import com.example.unsplashapp.presentation.feed.FeedsViewModel
 import com.example.unsplashapp.presentation.feed.photos.adapter.PhotoItemAdapter
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
+import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel.Companion.toPhotoItemModel
 import com.example.unsplashapp.presentation.feed.state.FeedsUiState
 
 class FeedPhotosFragment : BaseFragment<FragmentFeedPhotosBinding>(
@@ -23,10 +26,14 @@ class FeedPhotosFragment : BaseFragment<FragmentFeedPhotosBinding>(
     private const val VISIBLE_THRESHOLD = 2 // -> 2 items is visible
   }
   
-  private val viewModel: PhotosViewModel by viewModels<PhotosViewModel>(factoryProducer = {
+  private val unsplashApiService: UnsplashApiService = UnsplashServiceLocator.unsplashApiService
+  
+  private val viewModel: FeedsViewModel<PhotoItemModel> by viewModels(factoryProducer = {
     viewModelFactory {
-      addInitializer(PhotosViewModel::class) {
-        PhotosViewModel(UnsplashServiceLocator.unsplashApiService)
+      addInitializer(FeedsViewModel::class) {
+        FeedsViewModel(getItems = { page: Int, perPage: Int ->
+          unsplashApiService.getPhotos(page, perPage).map { it.toPhotoItemModel() }
+        })
       }
     }
   })
@@ -51,7 +58,7 @@ class FeedPhotosFragment : BaseFragment<FragmentFeedPhotosBinding>(
   }
   
   private fun bindViewModel() {
-    viewModel.photosUiState.observe(viewLifecycleOwner) { photosUiState: FeedsUiState<PhotoItemModel> ->
+    viewModel.feedsUiState.observe(viewLifecycleOwner) { photosUiState: FeedsUiState<PhotoItemModel> ->
       when (photosUiState) {
         FeedsUiState.FirstPageLoading -> {
           binding.photosProgressCircular.isVisible = true

@@ -65,7 +65,7 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
   }
   
   private fun bindViewModel() {
-    viewModel.collectionsUiState.observe(viewLifecycleOwner) { collectionsUiState: FeedsUiState<CollectionItemModel> ->
+    viewModel.feedsUiState.observe(viewLifecycleOwner) { collectionsUiState: FeedsUiState<CollectionItemModel> ->
       when (collectionsUiState) {
         FeedsUiState.FirstPageLoading -> { // -> show loading
           binding.collectionsProgressCircular.isVisible = true
