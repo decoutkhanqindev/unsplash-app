@@ -1,8 +1,6 @@
 package com.example.unsplashapp.presentation.search.users.model
 
-import com.example.unsplashapp.data.remote.response.PhotoItemResponse
 import com.example.unsplashapp.data.remote.response.UserItemResponse
-import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
 
 data class UserItemModel(
   val id: String,
@@ -10,6 +8,8 @@ data class UserItemModel(
   val twitterUsername: String?,
   val instagramUsername: String?,
   val profileImage: UserItemResponse.ProfileImage,
+  val totalLikes: Int,
+  val totalPhotos: Int,
 ) {
   companion object {
     fun UserItemResponse.toUserItemModel(): UserItemModel = UserItemModel(
@@ -17,7 +17,9 @@ data class UserItemModel(
       username = username,
       twitterUsername = twitterUsername,
       instagramUsername = instagramUsername,
-      profileImage = profileImage
+      profileImage = profileImage,
+      totalLikes = totalLikes,
+      totalPhotos = totalPhotos
     )
   }
 }
