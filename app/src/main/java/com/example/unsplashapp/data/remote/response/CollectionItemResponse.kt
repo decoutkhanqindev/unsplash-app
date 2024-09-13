@@ -10,7 +10,7 @@ import androidx.annotation.Keep
 data class CollectionItemResponse(
   @Json(name = "id") val id: String, // hhbDCBz39e4
   @Json(name = "title") val title: String, // Fall Wallpapers
-  @Json(name = "description") val description: String, // Embrace the warmth of autumn with this curated collection, 'Fall Wallpapers', perfect for refreshing your mobile screen.
+  @Json(name = "description") val description: String?, // Embrace the warmth of autumn with this curated collection, 'Fall Wallpapers', perfect for refreshing your mobile screen.
   @Json(name = "published_at") val publishedAt: String, // 2024-09-13T13:18:08Z
   @Json(name = "last_collected_at") val lastCollectedAt: String, // 2024-09-13T13:18:05Z
   @Json(name = "updated_at") val updatedAt: String, // 2024-09-13T13:18:08Z

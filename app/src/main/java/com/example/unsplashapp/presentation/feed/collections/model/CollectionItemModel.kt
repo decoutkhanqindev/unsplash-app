@@ -11,7 +11,7 @@ import com.example.unsplashapp.data.remote.response.CollectionItemResponse
 data class CollectionItemModel(
   val id: String,
   val title: String,
-  val description: String,
+  val description: String?,
   val coverPhotoUrl: String,
   val user: CollectionItemResponse.User,
   val previewPhotos: List<CollectionItemResponse.PreviewPhoto>

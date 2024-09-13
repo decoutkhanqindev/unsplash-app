@@ -41,7 +41,7 @@ class CollectionItemAdapter(
           .transition(DrawableTransitionOptions.withCrossFade()).into(collectionItemImage)
         
         collectionItemTitle.text = item.title
-        collectionItemDescription.text = item.description
+        collectionItemDescription.text = item.description ?: "No description ..."
       }
     }
   }
