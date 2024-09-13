@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.data.remote.UnsplashApiService
+import com.example.unsplashapp.data.remote.response.CollectionItemResponse
 import com.example.unsplashapp.databinding.FragmentFeedCollectionsBinding
 import com.example.unsplashapp.presentation.feed.FeedsViewModel
 import com.example.unsplashapp.presentation.feed.collections.adapter.CollectionItemAdapter
@@ -35,7 +36,9 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
     viewModelFactory {
       addInitializer(FeedsViewModel::class) {
         FeedsViewModel(getItems = { page: Int, perPage: Int ->
-          unsplashApiService.getCollections(page, perPage).map { it.toCollectionItemModel() }
+          unsplashApiService.getCollections(page, perPage).map { it: CollectionItemResponse ->
+            it.toCollectionItemModel()
+          }
         })
       }
     }
@@ -102,7 +105,7 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
   }
   
   private fun onItemClick(item: CollectionItemModel) {
-    parentFragmentManager.commit {
+    childFragmentManager.commit {
       setReorderingAllowed(true)
       addToBackStack(null)
       replace<FeedCollectionPreviewPhotosFragment>(containerViewId = binding.collectionPreviewPhotosFragment.id,

@@ -39,7 +39,7 @@ class FeedsViewModel<T>(
         throw cancel
       } catch (exception: Exception) {
         _feedsUiState.value = FeedsUiState.FirstPageError
-        Log.d("FeedsViewModel", "loadFirstPage: ${exception.message}")
+        Log.d("FeedsViewModel", "loadFirstPage: $exception")
       }
     }
   }

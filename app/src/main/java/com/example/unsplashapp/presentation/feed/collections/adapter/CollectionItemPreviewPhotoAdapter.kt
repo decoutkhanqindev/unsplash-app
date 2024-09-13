@@ -37,7 +37,7 @@ class CollectionItemPreviewPhotoAdapter(
           .transition(DrawableTransitionOptions.withCrossFade())
           .into(collectionItemPreviewPhotoImage)
         
-        collectionItemPreviewPhotoDate.text = formatTimestamp(item.createdAt)
+        collectionItemPreviewPhotoDate.text = formatTimestamp(item.createdAt.toString())
       }
     }
     

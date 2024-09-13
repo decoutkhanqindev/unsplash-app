@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.data.remote.UnsplashApiService
+import com.example.unsplashapp.data.remote.response.PhotoItemResponse
 import com.example.unsplashapp.databinding.FragmentFeedPhotosBinding
 import com.example.unsplashapp.presentation.feed.FeedsViewModel
 import com.example.unsplashapp.presentation.feed.photos.adapter.PhotoItemAdapter
@@ -32,7 +33,7 @@ class FeedPhotosFragment : BaseFragment<FragmentFeedPhotosBinding>(
     viewModelFactory {
       addInitializer(FeedsViewModel::class) {
         FeedsViewModel(getItems = { page: Int, perPage: Int ->
-          unsplashApiService.getPhotos(page, perPage).map { it.toPhotoItemModel() }
+          unsplashApiService.getPhotos(page, perPage).map { it: PhotoItemResponse -> it.toPhotoItemModel() }
         })
       }
     }
