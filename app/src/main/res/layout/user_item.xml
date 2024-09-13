@@ -17,12 +17,14 @@
 
         <ImageView
             android:id="@+id/user_item_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:scaleType="centerCrop"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.01"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
@@ -33,18 +35,21 @@
             android:id="@+id/user_item_username"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="4dp"
             android:text="@string/username"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/user_item_image"
-            app:layout_constraintTop_toTopOf="@+id/user_item_image" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/user_item_twitter_img"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="4dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
             android:src="@mipmap/twitter_foreground"
             app:layout_constraintStart_toEndOf="@+id/user_item_image"
             app:layout_constraintTop_toBottomOf="@+id/user_item_username"
@@ -52,7 +57,7 @@
 
         <TextView
             android:id="@+id/user_item_twitter_username"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/twitter"
             android:textAppearance="@style/TextAppearance.Material3.BodySmall"
@@ -62,17 +67,20 @@
 
         <ImageView
             android:id="@+id/user_item_instagram_img"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@mipmap/instagram_foreground"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/user_item_image"
+            app:layout_constraintBottom_toBottomOf="@+id/user_item_image"
+            app:layout_constraintEnd_toEndOf="@+id/user_item_twitter_img"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/user_item_twitter_img"
             app:layout_constraintTop_toBottomOf="@+id/user_item_twitter_img"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/user_item_instagram_username"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/instagram"
             android:textAppearance="@style/TextAppearance.Material3.BodySmall"
@@ -81,10 +89,46 @@
             app:layout_constraintTop_toTopOf="@+id/user_item_instagram_img" />
 
         <ImageView
-            android:id="@+id/user_item_total_likes"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@android:li"
-            />
+            android:id="@+id/user_item_total_likes_img"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@mipmap/like_foreground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/user_item_image"
+            app:layout_constraintTop_toBottomOf="@+id/user_item_image"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/user_item_total_likes_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/like"
+            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+            app:layout_constraintBottom_toBottomOf="@+id/user_item_total_likes_img"
+            app:layout_constraintStart_toEndOf="@+id/user_item_total_likes_img"
+            app:layout_constraintTop_toTopOf="@+id/user_item_total_likes_img" />
+
+        <ImageView
+            android:id="@+id/user_item_total_photos_img"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@mipmap/picture_foreground"
+            app:layout_constraintBottom_toBottomOf="@+id/user_item_total_likes_img"
+            app:layout_constraintStart_toEndOf="@+id/user_item_total_likes_text"
+            app:layout_constraintTop_toTopOf="@+id/user_item_total_likes_img"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/user_item_total_photos_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/photos"
+            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+            app:layout_constraintBottom_toBottomOf="@+id/user_item_total_photos_img"
+            app:layout_constraintEnd_toEndOf="@+id/user_item_image"
+            app:layout_constraintStart_toEndOf="@+id/user_item_total_photos_img"
+            app:layout_constraintTop_toTopOf="@+id/user_item_total_photos_img"
+            app:layout_constraintVertical_bias="0.444" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -5,4 +5,6 @@
     <string name="twitter">twitter</string>
     <string name="instagram">instagram</string>
     <string name="username">Username</string>
+    <string name="like">likes</string>
+    <string name="photos">photos</string>
 </resources>
