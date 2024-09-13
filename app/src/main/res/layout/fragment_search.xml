@@ -28,8 +28,8 @@
                     android:id="@+id/search_text_input_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Search"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    android:hint="@string/search"
+                    tools:ignore="SpeakableTextPresentCheck,VisualLintTextFieldSize" />
             </com.google.android.material.textfield.TextInputLayout>
         </com.google.android.material.appbar.MaterialToolbar>
 
@@ -37,7 +37,8 @@
             android:id="@+id/search_tabs_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="scrollable" />
+            app:tabMode="scrollable"
+            tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager2.widget.ViewPager2

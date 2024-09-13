@@ -8,4 +8,5 @@
     <string name="like">likes</string>
     <string name="photos">photos</string>
     <string name="click_to_retry">Click to retry</string>
+    <string name="search">Search</string>
 </resources>
