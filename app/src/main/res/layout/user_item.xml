@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp">
+
+        <ImageView
+            android:id="@+id/user_item_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="ContentDescription"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/user_item_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/username"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/user_item_image"
+            app:layout_constraintTop_toTopOf="@+id/user_item_image" />
+
+        <ImageView
+            android:id="@+id/user_item_twitter_img"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="4dp"
+            android:src="@mipmap/twitter_foreground"
+            app:layout_constraintStart_toEndOf="@+id/user_item_image"
+            app:layout_constraintTop_toBottomOf="@+id/user_item_username"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/user_item_twitter_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/twitter"
+            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+            app:layout_constraintBottom_toBottomOf="@+id/user_item_twitter_img"
+            app:layout_constraintStart_toEndOf="@+id/user_item_twitter_img"
+            app:layout_constraintTop_toTopOf="@+id/user_item_twitter_img" />
+
+        <ImageView
+            android:id="@+id/user_item_instagram_img"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@mipmap/instagram_foreground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/user_item_image"
+            app:layout_constraintTop_toBottomOf="@+id/user_item_twitter_img"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/user_item_instagram_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/instagram"
+            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+            app:layout_constraintBottom_toBottomOf="@+id/user_item_instagram_img"
+            app:layout_constraintStart_toEndOf="@+id/user_item_instagram_img"
+            app:layout_constraintTop_toTopOf="@+id/user_item_instagram_img" />
+
+        <ImageView
+            android:id="@+id/user_item_total_likes"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@android:li"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
