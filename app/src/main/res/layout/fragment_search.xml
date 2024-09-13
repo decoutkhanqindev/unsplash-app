@@ -4,17 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".presentation.search.SearchFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/search_app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/search_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             app:navigationIcon="@drawable/baseline_arrow_back_24">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -28,6 +31,7 @@
                     android:id="@+id/search_text_input_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:hint="@string/search"
                     tools:ignore="SpeakableTextPresentCheck,VisualLintTextFieldSize" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -37,6 +41,7 @@
             android:id="@+id/search_tabs_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             app:tabMode="scrollable"
             tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.appbar.AppBarLayout>
