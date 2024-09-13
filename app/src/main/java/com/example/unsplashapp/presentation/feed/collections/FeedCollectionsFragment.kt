@@ -18,7 +18,7 @@ import com.example.unsplashapp.databinding.FragmentFeedCollectionsBinding
 import com.example.unsplashapp.presentation.feed.FeedsViewModel
 import com.example.unsplashapp.presentation.feed.collections.adapter.CollectionItemAdapter
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
-import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel.Companion.toCollectionItemModel
+import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel.CREATOR.toCollectionItemModel
 import com.example.unsplashapp.presentation.feed.state.FeedsUiState
 
 class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
@@ -102,12 +102,12 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
   }
   
   private fun onItemClick(item: CollectionItemModel) {
-    childFragmentManager.commit {
+    parentFragmentManager.commit {
       setReorderingAllowed(true)
       addToBackStack(null)
       replace<FeedCollectionPreviewPhotosFragment>(containerViewId = binding.collectionPreviewPhotosFragment.id,
         tag = FeedCollectionPreviewPhotosFragment::class.simpleName,
-        args = Bundle().apply { putSerializable("item", item) })
+        args = Bundle().apply { putParcelable("item", item) })
     }
   }
   
