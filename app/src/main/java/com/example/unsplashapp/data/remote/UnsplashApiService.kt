@@ -2,7 +2,8 @@ package com.example.unsplashapp.data.remote
 
 import com.example.unsplashapp.data.remote.response.CollectionItemResponse
 import com.example.unsplashapp.data.remote.response.PhotoItemResponse
-import com.example.unsplashapp.data.remote.response.SearchPhotoItemResponse
+import com.example.unsplashapp.data.remote.response.SearchPhotosResponse
+import com.example.unsplashapp.data.remote.response.SearchUsersResponse
 import retrofit2.Retrofit
 import retrofit2.create
 import retrofit2.http.GET
@@ -26,5 +27,10 @@ interface UnsplashApiService {
   @GET("search/photos")
   suspend fun searchPhotos(
     @Query("query") query: String, @Query("page") page: Int, @Query("per_page") perPage: Int
-  ): SearchPhotoItemResponse
+  ): SearchPhotosResponse
+  
+  @GET("search/users")
+  suspend fun searchUsers(
+    @Query("query") query: String, @Query("page") page: Int, @Query("per_page") perPage: Int
+  ): SearchUsersResponse
 }
