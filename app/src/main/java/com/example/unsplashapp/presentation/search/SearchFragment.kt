@@ -4,11 +4,15 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.databinding.FragmentSearchBinding
+import com.example.unsplashapp.presentation.search.photos.SearchPhotosFragment
+import com.example.unsplashapp.presentation.search.users.SearchUsersFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -67,5 +71,16 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(
         viewModel.setQuery(s.toString())
       }
     })
+  }
+  
+  private class SearchViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+    override fun getItemCount(): Int = 2
+    
+    override fun createFragment(position: Int): Fragment = // -> always return a new obj fragment
+      when (position) {
+        0 -> SearchPhotosFragment.newInstance()
+        1 -> SearchUsersFragment.newInstance()
+        else -> throw IllegalArgumentException("Invalid position: $position")
+      }
   }
 }
