@@ -17,7 +17,6 @@ import com.example.unsplashapp.presentation.search.utils.Debounce.debounce
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 
-@Suppress("UNCHECKED_CAST")
 class SearchViewModel(private val unsplashApiService: UnsplashApiService) : ViewModel() {
   private val _searchQuery: MutableLiveData<String> = MutableLiveData<String>("")
   private val searchQuery: LiveData<String> get() = _searchQuery
@@ -40,6 +39,7 @@ class SearchViewModel(private val unsplashApiService: UnsplashApiService) : View
       }
     }
   
+  @Suppress("UNCHECKED_CAST")
   private suspend inline fun <reified T> searchItems(query: String): List<T> {
     return try {
       val responseItems: List<T> = when (T::class) {
