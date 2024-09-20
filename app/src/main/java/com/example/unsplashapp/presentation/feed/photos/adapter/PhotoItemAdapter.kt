@@ -27,7 +27,7 @@ class PhotoItemAdapter(
         requestManager.load(item.urls.regular).fitCenter().centerCrop()
           .transition(DrawableTransitionOptions.withCrossFade()).into(photoItemImage)
         
-        photoItemDescription.text = item.description
+        photoItemDescription.text = item.description ?: "No description..."
         
         requestManager.load(item.user.profileImage.medium).fitCenter().centerCrop()
           .transition(DrawableTransitionOptions.withCrossFade()).into(photoItemUserImage)
