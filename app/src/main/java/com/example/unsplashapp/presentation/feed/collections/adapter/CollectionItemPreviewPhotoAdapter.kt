@@ -5,6 +5,7 @@ import android.icu.text.SimpleDateFormat
 import android.icu.util.TimeZone
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
@@ -49,5 +50,15 @@ class CollectionItemPreviewPhotoAdapter(
       val date: Date? = inputFormat.parse(timestamp)
       return if (date != null) outputFormat.format(date) else "Invalid Date"
     }
+  }
+  
+  private object CollectionItemPreviewPhotoCallBack : ItemCallback<CollectionItemPreviewPhotoModel>() {
+    override fun areItemsTheSame(
+      oldItem: CollectionItemPreviewPhotoModel, newItem: CollectionItemPreviewPhotoModel
+    ): Boolean = oldItem.id == newItem.id
+    
+    override fun areContentsTheSame(
+      oldItem: CollectionItemPreviewPhotoModel, newItem: CollectionItemPreviewPhotoModel
+    ): Boolean = oldItem == newItem
   }
 }
