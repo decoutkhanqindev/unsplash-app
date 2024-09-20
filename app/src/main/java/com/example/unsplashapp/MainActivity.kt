@@ -8,22 +8,22 @@ import com.example.unsplashapp.databinding.ActivityMainBinding
 import com.example.unsplashapp.presentation.feed.FeedsFragment
 
 class MainActivity : AppCompatActivity() {
-    private val binding: ActivityMainBinding by lazy(LazyThreadSafetyMode.NONE) {
-        ActivityMainBinding.inflate(layoutInflater)
-    }
+  private val binding: ActivityMainBinding by lazy(LazyThreadSafetyMode.NONE) {
+    ActivityMainBinding.inflate(layoutInflater)
+  }
+  
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(binding.root)
     
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-        
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                addToBackStack(null)
-                add<FeedsFragment>(
-                    containerViewId = binding.main.id, tag = FeedsFragment::class.simpleName
-                )
-            }
-        }
+    if (savedInstanceState == null) {
+      supportFragmentManager.commit {
+        setReorderingAllowed(true)
+        addToBackStack(null)
+        add<FeedsFragment>(
+          containerViewId = binding.main.id, tag = FeedsFragment::class.simpleName
+        )
+      }
     }
+  }
 }

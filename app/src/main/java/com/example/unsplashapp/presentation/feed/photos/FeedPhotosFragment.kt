@@ -33,7 +33,8 @@ class FeedPhotosFragment : BaseFragment<FragmentFeedPhotosBinding>(
     viewModelFactory {
       addInitializer(FeedsViewModel::class) {
         FeedsViewModel(getItems = { page: Int, perPage: Int ->
-          unsplashApiService.getPhotos(page, perPage).map { it: PhotoItemResponse -> it.toPhotoItemModel() }
+          unsplashApiService.getPhotos(page, perPage)
+            .map { it: PhotoItemResponse -> it.toPhotoItemModel() }
         })
       }
     }

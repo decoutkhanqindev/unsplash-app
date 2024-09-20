@@ -52,7 +52,8 @@ class CollectionItemPreviewPhotoAdapter(
     }
   }
   
-  private object CollectionItemPreviewPhotoCallBack : ItemCallback<CollectionItemPreviewPhotoModel>() {
+  private object CollectionItemPreviewPhotoCallBack :
+    ItemCallback<CollectionItemPreviewPhotoModel>() {
     override fun areItemsTheSame(
       oldItem: CollectionItemPreviewPhotoModel, newItem: CollectionItemPreviewPhotoModel
     ): Boolean = oldItem.id == newItem.id

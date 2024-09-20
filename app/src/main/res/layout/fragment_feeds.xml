@@ -16,8 +16,8 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/feeds_toolbar"
             android:layout_width="match_parent"
-            android:background="@color/white"
             android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
             app:title="Feeds">
 
             <androidx.appcompat.widget.AppCompatImageButton
@@ -35,8 +35,8 @@
             android:id="@+id/feeds_tabs_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="scrollable"
             android:background="@color/white"
+            app:tabMode="scrollable"
             tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.appbar.AppBarLayout>
 

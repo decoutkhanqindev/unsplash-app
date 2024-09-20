@@ -12,8 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/collection_item_preview_photo_image"
@@ -24,8 +24,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/backgrounds/scenic"
-            tools:ignore="ContentDescription,VisualLintBounds" />
+            tools:ignore="ContentDescription,VisualLintBounds"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <TextView
             android:id="@+id/collection_item_preview_photo_date"
@@ -41,7 +41,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/collection_item_preview_photo_image"
-            tools:text="DATE"
-            tools:ignore="VisualLintBounds" />
+            tools:ignore="VisualLintBounds"
+            tools:text="DATE" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

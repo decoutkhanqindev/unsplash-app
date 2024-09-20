@@ -58,6 +58,7 @@ class FeedsViewModel<T>(
           }
         }
       }
+      
       else -> {
         throw IllegalArgumentException()
       }

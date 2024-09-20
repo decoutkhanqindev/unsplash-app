@@ -3,8 +3,8 @@ package com.example.unsplashapp.data.remote.response
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.squareup.moshi.Json
 import androidx.annotation.Keep
+import com.squareup.moshi.Json
 
 @Keep
 data class CollectionItemResponse(

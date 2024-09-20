@@ -43,8 +43,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/photo_item_image"
             app:layout_constraintVertical_bias="0.0"
-            tools:text="DESCRIPTION"
-            tools:ignore="VisualLintBounds" />
+            tools:ignore="VisualLintBounds"
+            tools:text="DESCRIPTION" />
 
         <ImageView
             android:id="@+id/photo_item_user_image"
@@ -69,7 +69,7 @@
             app:layout_constraintEnd_toStartOf="@id/photo_item_user_image"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="by Username"
-            tools:ignore="VisualLintBounds" />
+            tools:ignore="VisualLintBounds"
+            tools:text="by Username" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

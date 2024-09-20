@@ -1,7 +1,7 @@
 package com.example.unsplashapp.data.remote.response
 
-import com.squareup.moshi.Json
 import androidx.annotation.Keep
+import com.squareup.moshi.Json
 
 @Keep
 data class SearchUsersResponse(
