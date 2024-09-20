@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Parcel
 import android.os.Parcelable
 import com.example.unsplashapp.data.remote.response.CollectionItemResponse
+import java.io.Serializable
 
 // model to display data on UI for collection
 @SuppressLint("ParcelCreator")
@@ -15,7 +16,7 @@ data class CollectionItemModel(
   val coverPhotoUrl: String?,
   val user: CollectionItemResponse.User,
   val previewPhotos: List<CollectionItemResponse.PreviewPhoto>
-) : Parcelable {
+) : Parcelable, Serializable {
   
   constructor(parcel: Parcel) : this(
     parcel.readString()!!,
