@@ -15,6 +15,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class SearchFragment : BaseFragment<FragmentSearchBinding>(
   inflate = FragmentSearchBinding::inflate
 ) {
+  
   // activityViewModels -> to save view model
   private val viewModel: SearchViewModel by activityViewModels<SearchViewModel>(factoryProducer = {
     viewModelFactory {
