@@ -2,6 +2,7 @@ package com.example.unsplashapp.presentation.feed.photos.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
@@ -37,5 +38,15 @@ class PhotoItemAdapter(
         }
       }
     }
+  }
+  
+  private object PhotoItemCallBack : ItemCallback<PhotoItemModel>() {
+    override fun areItemsTheSame(
+      oldItem: PhotoItemModel, newItem: PhotoItemModel
+    ): Boolean = oldItem.id == newItem.id
+    
+    override fun areContentsTheSame(
+      oldItem: PhotoItemModel, newItem: PhotoItemModel
+    ): Boolean = oldItem == newItem
   }
 }
