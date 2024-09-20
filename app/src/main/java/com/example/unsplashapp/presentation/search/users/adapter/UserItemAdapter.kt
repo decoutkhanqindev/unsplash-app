@@ -2,6 +2,7 @@ package com.example.unsplashapp.presentation.search.users.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
@@ -35,5 +36,15 @@ class UserItemAdapter(
         userItemTotalPhotosText.text = item.totalPhotos.toString()
       }
     }
+  }
+  
+  private object UserItemCallBack : ItemCallback<UserItemModel>() {
+    override fun areItemsTheSame(
+      oldItem: UserItemModel, newItem: UserItemModel
+    ): Boolean = oldItem.id == newItem.id
+    
+    override fun areContentsTheSame(
+      oldItem: UserItemModel, newItem: UserItemModel
+    ): Boolean = oldItem == newItem
   }
 }
