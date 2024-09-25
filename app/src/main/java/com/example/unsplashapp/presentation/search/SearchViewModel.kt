@@ -27,6 +27,7 @@ class SearchViewModel(private val unsplashApiService: UnsplashApiService) : View
   val searchUsersLiveData: LiveData<List<UserItemModel>> =
     generateSearchItemsLiveData<UserItemModel>()
   
+  // reified is check type at runtime.
   private inline fun <reified T> generateSearchItemsLiveData(): LiveData<List<T>> =
     searchQuery.debounce(650L, viewModelScope).distinctUntilChanged().switchMap { query: String ->
       if (query.isNotBlank()) {
@@ -40,6 +41,7 @@ class SearchViewModel(private val unsplashApiService: UnsplashApiService) : View
     }
   
   @Suppress("UNCHECKED_CAST")
+  // reified is check type at at runtime.
   private suspend inline fun <reified T> searchItems(query: String): List<T> {
     return try {
       val responseItems: List<T> = when (T::class) {
