@@ -22,7 +22,7 @@ class UnsplashGlideModule : AppGlideModule() {
     registry.replace(
       GlideUrl::class.java,
       InputStream::class.java,
-      OkHttpUrlLoader.Factory(UnsplashServiceLocator.okHttpClient)
+      OkHttpUrlLoader.Factory(UnsplashServiceLocator.provideOkHttpClient())
     )
   }
 }

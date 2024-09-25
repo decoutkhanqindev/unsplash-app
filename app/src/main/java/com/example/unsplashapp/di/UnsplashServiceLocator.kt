@@ -36,8 +36,17 @@ object UnsplashServiceLocator {
   private const val UNSPLASH_BASE_URL = "https://api.unsplash.com/"
   
   // setting up an HttpLoggingInterceptor for logging HTTP requests and responses.
-  private val httpLoggingInterceptor: HttpLoggingInterceptor
-    get() = HttpLoggingInterceptor().apply {
+//  private val httpLoggingInterceptor: HttpLoggingInterceptor
+//    get() = HttpLoggingInterceptor().apply {
+//      level = if (BuildConfig.DEBUG) {
+//        HttpLoggingInterceptor.Level.BODY
+//      } else {
+//        HttpLoggingInterceptor.Level.NONE
+//      }
+//    }
+  
+  private fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
+    HttpLoggingInterceptor().apply {
       level = if (BuildConfig.DEBUG) {
         HttpLoggingInterceptor.Level.BODY
       } else {
@@ -46,33 +55,55 @@ object UnsplashServiceLocator {
     }
   
   // all requests made using that client will include the necessary authorization headers to access the Unsplash API.
-  private val authorizationInterceptor: AuthorizationInterceptor
-    get() = AuthorizationInterceptor(
+//  private val authorizationInterceptor: AuthorizationInterceptor
+//    get() = AuthorizationInterceptor(
+//      clientId = BuildConfig.UNSPLASH_ACCESS_KEY
+//    )
+  
+  private fun provideAuthorizationInterceptor(): AuthorizationInterceptor =
+    AuthorizationInterceptor(
       clientId = BuildConfig.UNSPLASH_ACCESS_KEY
     )
   
   // OkHttpClient making network requests and handling network interactions (Variety of HTTP Methods,
   // Handling Request Bodies, Setting Headers, Parsing Response Bodies, Handling Response Codes, ....)
-  val okHttpClient: OkHttpClient by lazy {
+//  val okHttpClient: OkHttpClient by lazy {
+//    OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS)
+//      .writeTimeout(30, TimeUnit.SECONDS)
+//      .addNetworkInterceptor(provideHttpLoggingInterceptor()) // -> logging HTTP requests and responses.
+//      .addInterceptor(provideAuthorizationInterceptor()) // -> add header is  Client-ID: YOUR ACCESS KEY
+//      .build()
+//  }
+  
+  fun provideOkHttpClient(): OkHttpClient =
     OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS)
       .writeTimeout(30, TimeUnit.SECONDS)
-      .addNetworkInterceptor(httpLoggingInterceptor) // -> logging HTTP requests and responses.
-      .addInterceptor(authorizationInterceptor) // -> add header is  Client-ID: YOUR ACCESS KEY
+      .addNetworkInterceptor(provideHttpLoggingInterceptor()) // -> logging HTTP requests and responses.
+      .addInterceptor(provideAuthorizationInterceptor()) // -> add header is  Client-ID: YOUR ACCESS KEY
       .build()
-  }
+
+//  private val moshi: Moshi by lazy {
+//    Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
+//  }
   
-  private val moshi: Moshi by lazy {
-    Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
-  }
+  private fun provideMoshi(): Moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
+
+//  private val retrofit: Retrofit by lazy {
+//    Retrofit.Builder().baseUrl(UNSPLASH_BASE_URL).client(provideOkHttpClient())
+//      .addConverterFactory(MoshiConverterFactory.create(provideMoshi())).build()
+//  }
   
-  private val retrofit: Retrofit by lazy {
-    Retrofit.Builder().baseUrl(UNSPLASH_BASE_URL).client(okHttpClient)
-      .addConverterFactory(MoshiConverterFactory.create(moshi)).build()
-  }
+  private fun provideRetrofit(): Retrofit =
+    Retrofit.Builder().baseUrl(UNSPLASH_BASE_URL).client(provideOkHttpClient())
+      .addConverterFactory(MoshiConverterFactory.create(provideMoshi())).build()
+
+//  val unsplashApiService: UnsplashApiService by lazy {
+//    UnsplashApiService(provideRetrofit()) // -> UnsplashApiService.invoke(retrofit)
+//  }
   
-   val unsplashApiService: UnsplashApiService by lazy {
-    UnsplashApiService(retrofit) // -> UnsplashApiService.invoke(retrofit)
-  }
+  fun provideUnsplashService(): UnsplashApiService =
+    UnsplashApiService(provideRetrofit()) // -> UnsplashApiService.invoke(retrofit)
   
-  fun provideUnsplashRepository(): UnsplashRepository = UnsplashRepositoryImpl(unsplashApiService)
+  fun provideUnsplashRepository(): UnsplashRepository =
+    UnsplashRepositoryImpl(provideUnsplashService())
 }
