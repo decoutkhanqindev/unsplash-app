@@ -6,9 +6,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.unsplashapp.di.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.databinding.FragmentSearchPhotosBinding
+import com.example.unsplashapp.di.UnsplashServiceLocator
 import com.example.unsplashapp.presentation.feed.photos.adapter.PhotoItemAdapter
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
 import com.example.unsplashapp.presentation.search.SearchViewModel
@@ -23,7 +23,7 @@ class SearchPhotosFragment : BaseFragment<FragmentSearchPhotosBinding>(
   private val viewModel: SearchViewModel by activityViewModels<SearchViewModel>(factoryProducer = {
     viewModelFactory {
       addInitializer(SearchViewModel::class) {
-        SearchViewModel(unsplashApiService = UnsplashServiceLocator.unsplashApiService)
+        SearchViewModel(unsplashApiService = UnsplashServiceLocator.provideUnsplashService())
       }
     }
   })
