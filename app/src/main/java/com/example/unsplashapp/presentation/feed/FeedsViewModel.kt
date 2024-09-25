@@ -5,14 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.unsplashapp.data.remote.repository.UnsplashRepository
 import com.example.unsplashapp.presentation.feed.state.FeedsNextPageState
 import com.example.unsplashapp.presentation.feed.state.FeedsUiState
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
 class FeedsViewModel<T>(
-  private val repository: UnsplashRepository,
   private val getItems: suspend (page: Int, perPage: Int) -> List<T>
 ) : ViewModel() {
   private var _feedsUiState: MutableLiveData<FeedsUiState<T>> =
