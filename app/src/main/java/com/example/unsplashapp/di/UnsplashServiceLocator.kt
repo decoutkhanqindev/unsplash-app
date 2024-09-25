@@ -1,6 +1,13 @@
 package com.example.unsplashapp.di
 
+import android.content.Context
 import androidx.annotation.MainThread
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Registry
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.module.AppGlideModule
 import com.example.unsplashapp.BuildConfig
 import com.example.unsplashapp.UnsplashApplication
 import com.example.unsplashapp.data.remote.UnsplashApiService
@@ -13,7 +20,10 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.io.InputStream
 import java.util.concurrent.TimeUnit
+
+const val UNSPLASH_BASE_URL = "https://api.unsplash.com/"
 
 object UnsplashServiceLocator {
   // @MainThread
@@ -33,9 +43,8 @@ object UnsplashServiceLocator {
       "UnsplashServiceLocator must be initialized. " + "Call UnsplashServiceLocator.initWith(this) in your Application class."
     }
   
-  private const val UNSPLASH_BASE_URL = "https://api.unsplash.com/"
-  
   // setting up an HttpLoggingInterceptor for logging HTTP requests and responses.
+
 //  private val httpLoggingInterceptor: HttpLoggingInterceptor
 //    get() = HttpLoggingInterceptor().apply {
 //      level = if (BuildConfig.DEBUG) {
@@ -54,7 +63,8 @@ object UnsplashServiceLocator {
       }
     }
   
-  // all requests made using that client will include the necessary authorization headers to access the Unsplash API.
+  // all requests made using that client will include the necessary authorization headers to access the Unsplash API
+
 //  private val authorizationInterceptor: AuthorizationInterceptor
 //    get() = AuthorizationInterceptor(
 //      clientId = BuildConfig.UNSPLASH_ACCESS_KEY
@@ -67,6 +77,7 @@ object UnsplashServiceLocator {
   
   // OkHttpClient making network requests and handling network interactions (Variety of HTTP Methods,
   // Handling Request Bodies, Setting Headers, Parsing Response Bodies, Handling Response Codes, ....)
+
 //  val okHttpClient: OkHttpClient by lazy {
 //    OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS)
 //      .writeTimeout(30, TimeUnit.SECONDS)
@@ -75,7 +86,7 @@ object UnsplashServiceLocator {
 //      .build()
 //  }
   
-  fun provideOkHttpClient(): OkHttpClient =
+  private fun provideOkHttpClient(): OkHttpClient =
     OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS)
       .writeTimeout(30, TimeUnit.SECONDS)
       .addNetworkInterceptor(provideHttpLoggingInterceptor()) // -> logging HTTP requests and responses.
@@ -106,4 +117,21 @@ object UnsplashServiceLocator {
   
   fun provideUnsplashRepository(): UnsplashRepository =
     UnsplashRepositoryImpl(provideUnsplashService())
+  
+  @GlideModule
+  class UnsplashGlideModule : AppGlideModule() {
+    // replace Glide's default network library (HttpURLConnection) with OkHttpClient to load images from the internet.
+    
+    override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
+      super.registerComponents(context, glide, registry)
+      
+      // registry.replace: Replace Glide's default loader (HttpURLConnection) with OkHttpUrlLoader,
+      // using the OkHttpClient you configured in UnsplashServiceLocator.
+      registry.replace(
+        GlideUrl::class.java,
+        InputStream::class.java,
+        OkHttpUrlLoader.Factory(provideOkHttpClient())
+      )
+    }
+  }
 }
