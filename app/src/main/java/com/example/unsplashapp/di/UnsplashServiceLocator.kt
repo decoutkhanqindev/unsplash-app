@@ -1,8 +1,12 @@
-package com.example.unsplashapp
+package com.example.unsplashapp.di
 
 import androidx.annotation.MainThread
+import com.example.unsplashapp.BuildConfig
+import com.example.unsplashapp.UnsplashApplication
 import com.example.unsplashapp.data.remote.UnsplashApiService
 import com.example.unsplashapp.data.remote.interceptor.AuthorizationInterceptor
+import com.example.unsplashapp.data.remote.repository.UnsplashRepository
+import com.example.unsplashapp.data.remote.repository.UnsplashRepositoryImpl
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -66,7 +70,9 @@ object UnsplashServiceLocator {
       .addConverterFactory(MoshiConverterFactory.create(moshi)).build()
   }
   
-  val unsplashApiService: UnsplashApiService by lazy {
+   val unsplashApiService: UnsplashApiService by lazy {
     UnsplashApiService(retrofit) // -> UnsplashApiService.invoke(retrofit)
   }
+  
+  fun provideUnsplashRepository(): UnsplashRepository = UnsplashRepositoryImpl(unsplashApiService)
 }
