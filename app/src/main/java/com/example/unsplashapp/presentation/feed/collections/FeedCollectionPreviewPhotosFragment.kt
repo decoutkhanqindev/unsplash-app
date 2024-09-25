@@ -3,6 +3,7 @@ package com.example.unsplashapp.presentation.feed.collections
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.unsplashapp.core.base.BaseFragment
@@ -22,6 +23,7 @@ class FeedCollectionPreviewPhotosFragment :
     CollectionItemPreviewPhotoAdapter(Glide.with(this))
   }
   
+  @RequiresApi(Build.VERSION_CODES.TIRAMISU)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     

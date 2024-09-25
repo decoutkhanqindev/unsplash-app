@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.databinding.FragmentSearchBinding
+import com.example.unsplashapp.di.UnsplashServiceLocator
 import com.example.unsplashapp.presentation.search.photos.SearchPhotosFragment
 import com.example.unsplashapp.presentation.search.users.SearchUsersFragment
 import com.google.android.material.tabs.TabLayout

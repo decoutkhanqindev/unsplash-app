@@ -8,11 +8,10 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
-import com.example.unsplashapp.data.remote.UnsplashApiService
 import com.example.unsplashapp.data.remote.response.PhotoItemResponse
 import com.example.unsplashapp.databinding.FragmentFeedPhotosBinding
+import com.example.unsplashapp.di.UnsplashServiceLocator
 import com.example.unsplashapp.presentation.feed.FeedsViewModel
 import com.example.unsplashapp.presentation.feed.photos.adapter.PhotoItemAdapter
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
@@ -27,13 +26,12 @@ class FeedPhotosFragment : BaseFragment<FragmentFeedPhotosBinding>(
     private const val VISIBLE_THRESHOLD = 2 // -> 2 items is visible
   }
   
-  private val unsplashApiService: UnsplashApiService = UnsplashServiceLocator.unsplashApiService
   
   private val viewModel: FeedsViewModel<PhotoItemModel> by viewModels(factoryProducer = {
     viewModelFactory {
       addInitializer(FeedsViewModel::class) {
         FeedsViewModel(getItems = { page: Int, perPage: Int ->
-          unsplashApiService.getPhotos(page, perPage)
+          UnsplashServiceLocator.provideUnsplashRepository().getPhotos(page, perPage)
             .map { it: PhotoItemResponse -> it.toPhotoItemModel() }
         })
       }

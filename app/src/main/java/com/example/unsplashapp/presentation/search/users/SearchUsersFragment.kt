@@ -6,9 +6,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.unsplashapp.UnsplashServiceLocator
 import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.databinding.FragmentSearchUsersBinding
+import com.example.unsplashapp.di.UnsplashServiceLocator
 import com.example.unsplashapp.presentation.search.SearchViewModel
 import com.example.unsplashapp.presentation.search.users.adapter.UserItemAdapter
 import com.example.unsplashapp.presentation.search.users.model.UserItemModel
