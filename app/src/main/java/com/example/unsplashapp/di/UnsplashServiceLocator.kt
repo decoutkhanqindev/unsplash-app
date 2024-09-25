@@ -112,7 +112,7 @@ object UnsplashServiceLocator {
 //    UnsplashApiService(provideRetrofit()) // -> UnsplashApiService.invoke(retrofit)
 //  }
   
-  fun provideUnsplashService(): UnsplashApiService =
+  private fun provideUnsplashService(): UnsplashApiService =
     UnsplashApiService(provideRetrofit()) // -> UnsplashApiService.invoke(retrofit)
   
   fun provideUnsplashRepository(): UnsplashRepository =
