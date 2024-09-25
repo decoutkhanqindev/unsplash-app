@@ -26,7 +26,6 @@ class FeedPhotosFragment : BaseFragment<FragmentFeedPhotosBinding>(
     private const val VISIBLE_THRESHOLD = 2 // -> 2 items is visible
   }
   
-  
   private val viewModel: FeedsViewModel<PhotoItemModel> by viewModels(factoryProducer = {
     viewModelFactory {
       addInitializer(FeedsViewModel::class) {

@@ -23,7 +23,7 @@ class SearchPhotosFragment : BaseFragment<FragmentSearchPhotosBinding>(
   private val viewModel: SearchViewModel by activityViewModels<SearchViewModel>(factoryProducer = {
     viewModelFactory {
       addInitializer(SearchViewModel::class) {
-        SearchViewModel(unsplashApiService = UnsplashServiceLocator.provideUnsplashService())
+        SearchViewModel(repository = UnsplashServiceLocator.provideUnsplashRepository())
       }
     }
   })
