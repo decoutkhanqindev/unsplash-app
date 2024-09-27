@@ -15,16 +15,16 @@ class UnsplashRepositoryImpl(
   
   override suspend fun getPhotos(page: Int, perPage: Int): List<PhotoItemResponse> =
     unsplashApiService.getPhotos(page, perPage)
-  
-  override suspend fun searchPhotos(query: String, page: Int, perPage: Int): SearchPhotosResponse =
-    unsplashApiService.searchPhotos(query, page, perPage)
+
+//  override suspend fun searchPhotos(query: String, page: Int, perPage: Int): SearchPhotosResponse =
+//    unsplashApiService.searchPhotos(query, page, perPage)
+
+//  override suspend fun searchUsers(query: String, page: Int, perPage: Int): SearchUsersResponse =
+//    unsplashApiService.searchUsers(query, page, perPage)
   
   override suspend fun searchPhotosByRxJava(
     query: String, page: Int, perPage: Int
   ): Single<SearchPhotosResponse> = unsplashApiService.searchPhotosByRxJava(query, page, perPage)
-  
-  override suspend fun searchUsers(query: String, page: Int, perPage: Int): SearchUsersResponse =
-    unsplashApiService.searchUsers(query, page, perPage)
   
   override suspend fun searchUsersByRxJava(
     query: String, page: Int, perPage: Int
