@@ -108,5 +108,5 @@ dependencies {
   // RxJava3 and RxAndroid
   implementation(libs.rxjava)
   implementation(libs.rxandroid)
-  implementation(libs.kotlinx.coroutines.rx2)
+  implementation(libs.kotlinx.coroutines.rx3)
 }
