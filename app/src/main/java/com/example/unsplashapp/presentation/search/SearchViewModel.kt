@@ -72,7 +72,6 @@ class SearchViewModel(private val repository: UnsplashRepository) : ViewModel() 
         emptyList()
       }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
   
-  
   @Suppress("UNCHECKED_CAST")
   // reified is check type at at runtime.
   private inline fun <reified T> searchItems(query: String): Single<List<T>> =

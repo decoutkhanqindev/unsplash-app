@@ -15,7 +15,7 @@ class FeedsViewModel<T>(
 ) : ViewModel() {
   private var _feedsUiState: MutableLiveData<FeedsUiState<T>> =
     MutableLiveData<FeedsUiState<T>>(FeedsUiState.FirstPageLoading)
-  internal val feedsUiState: LiveData<FeedsUiState<T>> get() = _feedsUiState
+  val feedsUiState: LiveData<FeedsUiState<T>> get() = _feedsUiState
   
   init {
     loadFirstPage()
