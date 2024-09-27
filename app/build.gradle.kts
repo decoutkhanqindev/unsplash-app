@@ -26,10 +26,9 @@ android {
       val properties: Properties = Properties().apply {
         load(rootProject.file("local.properties").inputStream())
       }
-      val unsplashAccessKey: String =
-        checkNotNull(properties.getProperty("UNSPLASH_ACCESS_KEY")) {
-          "UNSPLASH_ACCESS_KEY is not set in local.properties"
-        }
+      val unsplashAccessKey: String = checkNotNull(properties.getProperty("UNSPLASH_ACCESS_KEY")) {
+        "UNSPLASH_ACCESS_KEY is not set in local.properties"
+      }
       
       // -> write UNSPLASH_ACCESS_KEY to build gradle
       buildConfigField(
@@ -104,4 +103,9 @@ dependencies {
   implementation(libs.retrofit)
   implementation(libs.converter.gson)
   implementation(libs.converter.moshi)
+  implementation(libs.rxjava3.retrofit.adapter)
+  
+  // RxJava3 and RxAndroid
+  implementation(libs.rxjava)
+  implementation(libs.rxandroid)
 }
