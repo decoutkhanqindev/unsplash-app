@@ -61,7 +61,7 @@ class SearchPhotosFragment : BaseFragment<FragmentSearchPhotosBinding>(
   }
   
   override fun onDestroyView() {
-    disposable.dispose()
     super.onDestroyView()
+    disposable.dispose()
   }
 }
