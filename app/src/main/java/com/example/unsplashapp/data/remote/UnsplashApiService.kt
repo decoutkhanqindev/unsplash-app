@@ -25,20 +25,20 @@ interface UnsplashApiService {
     @Query("page") page: Int, @Query("per_page") perPage: Int
   ): List<PhotoItemResponse>
   
-  @GET("search/photos")
-  suspend fun searchPhotos(
-    @Query("query") query: String, @Query("page") page: Int, @Query("per_page") perPage: Int
-  ): SearchPhotosResponse
+//  @GET("search/photos")
+//  suspend fun searchPhotos(
+//    @Query("query") query: String, @Query("page") page: Int, @Query("per_page") perPage: Int
+//  ): SearchPhotosResponse
+
+//  @GET("search/users")
+//  suspend fun searchUsers(
+//    @Query("query") query: String, @Query("page") page: Int, @Query("per_page") perPage: Int
+//  ): SearchUsersResponse
   
   @GET("search/photos")
   suspend fun searchPhotosByRxJava(
     @Query("query") query: String, @Query("page") page: Int, @Query("per_page") perPage: Int
   ): Single<SearchPhotosResponse>
-  
-  @GET("search/users")
-  suspend fun searchUsers(
-    @Query("query") query: String, @Query("page") page: Int, @Query("per_page") perPage: Int
-  ): SearchUsersResponse
   
   @GET("search/users")
   suspend fun searchUsersByRxJava(
