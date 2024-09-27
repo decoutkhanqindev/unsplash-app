@@ -22,11 +22,11 @@ class UnsplashRepositoryImpl(
 //  override suspend fun searchUsers(query: String, page: Int, perPage: Int): SearchUsersResponse =
 //    unsplashApiService.searchUsers(query, page, perPage)
   
-  override suspend fun searchPhotosByRxJava(
+  override fun searchPhotosByRxJava(
     query: String, page: Int, perPage: Int
   ): Single<SearchPhotosResponse> = unsplashApiService.searchPhotosByRxJava(query, page, perPage)
   
-  override suspend fun searchUsersByRxJava(
+  override fun searchUsersByRxJava(
     query: String, page: Int, perPage: Int
   ): Single<SearchUsersResponse> = unsplashApiService.searchUsersByRxJava(query, page, perPage)
 }
