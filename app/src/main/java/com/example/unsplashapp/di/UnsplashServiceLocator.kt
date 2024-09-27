@@ -16,6 +16,7 @@ import com.example.unsplashapp.data.remote.repository.UnsplashRepository
 import com.example.unsplashapp.data.remote.repository.UnsplashRepositoryImpl
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -71,9 +72,7 @@ object UnsplashServiceLocator {
 //    )
   
   private fun provideAuthorizationInterceptor(): AuthorizationInterceptor =
-    AuthorizationInterceptor(
-      clientId = BuildConfig.UNSPLASH_ACCESS_KEY
-    )
+    AuthorizationInterceptor(clientId = BuildConfig.UNSPLASH_ACCESS_KEY)
   
   // OkHttpClient making network requests and handling network interactions (Variety of HTTP Methods,
   // Handling Request Bodies, Setting Headers, Parsing Response Bodies, Handling Response Codes, ....)
@@ -106,6 +105,7 @@ object UnsplashServiceLocator {
   
   private fun provideRetrofit(): Retrofit =
     Retrofit.Builder().baseUrl(UNSPLASH_BASE_URL).client(provideOkHttpClient())
+      .addCallAdapterFactory(RxJava3CallAdapterFactory.create()) // Convert data to be able to use RxJava3 operators
       .addConverterFactory(MoshiConverterFactory.create(provideMoshi())).build()
 
 //  val unsplashApiService: UnsplashApiService by lazy {
