@@ -13,12 +13,10 @@ import com.example.unsplashapp.presentation.search.users.model.UserItemModel
 import com.example.unsplashapp.presentation.search.users.model.UserItemModel.Companion.toUserItemModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.ObservableSource
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
-import kotlinx.coroutines.rx2.rxObservable
 import java.util.concurrent.TimeUnit
 
 class SearchViewModel(private val repository: UnsplashRepository) : ViewModel() {
@@ -65,21 +63,19 @@ class SearchViewModel(private val repository: UnsplashRepository) : ViewModel() 
 //    }
 //
   // reified is check type at runtime.
-  @Suppress("UNCHECKED_CAST")
   private inline fun <reified T> generateSearchItemsObservable(): Observable<List<T>> =
     searchQuerySubject.debounce(650L, TimeUnit.MILLISECONDS).distinctUntilChanged()
       .switchMap { query: String ->
-        rxObservable<List<T>> { searchItems<T>(query) } as ObservableSource<List<T>>
+        searchItems<T>(query).toObservable()
       }.onErrorReturn { e: Throwable ->
         Log.d("SearchViewModel", "generateSearchItemsObservable: ${e.message}")
-        _searchQuerySubject.onError(e)
         emptyList()
       }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
   
   
   @Suppress("UNCHECKED_CAST")
   // reified is check type at at runtime.
-  private suspend inline fun <reified T> searchItems(query: String): Single<List<T>> =
+  private inline fun <reified T> searchItems(query: String): Single<List<T>> =
     when (T::class) {
       PhotoItemModel::class -> repository.searchPhotosByRxJava(query, 1, 30)
         .map { response: SearchPhotosResponse ->
