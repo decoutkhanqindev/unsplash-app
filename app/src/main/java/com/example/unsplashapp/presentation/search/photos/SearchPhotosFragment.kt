@@ -12,6 +12,7 @@ import com.example.unsplashapp.di.UnsplashServiceLocator
 import com.example.unsplashapp.presentation.feed.photos.adapter.PhotoItemAdapter
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
 import com.example.unsplashapp.presentation.search.SearchViewModel
+import io.reactivex.rxjava3.disposables.Disposable
 
 class SearchPhotosFragment : BaseFragment<FragmentSearchPhotosBinding>(
   inflate = FragmentSearchPhotosBinding::inflate
@@ -19,6 +20,8 @@ class SearchPhotosFragment : BaseFragment<FragmentSearchPhotosBinding>(
   companion object {
     fun newInstance(): SearchPhotosFragment = SearchPhotosFragment()
   }
+  
+  private lateinit var disposable: Disposable
   
   private val viewModel: SearchViewModel by activityViewModels<SearchViewModel>(factoryProducer = {
     viewModelFactory {
@@ -48,8 +51,17 @@ class SearchPhotosFragment : BaseFragment<FragmentSearchPhotosBinding>(
   }
   
   private fun bindViewModel() {
-    viewModel.searchPhotosLiveData.observe(viewLifecycleOwner) { items: List<PhotoItemModel> ->
+//    viewModel.searchPhotosLiveData.observe(viewLifecycleOwner) { items: List<PhotoItemModel> ->
+//      photoItemAdapter.submitList(items)
+//    }
+    
+    disposable = viewModel.searchPhotosSubject.subscribe {items: List<PhotoItemModel> ->
       photoItemAdapter.submitList(items)
     }
+  }
+  
+  override fun onDestroyView() {
+    disposable.dispose()
+    super.onDestroyView()
   }
 }

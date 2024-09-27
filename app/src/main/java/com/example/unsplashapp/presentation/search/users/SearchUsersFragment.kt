@@ -12,6 +12,7 @@ import com.example.unsplashapp.di.UnsplashServiceLocator
 import com.example.unsplashapp.presentation.search.SearchViewModel
 import com.example.unsplashapp.presentation.search.users.adapter.UserItemAdapter
 import com.example.unsplashapp.presentation.search.users.model.UserItemModel
+import io.reactivex.rxjava3.disposables.Disposable
 
 class SearchUsersFragment : BaseFragment<FragmentSearchUsersBinding>(
   inflate = FragmentSearchUsersBinding::inflate
@@ -19,6 +20,8 @@ class SearchUsersFragment : BaseFragment<FragmentSearchUsersBinding>(
   companion object {
     fun newInstance(): SearchUsersFragment = SearchUsersFragment()
   }
+  
+  private lateinit var disposable: Disposable
   
   private val viewModel: SearchViewModel by activityViewModels<SearchViewModel>(factoryProducer = {
     viewModelFactory {
@@ -48,8 +51,17 @@ class SearchUsersFragment : BaseFragment<FragmentSearchUsersBinding>(
   }
   
   private fun bindViewModel() {
-    viewModel.searchUsersLiveData.observe(viewLifecycleOwner) { items: List<UserItemModel> ->
+//    viewModel.searchUsersLiveData.observe(viewLifecycleOwner) { items: List<UserItemModel> ->
+//      userItemAdapter.submitList(items)
+//    }
+    
+    disposable = viewModel.searchUsersSubject.subscribe { items: List<UserItemModel> ->
       userItemAdapter.submitList(items)
     }
+  }
+  
+  override fun onDestroyView() {
+    disposable.dispose()
+    super.onDestroyView()
   }
 }
