@@ -4,6 +4,7 @@ import com.example.unsplashapp.data.remote.response.CollectionItemResponse
 import com.example.unsplashapp.data.remote.response.PhotoItemResponse
 import com.example.unsplashapp.data.remote.response.SearchPhotosResponse
 import com.example.unsplashapp.data.remote.response.SearchUsersResponse
+import io.reactivex.rxjava3.core.Single
 import retrofit2.Retrofit
 import retrofit2.create
 import retrofit2.http.GET
@@ -29,8 +30,18 @@ interface UnsplashApiService {
     @Query("query") query: String, @Query("page") page: Int, @Query("per_page") perPage: Int
   ): SearchPhotosResponse
   
+  @GET("search/photos")
+  suspend fun searchPhotosByRxJava(
+    @Query("query") query: String, @Query("page") page: Int, @Query("per_page") perPage: Int
+  ): Single<SearchPhotosResponse>
+  
   @GET("search/users")
   suspend fun searchUsers(
     @Query("query") query: String, @Query("page") page: Int, @Query("per_page") perPage: Int
   ): SearchUsersResponse
+  
+  @GET("search/users")
+  suspend fun searchUsersByRxJava(
+    @Query("query") query: String, @Query("page") page: Int, @Query("per_page") perPage: Int
+  ): Single<SearchUsersResponse>
 }
