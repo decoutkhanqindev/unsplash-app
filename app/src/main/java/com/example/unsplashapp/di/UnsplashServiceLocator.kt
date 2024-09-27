@@ -1,5 +1,6 @@
 package com.example.unsplashapp.di
 
+import android.app.Application
 import android.content.Context
 import androidx.annotation.MainThread
 import com.bumptech.glide.Glide
@@ -35,14 +36,17 @@ object UnsplashServiceLocator {
     _application = application
   }
   
-  @get:MainThread
+
   // indicate that a function or property should be accessed or executed on the main thread.
   // Using @get:MainThread ensures that the annotated function or property is accessed on the main thread,
   // helping to avoid such issues.
-  val application: UnsplashApplication
-    get() = checkNotNull(_application) {
-      "UnsplashServiceLocator must be initialized. " + "Call UnsplashServiceLocator.initWith(this) in your Application class."
-    }
+//  @get:MainThread
+//  val application: UnsplashApplication
+//    get() = checkNotNull(_application) {
+//      "UnsplashServiceLocator must be initialized. " + "Call UnsplashServiceLocator.initWith(this) in your Application class."
+//    }
+  
+  fun provideApplication(): Application = checkNotNull(_application)
   
   // setting up an HttpLoggingInterceptor for logging HTTP requests and responses.
 
