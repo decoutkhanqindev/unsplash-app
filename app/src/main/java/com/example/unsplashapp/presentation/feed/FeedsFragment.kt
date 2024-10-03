@@ -16,6 +16,9 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
+// @AndroidEntryPoint is a Hilt annotation that you can use on Android classes
+//that need to receive dependencies from Hilt.
+
 @AndroidEntryPoint
 class FeedsFragment : BaseFragment<FragmentFeedsBinding>(
   inflate = FragmentFeedsBinding::inflate

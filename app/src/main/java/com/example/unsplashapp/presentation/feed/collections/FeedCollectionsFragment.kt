@@ -21,6 +21,9 @@ import com.example.unsplashapp.presentation.feed.collections.model.CollectionIte
 import com.example.unsplashapp.presentation.feed.state.FeedsUiState
 import dagger.hilt.android.AndroidEntryPoint
 
+// @AndroidEntryPoint is a Hilt annotation that you can use on Android classes
+//that need to receive dependencies from Hilt.
+
 @AndroidEntryPoint
 class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
   inflate = FragmentFeedCollectionsBinding::inflate

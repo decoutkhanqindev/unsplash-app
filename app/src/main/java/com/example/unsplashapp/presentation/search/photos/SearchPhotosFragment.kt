@@ -15,6 +15,9 @@ import com.example.unsplashapp.presentation.search.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.Disposable
 
+// @AndroidEntryPoint is a Hilt annotation that you can use on Android classes
+//that need to receive dependencies from Hilt.
+
 @AndroidEntryPoint
 class SearchPhotosFragment : BaseFragment<FragmentSearchPhotosBinding>(
   inflate = FragmentSearchPhotosBinding::inflate

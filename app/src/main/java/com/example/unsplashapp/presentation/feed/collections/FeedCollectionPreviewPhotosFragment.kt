@@ -14,6 +14,9 @@ import com.example.unsplashapp.presentation.feed.collections.model.CollectionIte
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemPreviewPhotoModel.Companion.toCollectionItemPreviewPhotoModel
 import dagger.hilt.android.AndroidEntryPoint
 
+// @AndroidEntryPoint is a Hilt annotation that you can use on Android classes
+//that need to receive dependencies from Hilt.
+
 @AndroidEntryPoint
 class FeedCollectionPreviewPhotosFragment :
   BaseFragment<FragmentFeedCollectionItemPreviewPhotosBinding>(
