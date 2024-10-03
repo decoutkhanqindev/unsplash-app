@@ -14,7 +14,9 @@ import com.example.unsplashapp.presentation.feed.photos.FeedPhotosFragment
 import com.example.unsplashapp.presentation.search.SearchFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FeedsFragment : BaseFragment<FragmentFeedsBinding>(
   inflate = FragmentFeedsBinding::inflate
 ) {

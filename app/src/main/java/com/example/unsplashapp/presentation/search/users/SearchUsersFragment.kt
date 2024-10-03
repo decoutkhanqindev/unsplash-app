@@ -12,8 +12,10 @@ import com.example.unsplashapp.di.UnsplashServiceLocator
 import com.example.unsplashapp.presentation.search.SearchViewModel
 import com.example.unsplashapp.presentation.search.users.adapter.UserItemAdapter
 import com.example.unsplashapp.presentation.search.users.model.UserItemModel
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.Disposable
 
+@AndroidEntryPoint
 class SearchUsersFragment : BaseFragment<FragmentSearchUsersBinding>(
   inflate = FragmentSearchUsersBinding::inflate
 ) {

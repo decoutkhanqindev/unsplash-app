@@ -15,7 +15,9 @@ import com.example.unsplashapp.presentation.search.photos.SearchPhotosFragment
 import com.example.unsplashapp.presentation.search.users.SearchUsersFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(
   inflate = FragmentSearchBinding::inflate
 ) {

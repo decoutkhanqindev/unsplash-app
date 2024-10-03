@@ -12,7 +12,9 @@ import com.example.unsplashapp.presentation.feed.collections.adapter.CollectionI
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemPreviewPhotoModel
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemPreviewPhotoModel.Companion.toCollectionItemPreviewPhotoModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FeedCollectionPreviewPhotosFragment :
   BaseFragment<FragmentFeedCollectionItemPreviewPhotosBinding>(
     inflate = FragmentFeedCollectionItemPreviewPhotosBinding::inflate

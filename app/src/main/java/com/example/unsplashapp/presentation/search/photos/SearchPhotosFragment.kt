@@ -12,8 +12,10 @@ import com.example.unsplashapp.di.UnsplashServiceLocator
 import com.example.unsplashapp.presentation.feed.photos.adapter.PhotoItemAdapter
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
 import com.example.unsplashapp.presentation.search.SearchViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.Disposable
 
+@AndroidEntryPoint
 class SearchPhotosFragment : BaseFragment<FragmentSearchPhotosBinding>(
   inflate = FragmentSearchPhotosBinding::inflate
 ) {

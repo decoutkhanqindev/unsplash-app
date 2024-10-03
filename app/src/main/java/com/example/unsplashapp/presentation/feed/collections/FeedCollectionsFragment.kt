@@ -19,7 +19,9 @@ import com.example.unsplashapp.presentation.feed.collections.adapter.CollectionI
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel.CREATOR.toCollectionItemModel
 import com.example.unsplashapp.presentation.feed.state.FeedsUiState
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
   inflate = FragmentFeedCollectionsBinding::inflate
 ) {

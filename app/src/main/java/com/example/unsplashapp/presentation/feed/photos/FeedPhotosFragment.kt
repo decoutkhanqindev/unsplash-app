@@ -17,7 +17,9 @@ import com.example.unsplashapp.presentation.feed.photos.adapter.PhotoItemAdapter
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel.Companion.toPhotoItemModel
 import com.example.unsplashapp.presentation.feed.state.FeedsUiState
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FeedPhotosFragment : BaseFragment<FragmentFeedPhotosBinding>(
   inflate = FragmentFeedPhotosBinding::inflate
 ) {
