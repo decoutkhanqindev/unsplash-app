@@ -39,15 +39,19 @@ class SearchViewModel(private val repository: UnsplashRepository) : ViewModel() 
   val searchUsersSubject: Observable<List<UserItemModel>> get() = _searchUsersSubject.hide()
   
   private val searchPhotosDisposable: Disposable =
-    generateSearchItemsObservable<PhotoItemModel>().subscribe(
-      /* onNext = */ { _searchPhotosSubject.onNext(it) },
-      /* onError = */ { Log.d("SearchViewModel", "searchPhotosDisposable:  $it") }
-    )
+    generateSearchItemsObservable<PhotoItemModel>()
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(
+        /* onNext = */ { _searchPhotosSubject.onNext(it) },
+        /* onError = */ { Log.d("SearchViewModel", "searchPhotosDisposable:  $it") }
+      )
   private val searchUsersDisposable: Disposable =
-    generateSearchItemsObservable<UserItemModel>().subscribe(
-      /* onNext = */ { _searchUsersSubject.onNext(it) },
-      /* onError = */ { Log.d("SearchViewModel", "searchUsersDisposable:  $it") }
-    )
+    generateSearchItemsObservable<UserItemModel>()
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(
+        /* onNext = */ { _searchUsersSubject.onNext(it) },
+        /* onError = */{ Log.d("SearchViewModel", "searchUsersDisposable:  $it") }
+      )
   
   //  // reified is check type at runtime.
 //  private inline fun <reified T> generateSearchItemsLiveData(): LiveData<List<T>> =
@@ -70,31 +74,30 @@ class SearchViewModel(private val repository: UnsplashRepository) : ViewModel() 
       }.onErrorReturn { e: Throwable ->
         Log.d("SearchViewModel", "generateSearchItemsObservable: ${e.message}")
         emptyList()
-      }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+      }.subscribeOn(Schedulers.io())
   
   @Suppress("UNCHECKED_CAST")
   // reified is check type at at runtime.
-  private inline fun <reified T> searchItems(query: String): Single<List<T>> =
-    when (T::class) {
-      PhotoItemModel::class -> repository.searchPhotosByRxJava(query, 1, 30)
-        .map { response: SearchPhotosResponse ->
-          response.results.map { result: PhotoItemResponse ->
-            result.toPhotoItemModel()
-          }
-        } as Single<List<T>>
-      
-      UserItemModel::class -> repository.searchUsersByRxJava(query, 1, 30)
-        .map { response: SearchUsersResponse ->
-          response.results.map { result: UserItemResponse ->
-            result.toUserItemModel()
-          }
-        } as Single<List<T>>
-      
-      else -> throw IllegalArgumentException("Unsupported type")
-    }.onErrorReturn { e: Throwable ->
-      Log.d("SearchViewModel", "searchItems: ${e.message}")
-      emptyList()
-    }
+  private inline fun <reified T> searchItems(query: String): Single<List<T>> = when (T::class) {
+    PhotoItemModel::class -> repository.searchPhotosByRxJava(query, 1, 30)
+      .map { response: SearchPhotosResponse ->
+        response.results.map { result: PhotoItemResponse ->
+          result.toPhotoItemModel()
+        }
+      } as Single<List<T>>
+    
+    UserItemModel::class -> repository.searchUsersByRxJava(query, 1, 30)
+      .map { response: SearchUsersResponse ->
+        response.results.map { result: UserItemResponse ->
+          result.toUserItemModel()
+        }
+      } as Single<List<T>>
+    
+    else -> throw IllegalArgumentException("Unsupported type")
+  }.onErrorReturn { e: Throwable ->
+    Log.d("SearchViewModel", "searchItems: ${e.message}")
+    emptyList()
+  }
   
   fun setQuery(query: String) {
     _searchQuerySubject.onNext(query)
