@@ -23,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class FeedsFragment : BaseFragment<FragmentFeedsBinding>(
   inflate = FragmentFeedsBinding::inflate
 ) {
+  
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     

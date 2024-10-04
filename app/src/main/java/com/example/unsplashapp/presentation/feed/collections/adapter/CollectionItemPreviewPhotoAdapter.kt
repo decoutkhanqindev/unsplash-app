@@ -34,7 +34,9 @@ class CollectionItemPreviewPhotoAdapter(
     
     fun bind(item: CollectionItemPreviewPhotoModel) {
       binding.run {
-        requestManager.load(item.urls.regular).fitCenter().centerCrop()
+        requestManager.load(item.urls.regular)
+          .fitCenter()
+          .centerCrop()
           .transition(DrawableTransitionOptions.withCrossFade())
           .into(collectionItemPreviewPhotoImage)
         

@@ -17,9 +17,9 @@ import com.example.unsplashapp.databinding.FragmentFeedCollectionsBinding
 import com.example.unsplashapp.presentation.feed.FeedsViewModel
 import com.example.unsplashapp.presentation.feed.collections.adapter.CollectionItemAdapter
 import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
-import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel.CREATOR.toCollectionItemModel
 import com.example.unsplashapp.presentation.feed.state.FeedsUiState
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.disposables.Disposable
 import javax.inject.Inject
 
 // @AndroidEntryPoint is a Hilt annotation that you can use on Android classes
@@ -29,10 +29,13 @@ import javax.inject.Inject
 class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
   inflate = FragmentFeedCollectionsBinding::inflate
 ) {
+  
   companion object {
     fun newInstance(): FeedCollectionsFragment = FeedCollectionsFragment()
     private const val VISIBLE_THRESHOLD = 2 // -> 2 items is visible
   }
+  
+  private lateinit var disposable: Disposable
   
   @Inject
   internal lateinit var repository: UnsplashRepository
@@ -41,7 +44,7 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
     viewModelFactory {
       addInitializer(FeedsViewModel::class) {
         FeedsViewModel(getItems = { page: Int, perPage: Int ->
-          repository.getCollections(page, perPage).map { it.toCollectionItemModel() }
+          repository.getCollections(page, perPage)
         })
       }
     }
@@ -71,27 +74,50 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
   }
   
   private fun bindViewModel() {
-    viewModel.feedsUiState.observe(viewLifecycleOwner) { collectionsUiState: FeedsUiState<CollectionItemModel> ->
-      when (collectionsUiState) {
-        FeedsUiState.FirstPageLoading -> { // -> show loading
-          binding.collectionsProgressCircular.isVisible = true
-          binding.collectionsButtonRetry.isVisible = false
-          collectionItemAdapter.submitList(emptyList())
-        }
-        
-        FeedsUiState.FirstPageError -> {  // -> show error
-          binding.collectionsProgressCircular.isVisible = false
-          binding.collectionsButtonRetry.isVisible = true
-          collectionItemAdapter.submitList(emptyList())
-        }
-        
-        is FeedsUiState.Content -> { // -> show content
-          binding.collectionsProgressCircular.isVisible = false
-          binding.collectionsButtonRetry.isVisible = false
-          collectionItemAdapter.submitList(collectionsUiState.items)
+//    viewModel.feedsUiSubject.observe(viewLifecycleOwner) { collectionsUiState: FeedsUiState<CollectionItemModel> ->
+//      when (collectionsUiState) {
+//        FeedsUiState.FirstPageLoading -> { // -> show loading
+//          binding.collectionsProgressCircular.isVisible = true
+//          binding.collectionsButtonRetry.isVisible = false
+//          collectionItemAdapter.submitList(emptyList())
+//        }
+//
+//        FeedsUiState.FirstPageError -> {  // -> show error
+//          binding.collectionsProgressCircular.isVisible = false
+//          binding.collectionsButtonRetry.isVisible = true
+//          collectionItemAdapter.submitList(emptyList())
+//        }
+//
+//        is FeedsUiState.Content -> { // -> show content
+//          binding.collectionsProgressCircular.isVisible = false
+//          binding.collectionsButtonRetry.isVisible = false
+//          collectionItemAdapter.submitList(collectionsUiState.items)
+//        }
+//      }
+//    }
+    
+    disposable =
+      viewModel.feedsUiSubject.subscribe { collectionsUiState: FeedsUiState<CollectionItemModel> ->
+        when (collectionsUiState) {
+          FeedsUiState.FirstPageLoading -> { // -> show loading
+            binding.collectionsProgressCircular.isVisible = true
+            binding.collectionsButtonRetry.isVisible = false
+            collectionItemAdapter.submitList(emptyList())
+          }
+          
+          FeedsUiState.FirstPageError -> {  // -> show error
+            binding.collectionsProgressCircular.isVisible = false
+            binding.collectionsButtonRetry.isVisible = true
+            collectionItemAdapter.submitList(emptyList())
+          }
+          
+          is FeedsUiState.Content -> { // -> show content
+            binding.collectionsProgressCircular.isVisible = false
+            binding.collectionsButtonRetry.isVisible = false
+            collectionItemAdapter.submitList(collectionsUiState.items)
+          }
         }
       }
-    }
     
     // config to load next page
     val linearLayoutManager: LinearLayoutManager =
@@ -140,6 +166,7 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
   
   override fun onDestroyView() {
     binding.collectionsRecyclerView.adapter = null // -> avoid memory leak
+    disposable.dispose()
     super.onDestroyView()
   }
 }

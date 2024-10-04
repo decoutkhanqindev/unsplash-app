@@ -51,6 +51,7 @@ class FeedCollectionPreviewPhotosFragment :
       // map PreviewPhoto to CollectionItemPreviewPhotoModel
       val previewPhotoItems: List<CollectionItemPreviewPhotoModel>? =
         item?.previewPhotos?.map { it.toCollectionItemPreviewPhotoModel() }
+      
       collectionItemPreviewPhotoAdapter!!.submitList(previewPhotoItems)
       
       collectionItemPreviewPhotosTitle.text = item?.title
@@ -59,8 +60,12 @@ class FeedCollectionPreviewPhotosFragment :
         append("by ")
         append(item?.user?.username ?: "Unknown User")
       }
-      Glide.with(requireParentFragment()).load(item?.user?.profileImage?.small).fitCenter()
-        .centerCrop().into(collectionItemPreviewPhotosUserImage)
+      
+      Glide.with(requireParentFragment())
+        .load(item?.user?.profileImage?.small)
+        .fitCenter()
+        .centerCrop()
+        .into(collectionItemPreviewPhotosUserImage)
     }
   }
   

@@ -10,14 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.data.remote.repository.UnsplashRepository
-import com.example.unsplashapp.data.remote.response.PhotoItemResponse
 import com.example.unsplashapp.databinding.FragmentFeedPhotosBinding
 import com.example.unsplashapp.presentation.feed.FeedsViewModel
 import com.example.unsplashapp.presentation.feed.photos.adapter.PhotoItemAdapter
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
-import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel.Companion.toPhotoItemModel
 import com.example.unsplashapp.presentation.feed.state.FeedsUiState
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.disposables.Disposable
 import javax.inject.Inject
 
 // @AndroidEntryPoint is a Hilt annotation that you can use on Android classes
@@ -27,10 +26,13 @@ import javax.inject.Inject
 class FeedPhotosFragment : BaseFragment<FragmentFeedPhotosBinding>(
   inflate = FragmentFeedPhotosBinding::inflate
 ) {
+
   companion object {
     fun newInstance(): FeedPhotosFragment = FeedPhotosFragment()
     private const val VISIBLE_THRESHOLD = 2 // -> 2 items is visible
   }
+  
+  private lateinit var disposable: Disposable
   
   @Inject
   internal lateinit var repository: UnsplashRepository
@@ -39,7 +41,7 @@ class FeedPhotosFragment : BaseFragment<FragmentFeedPhotosBinding>(
     viewModelFactory {
       addInitializer(FeedsViewModel::class) {
         FeedsViewModel(getItems = { page: Int, perPage: Int ->
-          repository.getPhotos(page, perPage).map { it: PhotoItemResponse -> it.toPhotoItemModel() }
+          repository.getPhotos(page, perPage)
         })
       }
     }
@@ -65,27 +67,50 @@ class FeedPhotosFragment : BaseFragment<FragmentFeedPhotosBinding>(
   }
   
   private fun bindViewModel() {
-    viewModel.feedsUiState.observe(viewLifecycleOwner) { photosUiState: FeedsUiState<PhotoItemModel> ->
+//    viewModel.feedsUiSubject.observe(viewLifecycleOwner) { photosUiState: FeedsUiState<PhotoItemModel> ->
+//      when (photosUiState) {
+//        FeedsUiState.FirstPageLoading -> {
+//          binding.photosProgressCircular.isVisible = true
+//          binding.photosButtonRetry.isVisible = false
+//          photoItemAdapter.submitList(emptyList())
+//        }
+//
+//        FeedsUiState.FirstPageError -> {
+//          binding.photosProgressCircular.isVisible = false
+//          binding.photosButtonRetry.isVisible = true
+//          photoItemAdapter.submitList(emptyList())
+//        }
+//
+//        is FeedsUiState.Content -> {
+//          binding.photosProgressCircular.isVisible = false
+//          binding.photosButtonRetry.isVisible = false
+//          photoItemAdapter.submitList(photosUiState.items)
+//        }
+//      }
+//    }
+    
+    disposable =
+      viewModel.feedsUiSubject.subscribe { photosUiState: FeedsUiState<PhotoItemModel> ->
       when (photosUiState) {
         FeedsUiState.FirstPageLoading -> {
           binding.photosProgressCircular.isVisible = true
           binding.photosButtonRetry.isVisible = false
           photoItemAdapter.submitList(emptyList())
         }
-        
+
         FeedsUiState.FirstPageError -> {
           binding.photosProgressCircular.isVisible = false
           binding.photosButtonRetry.isVisible = true
           photoItemAdapter.submitList(emptyList())
         }
-        
+
         is FeedsUiState.Content -> {
           binding.photosProgressCircular.isVisible = false
           binding.photosButtonRetry.isVisible = false
           photoItemAdapter.submitList(photosUiState.items)
         }
       }
-    }
+      }
     
     // config to load next page
     val linearLayoutManager: LinearLayoutManager =
@@ -103,6 +128,7 @@ class FeedPhotosFragment : BaseFragment<FragmentFeedPhotosBinding>(
   
   override fun onDestroyView() {
     binding.photosRecyclerView.adapter = null
+    disposable.dispose()
     super.onDestroyView()
   }
 }
