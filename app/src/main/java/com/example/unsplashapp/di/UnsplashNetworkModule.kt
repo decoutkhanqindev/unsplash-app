@@ -28,6 +28,13 @@ Modules are responsible for providing dependencies that Hilt cannot create by it
 SingletonComponent::class: Components are containers for dependencies, and the SingletonComponent
 is the top-level component in Hilt, meaning dependencies provided by this module will be available
 throughout the entire application's lifecycle.
+
+@Provides: This annotation tells Hilt that the function it's attached to is a provider function.
+Provider functions are responsible for creating and returning instances of dependencies.
+
+@Singleton: This annotation indicates that the dependency provided by this function should be a singleton.
+A singleton means that only one instance of the dependency will be created and shared throughout the
+entire application's lifecycle.
 */
 
 @Module
