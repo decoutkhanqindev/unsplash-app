@@ -14,8 +14,8 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
 import java.util.concurrent.TimeUnit
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 /*
@@ -37,26 +37,35 @@ A singleton means that only one instance of the dependency will be created and s
 entire application's lifecycle.
 */
 
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class UnsplashClientIdQualifier
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class UnsplashBaseURLQualifier
+
 @Module
 @InstallIn(SingletonComponent::class)
 object UnsplashNetworkModule {
-  private const val UNSPLASH_BASE_URL = "https://api.unsplash.com/"
+  
+  @Provides
+  @UnsplashClientIdQualifier
+  fun provideUnsplashClientId(): String = BuildConfig.UNSPLASH_ACCESS_KEY
+  
+  @Provides
+  @UnsplashBaseURLQualifier
+  fun provideUnsplashBaseURL(): String = "https://api.unsplash.com/"
   
   @Provides
   @Singleton
-  fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
-    HttpLoggingInterceptor().apply {
-      level = if (BuildConfig.DEBUG) {
-        HttpLoggingInterceptor.Level.BODY
-      } else {
-        HttpLoggingInterceptor.Level.NONE
-      }
+  fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+    level = if (BuildConfig.DEBUG) {
+      HttpLoggingInterceptor.Level.BODY
+    } else {
+      HttpLoggingInterceptor.Level.NONE
     }
-  
-  @Provides
-  @Singleton
-  fun provideAuthorizationInterceptor(): AuthorizationInterceptor =
-    AuthorizationInterceptor(clientId = BuildConfig.UNSPLASH_ACCESS_KEY)
+  }
   
   @Provides
   @Singleton
@@ -78,9 +87,11 @@ object UnsplashNetworkModule {
   
   @Provides
   @Singleton
-  fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit =
+  fun provideRetrofit(
+    okHttpClient: OkHttpClient, moshi: Moshi, @UnsplashBaseURLQualifier baseUrl: String
+  ): Retrofit =
     Retrofit.Builder()
-      .baseUrl(UNSPLASH_BASE_URL)
+      .baseUrl(baseUrl)
       .client(okHttpClient)
       .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
       .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -88,5 +99,5 @@ object UnsplashNetworkModule {
   
   @Provides
   @Singleton
-  fun provideUnsplashService(retrofit: Retrofit): UnsplashApiService = retrofit.create()
+  fun provideUnsplashService(retrofit: Retrofit): UnsplashApiService = UnsplashApiService(retrofit)
 }
