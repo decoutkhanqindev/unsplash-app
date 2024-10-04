@@ -11,6 +11,7 @@ import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel.Companion.toPhotoItemModel
 import com.example.unsplashapp.presentation.search.users.model.UserItemModel
 import com.example.unsplashapp.presentation.search.users.model.UserItemModel.Companion.toUserItemModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -18,8 +19,10 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class SearchViewModel(private val repository: UnsplashRepository) : ViewModel() {
+@HiltViewModel
+class SearchViewModel @Inject constructor(private val repository: UnsplashRepository) : ViewModel() {
 //  private val _searchQuery: MutableLiveData<String> = MutableLiveData<String>("")
 //  private val searchQuery: LiveData<String> get() = _searchQuery
 //
