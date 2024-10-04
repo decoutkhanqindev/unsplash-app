@@ -15,7 +15,7 @@ data class PhotoItemResponse(
   @Json(name = "width") val width: Int, // 8736
   @Json(name = "height") val height: Int, // 11648
   @Json(name = "color") val color: String, // #260c0c
-  @Json(name = "blur_hash") val blurHash: String, // LLFXL_x]E1EM11f6s9kB4.M{kDso
+  @Json(name = "blur_hash") val blurHash: String?, // LLFXL_x]E1EM11f6s9kB4.M{kDso
   @Json(name = "description") val description: String?, // Image by Planet Volumes
   @Json(name = "alt_description") val altDescription: String, // A person holding a nintendo wii game controller
   @Json(name = "breadcrumbs") val breadcrumbs: List<Any>,
