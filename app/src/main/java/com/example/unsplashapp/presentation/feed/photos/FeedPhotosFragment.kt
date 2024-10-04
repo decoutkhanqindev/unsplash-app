@@ -9,15 +9,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.unsplashapp.core.base.BaseFragment
+import com.example.unsplashapp.data.remote.repository.UnsplashRepository
 import com.example.unsplashapp.data.remote.response.PhotoItemResponse
 import com.example.unsplashapp.databinding.FragmentFeedPhotosBinding
-import com.example.unsplashapp.di.UnsplashServiceLocator
 import com.example.unsplashapp.presentation.feed.FeedsViewModel
 import com.example.unsplashapp.presentation.feed.photos.adapter.PhotoItemAdapter
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
 import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel.Companion.toPhotoItemModel
 import com.example.unsplashapp.presentation.feed.state.FeedsUiState
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 // @AndroidEntryPoint is a Hilt annotation that you can use on Android classes
 //that need to receive dependencies from Hilt.
@@ -31,12 +32,14 @@ class FeedPhotosFragment : BaseFragment<FragmentFeedPhotosBinding>(
     private const val VISIBLE_THRESHOLD = 2 // -> 2 items is visible
   }
   
+  @Inject
+  internal lateinit var repository: UnsplashRepository
+  
   private val viewModel: FeedsViewModel<PhotoItemModel> by viewModels(factoryProducer = {
     viewModelFactory {
       addInitializer(FeedsViewModel::class) {
         FeedsViewModel(getItems = { page: Int, perPage: Int ->
-          UnsplashServiceLocator.provideUnsplashRepository().getPhotos(page, perPage)
-            .map { it: PhotoItemResponse -> it.toPhotoItemModel() }
+          repository.getPhotos(page, perPage).map { it: PhotoItemResponse -> it.toPhotoItemModel() }
         })
       }
     }
