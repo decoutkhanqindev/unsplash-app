@@ -85,7 +85,7 @@ class SearchViewModel @Inject constructor(private val repository: UnsplashReposi
   private inline fun <reified T> searchItems(query: String): Single<List<T>> = when (T::class) {
     
     PhotoItemModel::class -> repository
-      .searchPhotosByRxJava(query, 1, 30)
+      .searchPhotos(query, 1, 30)
       .map { response: SearchPhotosResponse ->
         response.results.map { result: PhotoItemResponse ->
           result.toPhotoItemModel()
@@ -93,7 +93,7 @@ class SearchViewModel @Inject constructor(private val repository: UnsplashReposi
       } as Single<List<T>>
     
     UserItemModel::class -> repository
-      .searchUsersByRxJava(query, 1, 30)
+      .searchUsers(query, 1, 30)
       .map { response: SearchUsersResponse ->
         response.results.map { result: UserItemResponse ->
           result.toUserItemModel()
