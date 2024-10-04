@@ -1,18 +1,17 @@
 package com.example.unsplashapp.data.remote.repository
 
-import com.example.unsplashapp.data.remote.response.CollectionItemResponse
-import com.example.unsplashapp.data.remote.response.PhotoItemResponse
-import com.example.unsplashapp.data.remote.response.SearchPhotosResponse
-import com.example.unsplashapp.data.remote.response.SearchUsersResponse
+import com.example.unsplashapp.presentation.feed.collections.model.CollectionItemModel
+import com.example.unsplashapp.presentation.feed.photos.model.PhotoItemModel
+import com.example.unsplashapp.presentation.search.users.model.UserItemModel
 import io.reactivex.rxjava3.core.Single
 
 // abstractions data source
 interface UnsplashRepository {
-  fun getCollections(page: Int, perPage: Int): Single<List<CollectionItemResponse>>
+  fun getCollections(page: Int, perPage: Int): Single<List<CollectionItemModel>>
   
-  fun getPhotos(page: Int, perPage: Int): Single<List<PhotoItemResponse>>
+  fun getPhotos(page: Int, perPage: Int): Single<List<PhotoItemModel>>
   
-  fun searchPhotos(query: String, page: Int, perPage: Int): Single<SearchPhotosResponse>
+  fun searchPhotos(query: String, page: Int, perPage: Int): Single<List<PhotoItemModel>>
   
-  fun searchUsers(query: String, page: Int, perPage: Int): Single<SearchUsersResponse>
+  fun searchUsers(query: String, page: Int, perPage: Int): Single<List<UserItemModel>>
 }
