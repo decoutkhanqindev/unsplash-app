@@ -27,12 +27,12 @@ interface UnsplashApiService {
   ): Single<List<PhotoItemResponse>>
   
   @GET("search/photos")
-  fun searchPhotosByRxJava(
+  fun searchPhotos(
     @Query("query") query: String, @Query("page") page: Int, @Query("per_page") perPage: Int
   ): Single<SearchPhotosResponse>
   
   @GET("search/users")
-  fun searchUsersByRxJava(
+  fun searchUsers(
     @Query("query") query: String, @Query("page") page: Int, @Query("per_page") perPage: Int
   ): Single<SearchUsersResponse>
 }
