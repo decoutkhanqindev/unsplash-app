@@ -5,16 +5,10 @@ import com.example.unsplashapp.data.remote.response.PhotoItemResponse
 import com.example.unsplashapp.data.remote.response.SearchPhotosResponse
 import com.example.unsplashapp.data.remote.response.SearchUsersResponse
 import io.reactivex.rxjava3.core.Single
-import retrofit2.Retrofit
-import retrofit2.create
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface UnsplashApiService {
-  companion object {
-    operator fun invoke(retrofit: Retrofit): UnsplashApiService = retrofit.create()
-  }
-  
   @GET("collections")
   suspend fun getCollections(
     @Query("page") page: Int, @Query("per_page") perPage: Int
