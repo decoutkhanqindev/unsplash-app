@@ -6,14 +6,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.unsplashapp.core.base.BaseFragment
-import com.example.unsplashapp.data.remote.repository.UnsplashRepository
 import com.example.unsplashapp.databinding.FragmentSearchUsersBinding
 import com.example.unsplashapp.presentation.search.SearchViewModel
 import com.example.unsplashapp.presentation.search.users.adapter.UserItemAdapter
 import com.example.unsplashapp.presentation.search.users.model.UserItemModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.Disposable
-import javax.inject.Inject
 
 // @AndroidEntryPoint is a Hilt annotation that you can use on Android classes
 //that need to receive dependencies from Hilt.
@@ -22,24 +20,14 @@ import javax.inject.Inject
 class SearchUsersFragment : BaseFragment<FragmentSearchUsersBinding>(
   inflate = FragmentSearchUsersBinding::inflate
 ) {
+  
   companion object {
     fun newInstance(): SearchUsersFragment = SearchUsersFragment()
   }
   
   private lateinit var disposable: Disposable
   
-  @Inject
-  internal lateinit var repository: UnsplashRepository
-  
   private val viewModel: SearchViewModel by activityViewModels()
-  
-//  private val viewModel: SearchViewModel by activityViewModels<SearchViewModel>(factoryProducer = {
-//    viewModelFactory {
-//      addInitializer(SearchViewModel::class) {
-//        SearchViewModel(repository = UnsplashServiceLocator.provideUnsplashRepository())
-//      }
-//    }
-//  })
   
   private val userItemAdapter: UserItemAdapter by lazy {
     UserItemAdapter(Glide.with(this))
@@ -61,17 +49,13 @@ class SearchUsersFragment : BaseFragment<FragmentSearchUsersBinding>(
   }
   
   private fun bindViewModel() {
-//    viewModel.searchUsersLiveData.observe(viewLifecycleOwner) { items: List<UserItemModel> ->
-//      userItemAdapter.submitList(items)
-//    }
-    
     disposable = viewModel.searchUsersSubject.subscribe { items: List<UserItemModel> ->
       userItemAdapter.submitList(items)
     }
   }
   
   override fun onDestroyView() {
-    super.onDestroyView()
     disposable.dispose()
+    super.onDestroyView()
   }
 }
