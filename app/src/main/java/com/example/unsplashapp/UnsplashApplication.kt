@@ -1,7 +1,6 @@
 package com.example.unsplashapp
 
 import android.app.Application
-import com.example.unsplashapp.di.UnsplashServiceLocator
 import dagger.hilt.android.HiltAndroidApp
 
 /*
@@ -16,8 +15,8 @@ can access the dependency container through this interface.
 
 @HiltAndroidApp
 class UnsplashApplication : Application() {
-  override fun onCreate() {
-    super.onCreate()
-    UnsplashServiceLocator.initWith(application = this)
-  }
+//  override fun onCreate() {
+//    super.onCreate()
+//    UnsplashServiceLocator.initWith(application = this)
+//  }
 }
