@@ -32,6 +32,6 @@ entire application's lifecycle.
 @InstallIn(SingletonComponent::class)
 interface UnsplashRepositoryModule {
   @Binds
-  @Singleton
-  fun bindUnsplashRepository(repositoryImpl: UnsplashRepositoryImpl) : UnsplashRepository
+  @Singleton // <- scope
+  fun bindUnsplashRepository(repositoryImpl: UnsplashRepositoryImpl): UnsplashRepository
 }
