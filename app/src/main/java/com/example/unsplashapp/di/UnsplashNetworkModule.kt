@@ -25,7 +25,7 @@ Modules are responsible for providing dependencies that Hilt cannot create by it
 
 @InstallIn(): This annotation specifies the component that the module should be installed in.
 
-SingletonComponent::class: Components are containers for dependencies, and the SingletonComponent
+@SingletonComponent::class: Components are containers for dependencies, and the SingletonComponent
 is the top-level component in Hilt, meaning dependencies provided by this module will be available
 throughout the entire application's lifecycle.
 
