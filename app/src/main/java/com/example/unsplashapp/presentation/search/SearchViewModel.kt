@@ -71,25 +71,30 @@ class SearchViewModel @Inject constructor(private val repository: UnsplashReposi
 //
   // reified is check type at runtime.
   private inline fun <reified T> generateSearchItemsObservable(): Observable<List<T>> =
-    searchQuerySubject.debounce(650L, TimeUnit.MILLISECONDS).distinctUntilChanged()
-      .switchMap { query: String ->
-        searchItems<T>(query).toObservable()
-      }.onErrorReturn { e: Throwable ->
+    searchQuerySubject
+      .debounce(650L, TimeUnit.MILLISECONDS)
+      .distinctUntilChanged()
+      .switchMap { query: String -> searchItems<T>(query).toObservable() }
+      .onErrorReturn { e: Throwable ->
         Log.d("SearchViewModel", "generateSearchItemsObservable: ${e.message}")
         emptyList()
-      }.subscribeOn(Schedulers.io())
+      }
+      .subscribeOn(Schedulers.io())
   
   @Suppress("UNCHECKED_CAST")
   // reified is check type at at runtime.
   private inline fun <reified T> searchItems(query: String): Single<List<T>> = when (T::class) {
-    PhotoItemModel::class -> repository.searchPhotosByRxJava(query, 1, 30)
+    
+    PhotoItemModel::class -> repository
+      .searchPhotosByRxJava(query, 1, 30)
       .map { response: SearchPhotosResponse ->
         response.results.map { result: PhotoItemResponse ->
           result.toPhotoItemModel()
         }
       } as Single<List<T>>
     
-    UserItemModel::class -> repository.searchUsersByRxJava(query, 1, 30)
+    UserItemModel::class -> repository
+      .searchUsersByRxJava(query, 1, 30)
       .map { response: SearchUsersResponse ->
         response.results.map { result: UserItemResponse ->
           result.toUserItemModel()
