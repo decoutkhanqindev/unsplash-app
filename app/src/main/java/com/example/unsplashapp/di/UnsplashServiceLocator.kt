@@ -1,14 +1,7 @@
 package com.example.unsplashapp.di
 
 import android.app.Application
-import android.content.Context
 import androidx.annotation.MainThread
-import com.bumptech.glide.Glide
-import com.bumptech.glide.Registry
-import com.bumptech.glide.annotation.GlideModule
-import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
-import com.bumptech.glide.load.model.GlideUrl
-import com.bumptech.glide.module.AppGlideModule
 import com.example.unsplashapp.BuildConfig
 import com.example.unsplashapp.UnsplashApplication
 import com.example.unsplashapp.data.remote.UnsplashApiService
@@ -22,12 +15,12 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.io.InputStream
 import java.util.concurrent.TimeUnit
 
-const val UNSPLASH_BASE_URL = "https://api.unsplash.com/"
 
 object UnsplashServiceLocator {
+  private const val UNSPLASH_BASE_URL = "https://api.unsplash.com/"
+  
   // @MainThread
   private var _application: UnsplashApplication? = null
   
@@ -36,7 +29,6 @@ object UnsplashServiceLocator {
     _application = application
   }
   
-
   // indicate that a function or property should be accessed or executed on the main thread.
   // Using @get:MainThread ensures that the annotated function or property is accessed on the main thread,
   // helping to avoid such issues.
@@ -89,7 +81,7 @@ object UnsplashServiceLocator {
 //      .build()
 //  }
   
-  private fun provideOkHttpClient(): OkHttpClient =
+  internal fun provideOkHttpClient(): OkHttpClient =
     OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS)
       .writeTimeout(30, TimeUnit.SECONDS)
       .addNetworkInterceptor(provideHttpLoggingInterceptor()) // -> logging HTTP requests and responses.
@@ -121,21 +113,4 @@ object UnsplashServiceLocator {
   
   fun provideUnsplashRepository(): UnsplashRepository =
     UnsplashRepositoryImpl(provideUnsplashService())
-  
-  @GlideModule
-  class UnsplashGlideModule : AppGlideModule() {
-    // replace Glide's default network library (HttpURLConnection) with OkHttpClient to load images from the internet.
-    
-    override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
-      super.registerComponents(context, glide, registry)
-      
-      // registry.replace: Replace Glide's default loader (HttpURLConnection) with OkHttpUrlLoader,
-      // using the OkHttpClient you configured in UnsplashServiceLocator.
-      registry.replace(
-        GlideUrl::class.java,
-        InputStream::class.java,
-        OkHttpUrlLoader.Factory(provideOkHttpClient())
-      )
-    }
-  }
 }
