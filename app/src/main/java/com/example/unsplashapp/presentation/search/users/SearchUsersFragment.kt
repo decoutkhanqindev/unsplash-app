@@ -3,10 +3,12 @@ package com.example.unsplashapp.presentation.search.users
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.unsplashapp.core.base.BaseFragment
 import com.example.unsplashapp.databinding.FragmentSearchUsersBinding
+import com.example.unsplashapp.di.UnsplashServiceLocator
 import com.example.unsplashapp.presentation.search.SearchViewModel
 import com.example.unsplashapp.presentation.search.users.adapter.UserItemAdapter
 import com.example.unsplashapp.presentation.search.users.model.UserItemModel
@@ -26,15 +28,13 @@ class SearchUsersFragment : BaseFragment<FragmentSearchUsersBinding>(
   
   private lateinit var disposable: Disposable
   
-//  private val viewModel: SearchViewModel by activityViewModels<SearchViewModel>(factoryProducer = {
-//    viewModelFactory {
-//      addInitializer(SearchViewModel::class) {
-//        SearchViewModel(repository = UnsplashServiceLocator.provideUnsplashRepository())
-//      }
-//    }
-//  })
-  
-  private val viewModel: SearchViewModel by activityViewModels()
+  private val viewModel: SearchViewModel by activityViewModels<SearchViewModel>(factoryProducer = {
+    viewModelFactory {
+      addInitializer(SearchViewModel::class) {
+        SearchViewModel(repository = UnsplashServiceLocator.provideUnsplashRepository())
+      }
+    }
+  })
   
   private val userItemAdapter: UserItemAdapter by lazy {
     UserItemAdapter(Glide.with(this))
