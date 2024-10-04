@@ -12,7 +12,7 @@ interface UnsplashRepository {
   
   fun getPhotos(page: Int, perPage: Int): Single<List<PhotoItemResponse>>
   
-  fun searchPhotosByRxJava(query: String, page: Int, perPage: Int): Single<SearchPhotosResponse>
+  fun searchPhotos(query: String, page: Int, perPage: Int): Single<SearchPhotosResponse>
   
-  fun searchUsersByRxJava(query: String, page: Int, perPage: Int): Single<SearchUsersResponse>
+  fun searchUsers(query: String, page: Int, perPage: Int): Single<SearchUsersResponse>
 }

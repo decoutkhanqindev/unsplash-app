@@ -23,11 +23,11 @@ class UnsplashRepositoryImpl @Inject constructor(
   override fun getPhotos(page: Int, perPage: Int): Single<List<PhotoItemResponse>> =
     unsplashApiService.getPhotos(page, perPage)
   
-  override fun searchPhotosByRxJava(
+  override fun searchPhotos(
     query: String, page: Int, perPage: Int
-  ): Single<SearchPhotosResponse> = unsplashApiService.searchPhotosByRxJava(query, page, perPage)
+  ): Single<SearchPhotosResponse> = unsplashApiService.searchPhotos(query, page, perPage)
   
-  override fun searchUsersByRxJava(
+  override fun searchUsers(
     query: String, page: Int, perPage: Int
-  ): Single<SearchUsersResponse> = unsplashApiService.searchUsersByRxJava(query, page, perPage)
+  ): Single<SearchUsersResponse> = unsplashApiService.searchUsers(query, page, perPage)
 }
