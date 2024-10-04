@@ -18,6 +18,14 @@ Modules are responsible for providing dependencies that Hilt cannot create by it
 SingletonComponent::class: Components are containers for dependencies, and the SingletonComponent
 is the top-level component in Hilt, meaning dependencies provided by this module will be available
 throughout the entire application's lifecycle.
+
+@Binds annotation is used in Dagger Hilt modules to tell Hilt how to provide an interface or abstract
+class by binding it to a concrete implementation. It's a way to declare dependencies when you have
+an interface and a single implementation of that interface.
+
+@Singleton: This annotation indicates that the dependency provided by this function should be a singleton.
+A singleton means that only one instance of the dependency will be created and shared throughout the
+entire application's lifecycle.
 */
 
 @Module
