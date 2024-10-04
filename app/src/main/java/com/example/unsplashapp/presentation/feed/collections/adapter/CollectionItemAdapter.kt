@@ -38,8 +38,11 @@ class CollectionItemAdapter(
     
     fun bind(item: CollectionItemModel) {
       binding.run {
-        requestManager.load(item.coverPhotoUrl).fitCenter().centerCrop()
-          .transition(DrawableTransitionOptions.withCrossFade()).into(collectionItemImage)
+        requestManager.load(item.coverPhotoUrl)
+          .fitCenter()
+          .centerCrop()
+          .transition(DrawableTransitionOptions.withCrossFade())
+          .into(collectionItemImage)
         
         collectionItemTitle.text = item.title
         collectionItemDescription.text = item.description ?: "No description ..."
