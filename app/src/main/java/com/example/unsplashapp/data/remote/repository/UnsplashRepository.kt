@@ -8,9 +8,9 @@ import io.reactivex.rxjava3.core.Single
 
 // abstractions data source
 interface UnsplashRepository {
-  suspend fun getCollections(page: Int, perPage: Int): List<CollectionItemResponse>
+  fun getCollections(page: Int, perPage: Int): Single<List<CollectionItemResponse>>
   
-  suspend fun getPhotos(page: Int, perPage: Int): List<PhotoItemResponse>
+  fun getPhotos(page: Int, perPage: Int): Single<List<PhotoItemResponse>>
   
   fun searchPhotosByRxJava(query: String, page: Int, perPage: Int): Single<SearchPhotosResponse>
   

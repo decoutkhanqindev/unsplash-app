@@ -17,10 +17,10 @@ class UnsplashRepositoryImpl @Inject constructor(
   private val unsplashApiService: UnsplashApiService
 ) : UnsplashRepository {
   
-  override suspend fun getCollections(page: Int, perPage: Int): List<CollectionItemResponse> =
+  override fun getCollections(page: Int, perPage: Int): Single<List<CollectionItemResponse>> =
     unsplashApiService.getCollections(page, perPage)
   
-  override suspend fun getPhotos(page: Int, perPage: Int): List<PhotoItemResponse> =
+  override fun getPhotos(page: Int, perPage: Int): Single<List<PhotoItemResponse>> =
     unsplashApiService.getPhotos(page, perPage)
   
   override fun searchPhotosByRxJava(
