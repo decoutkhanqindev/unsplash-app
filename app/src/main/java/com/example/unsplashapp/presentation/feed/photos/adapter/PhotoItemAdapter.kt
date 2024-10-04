@@ -24,13 +24,19 @@ class PhotoItemAdapter(
     
     fun bind(item: PhotoItemModel) {
       binding.run {
-        requestManager.load(item.urls.regular).fitCenter().centerCrop()
-          .transition(DrawableTransitionOptions.withCrossFade()).into(photoItemImage)
+        requestManager.load(item.urls.regular)
+          .fitCenter()
+          .centerCrop()
+          .transition(DrawableTransitionOptions.withCrossFade())
+          .into(photoItemImage)
         
         photoItemDescription.text = item.description ?: "No description..."
         
-        requestManager.load(item.user.profileImage.medium).fitCenter().centerCrop()
-          .transition(DrawableTransitionOptions.withCrossFade()).into(photoItemUserImage)
+        requestManager.load(item.user.profileImage.medium)
+          .fitCenter()
+          .centerCrop()
+          .transition(DrawableTransitionOptions.withCrossFade())
+          .into(photoItemUserImage)
         
         photoItemUserUsername.text = buildString {
           append("by ")
