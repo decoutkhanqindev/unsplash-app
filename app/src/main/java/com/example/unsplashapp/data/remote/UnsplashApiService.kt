@@ -24,16 +24,6 @@ interface UnsplashApiService {
   suspend fun getPhotos(
     @Query("page") page: Int, @Query("per_page") perPage: Int
   ): List<PhotoItemResponse>
-
-//  @GET("search/photos")
-//  suspend fun searchPhotos(
-//    @Query("query") query: String, @Query("page") page: Int, @Query("per_page") perPage: Int
-//  ): SearchPhotosResponse
-
-//  @GET("search/users")
-//  suspend fun searchUsers(
-//    @Query("query") query: String, @Query("page") page: Int, @Query("per_page") perPage: Int
-//  ): SearchUsersResponse
   
   @GET("search/photos")
   fun searchPhotosByRxJava(
