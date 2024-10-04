@@ -6,8 +6,14 @@ import com.example.unsplashapp.data.remote.response.PhotoItemResponse
 import com.example.unsplashapp.data.remote.response.SearchPhotosResponse
 import com.example.unsplashapp.data.remote.response.SearchUsersResponse
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
 
-class UnsplashRepositoryImpl(
+/*
+@Inject: This annotation tells Hilt that this constructor can be used to create an instance of
+the class and Hilt will analyze the constructor parameters and try to provide the necessary dependencies.
+*/
+
+class UnsplashRepositoryImpl @Inject constructor(
   private val unsplashApiService: UnsplashApiService
 ) : UnsplashRepository {
   
