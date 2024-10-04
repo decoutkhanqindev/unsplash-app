@@ -25,6 +25,7 @@ Supported classes: You can use @AndroidEntryPoint on a variety of Android classe
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+  
   private val binding: ActivityMainBinding by lazy(LazyThreadSafetyMode.NONE) {
     ActivityMainBinding.inflate(layoutInflater)
   }
