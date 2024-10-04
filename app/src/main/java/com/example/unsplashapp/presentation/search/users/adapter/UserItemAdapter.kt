@@ -29,8 +29,11 @@ class UserItemAdapter(
       binding.run {
         userItemUsername.text = item.username
         
-        requestManager.load(item.profileImage.medium).fitCenter().centerCrop()
-          .transition(DrawableTransitionOptions.withCrossFade()).into(userItemImage)
+        requestManager.load(item.profileImage.medium)
+          .fitCenter()
+          .centerCrop()
+          .transition(DrawableTransitionOptions.withCrossFade())
+          .into(userItemImage)
         
         userItemTwitterUsername.text = item.twitterUsername
         userItemInstagramUsername.text = item.instagramUsername
