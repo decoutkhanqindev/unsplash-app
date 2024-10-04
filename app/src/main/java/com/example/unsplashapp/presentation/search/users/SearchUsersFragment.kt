@@ -3,17 +3,17 @@ package com.example.unsplashapp.presentation.search.users
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.unsplashapp.core.base.BaseFragment
+import com.example.unsplashapp.data.remote.repository.UnsplashRepository
 import com.example.unsplashapp.databinding.FragmentSearchUsersBinding
-import com.example.unsplashapp.di.UnsplashServiceLocator
 import com.example.unsplashapp.presentation.search.SearchViewModel
 import com.example.unsplashapp.presentation.search.users.adapter.UserItemAdapter
 import com.example.unsplashapp.presentation.search.users.model.UserItemModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.Disposable
+import javax.inject.Inject
 
 // @AndroidEntryPoint is a Hilt annotation that you can use on Android classes
 //that need to receive dependencies from Hilt.
@@ -28,13 +28,18 @@ class SearchUsersFragment : BaseFragment<FragmentSearchUsersBinding>(
   
   private lateinit var disposable: Disposable
   
-  private val viewModel: SearchViewModel by activityViewModels<SearchViewModel>(factoryProducer = {
-    viewModelFactory {
-      addInitializer(SearchViewModel::class) {
-        SearchViewModel(repository = UnsplashServiceLocator.provideUnsplashRepository())
-      }
-    }
-  })
+  @Inject
+  internal lateinit var repository: UnsplashRepository
+  
+  private val viewModel: SearchViewModel by activityViewModels()
+  
+//  private val viewModel: SearchViewModel by activityViewModels<SearchViewModel>(factoryProducer = {
+//    viewModelFactory {
+//      addInitializer(SearchViewModel::class) {
+//        SearchViewModel(repository = UnsplashServiceLocator.provideUnsplashRepository())
+//      }
+//    }
+//  })
   
   private val userItemAdapter: UserItemAdapter by lazy {
     UserItemAdapter(Glide.with(this))
