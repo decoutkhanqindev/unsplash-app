@@ -111,7 +111,8 @@ class FeedCollectionsFragment : BaseFragment<FragmentFeedCollectionsBinding>(
     childFragmentManager.commit {
       setReorderingAllowed(true)
       addToBackStack(null)
-      replace<FeedCollectionPreviewPhotosFragment>(containerViewId = binding.collectionPreviewPhotosFragment.id,
+      replace<FeedCollectionPreviewPhotosFragment>(
+        containerViewId = binding.collectionPreviewPhotosFragment.id,
         tag = FeedCollectionPreviewPhotosFragment::class.simpleName,
         args = Bundle().apply { putParcelable("item", item) })
     }
