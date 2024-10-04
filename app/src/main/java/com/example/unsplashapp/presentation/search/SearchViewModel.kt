@@ -78,8 +78,7 @@ class SearchViewModel @Inject constructor(private val repository: UnsplashReposi
       .onErrorReturn { e: Throwable ->
         Log.d("SearchViewModel", "generateSearchItemsObservable: ${e.message}")
         emptyList()
-      }
-      .subscribeOn(Schedulers.io())
+      }.subscribeOn(Schedulers.io())
   
   @Suppress("UNCHECKED_CAST")
   // reified is check type at at runtime.
