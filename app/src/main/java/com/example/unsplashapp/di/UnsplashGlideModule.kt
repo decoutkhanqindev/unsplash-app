@@ -14,12 +14,15 @@ import javax.inject.Inject
 @GlideModule
 class UnsplashGlideModule : AppGlideModule() {
   
+  @Inject
+  internal lateinit var okHttpClient: OkHttpClient
+  
   override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
     super.registerComponents(context, glide, registry)
     registry.replace(
       GlideUrl::class.java,
       InputStream::class.java,
-      OkHttpUrlLoader.Factory(UnsplashServiceLocator.provideOkHttpClient())
+      OkHttpUrlLoader.Factory(okHttpClient)
     )
   }
 }
