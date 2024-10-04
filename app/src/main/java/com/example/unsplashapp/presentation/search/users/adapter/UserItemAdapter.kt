@@ -1,5 +1,6 @@
 package com.example.unsplashapp.presentation.search.users.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
@@ -23,6 +24,7 @@ class UserItemAdapter(
   override fun onBindViewHolder(holder: VH, position: Int): Unit = holder.bind(getItem(position))
   
   inner class VH(private val binding: UserItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    @SuppressLint("SetTextI18n")
     fun bind(item: UserItemModel) {
       binding.run {
         userItemUsername.text = item.username
